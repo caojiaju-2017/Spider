@@ -6,19 +6,25 @@ var userName='caojiaju';
 var loginToken="fsdefasfs#f!@fsae3";
 var selectIndex = -1;
 
+var windowHeight;
+//获取窗口的宽度
+var windowWidth;
+//获取弹窗的宽度
+var popWidth;
+//获取弹窗高度
+var popHeight;
+
+
 window.onload=function()
 {
     $.setPosition();
 
-    $("#large_images").transform({rotate: "60deg"})
-    alert("aaa");
-    $("#large_images").animate({rotate: "60deg"})
-    alert("aaa2");
+    $.init();
 };
 
 $(window).resize(function(){
     $.setPosition();
-        alert("aaa");
+        // alert("aaa");
 
 });
 
@@ -124,7 +130,11 @@ $(document).ready(function(){
 
     // 登陆按钮
     $("#loginLab").click(function() {
+
+        //
+        // alert("OpenDialog");
         $.showDialog();
+        // alert("Open Finish");
 
     })
 
@@ -212,13 +222,6 @@ $(document).ready(function(){
         },
 
         showDialog: function () {
-            // var ret = window.showModalDialog("login/login.html",window);
-            // //for Chrome
-            // if(ret==undefined)
-            // {
-            //     ret = window.returnValue;
-            // }
-            // alert("sub return value is "+ret);
 
            if(   document.all   ) //IE
            {
@@ -230,9 +233,9 @@ $(document).ready(function(){
                 //modelessDialog可以将modal换成dialog=yes
                feature ="width=300,height=200,menubar=no,toolbar=no,location=no,";
                feature+="scrollbars=no,status=no,modal=yes";
-               window.open("login.html",null,feature);
+               feature+="scrollbars=no,status=no,modal=yes";
+               window.showModalDialog("login.html",null,feature);
            }
-
         },
 
         encryptInfo:function(orginSrc){

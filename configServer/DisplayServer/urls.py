@@ -26,7 +26,7 @@ from DSServer.Api.WebCenterApi import *
 urlpatterns = [
     # API接口
     url(r'^admin/', admin.site.urls),
-    url(r'^',WebCenterApi.goHome),
+    url(r'^$',WebCenterApi.goHome),
     url(r'^login.html',WebCenterApi.openLogin),
     url(r'^searchData',WebCenterApi.serviceQuery),
 
