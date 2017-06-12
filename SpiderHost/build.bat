@@ -1,0 +1,1 @@
+C:\Python27\Scripts\cxfreeze.bat D:\GitWorkSpace\SpiderHost\main.py --target-dir D:\GitWorkSpace\SpiderHost\out

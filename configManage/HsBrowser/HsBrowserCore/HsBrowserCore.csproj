@@ -1,0 +1,217 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{225034DE-D730-4C7E-B9DA-2DFA6234C180}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>HsServiceCore</RootNamespace>
+    <AssemblyName>HsBrowserCore</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\HsServiceCore\bin\Debug\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="HsFastLink.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HsFastLink.Designer.cs">
+      <DependentUpon>HsFastLink.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HsPubLogin.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HsPubLogin.Designer.cs">
+      <DependentUpon>HsPubLogin.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Service\CommCtrl\CircleButton.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Service\CommCtrl\CircleButton.Designer.cs">
+      <DependentUpon>CircleButton.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\CommCtrl\CXListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Service\CommCtrl\CXListView.designer.cs">
+      <DependentUpon>CXListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\HsMainWorkSpace.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Service\HsMainWorkSpace.Designer.cs">
+      <DependentUpon>HsMainWorkSpace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\HsServiceTree.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Service\HsServiceTree.Designer.cs">
+      <DependentUpon>HsServiceTree.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HsWebBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HsWebBar.Designer.cs">
+      <DependentUpon>HsWebBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HsWebForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HsWebForm.Designer.cs">
+      <DependentUpon>HsWebForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HsWebTitle.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HsWebTitle.Designer.cs">
+      <DependentUpon>HsWebTitle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PromptedTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data\TabItem.cs" />
+    <Compile Include="Data\UrlFavourite.cs" />
+    <Compile Include="Service\HsServiceWork.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Service\HsServiceWork.Designer.cs">
+      <DependentUpon>HsServiceWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\Priv\MenuMangeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Service\Priv\MenuMangeForm.Designer.cs">
+      <DependentUpon>MenuMangeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\TipsWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Service\TipsWindow.Designer.cs">
+      <DependentUpon>TipsWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\BaseManageCtr.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\BaseManageCtr.Designer.cs">
+      <DependentUpon>BaseManageCtr.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\BaseController.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\BaseController.Designer.cs">
+      <DependentUpon>BaseController.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\BaseInfoCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\BaseInfoCtrl.Designer.cs">
+      <DependentUpon>BaseInfoCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\BaseListCtrl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\BaseListCtrl.Designer.cs">
+      <DependentUpon>BaseListCtrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\PageSwitchView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Service\ViewCtrl\PageSwitchView.Designer.cs">
+      <DependentUpon>PageSwitchView.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="HsFastLink.resx">
+      <DependentUpon>HsFastLink.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HsPubLogin.resx">
+      <DependentUpon>HsPubLogin.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service\CommCtrl\CircleButton.resx">
+      <DependentUpon>CircleButton.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service\HsMainWorkSpace.resx">
+      <DependentUpon>HsMainWorkSpace.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service\HsServiceTree.resx">
+      <DependentUpon>HsServiceTree.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HsWebBar.resx">
+      <DependentUpon>HsWebBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HsWebForm.resx">
+      <DependentUpon>HsWebForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HsWebTitle.resx">
+      <DependentUpon>HsWebTitle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service\Priv\MenuMangeForm.resx">
+      <DependentUpon>MenuMangeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service\ViewCtrl\BaseManageCtr.resx">
+      <DependentUpon>BaseManageCtr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service\ViewCtrl\BaseListCtrl.resx">
+      <DependentUpon>BaseListCtrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Service\ViewCtrl\PageSwitchView.resx">
+      <DependentUpon>PageSwitchView.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HsServiceCore\HsServiceCore.csproj">
+      <Project>{90f896b0-8d77-4f71-a456-53c075cad30f}</Project>
+      <Name>HsServiceCore</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,8 @@
+D:\GitWorkSpace\爬虫项目\configManage\HsBrowser\HsServiceCore\bin\Debug\HsServiceCore.dll
+D:\GitWorkSpace\爬虫项目\configManage\HsBrowser\HsServiceCore\bin\Debug\HsServiceCore.pdb
+D:\GitWorkSpace\爬虫项目\configManage\HsBrowser\HsServiceCore\obj\Debug\HsServiceCore.dll
+D:\GitWorkSpace\爬虫项目\configManage\HsBrowser\HsServiceCore\obj\Debug\HsServiceCore.pdb
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsServiceCore\obj\Debug\HsServiceCore.dll
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsServiceCore\obj\Debug\HsServiceCore.pdb
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsServiceCore\bin\Debug\HsServiceCore.dll
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsServiceCore\bin\Debug\HsServiceCore.pdb

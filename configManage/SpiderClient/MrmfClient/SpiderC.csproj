@@ -1,0 +1,299 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C7867FA6-C900-4A36-988D-9910B6D14516}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SpiderC</RootNamespace>
+    <AssemblyName>SpiderC</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Data\MultiBatchDatas.cs" />
+    <Compile Include="HSControl\BaseTreeView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HSControl\BaseTreeView.designer.cs">
+      <DependentUpon>BaseTreeView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Data\LocalConfig.cs" />
+    <Compile Include="GlobalShare.cs" />
+    <Compile Include="HSControl\Custom\Terminal\TerminalControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Custom\Terminal\TerminalControl.Designer.cs">
+      <DependentUpon>TerminalControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Logger\LoggerPannel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Logger\LoggerPannel.Designer.cs">
+      <DependentUpon>LoggerPannel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Logger\QueryPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Logger\QueryPanel.Designer.cs">
+      <DependentUpon>QueryPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Order\FliterPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Order\FliterPanel.Designer.cs">
+      <DependentUpon>FliterPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Order\ItemData.cs" />
+    <Compile Include="HSControl\Order\ItemView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Order\ItemView.Designer.cs">
+      <DependentUpon>ItemView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Order\OrderControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Order\OrderControl.Designer.cs">
+      <DependentUpon>OrderControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\PageSwitchPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\PageSwitchPanel.Designer.cs">
+      <DependentUpon>PageSwitchPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Priv\GrantControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Priv\GrantControl.Designer.cs">
+      <DependentUpon>GrantControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Priv\RoleControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Priv\RoleControl.Designer.cs">
+      <DependentUpon>RoleControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Setting\SystemSetting.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Setting\SystemSetting.Designer.cs">
+      <DependentUpon>SystemSetting.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\CXListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HSControl\CXListView.designer.cs">
+      <DependentUpon>CXListView.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\NativeBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\NativeBar.Designer.cs">
+      <DependentUpon>NativeBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Search\CustomListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HSControl\Search\GraphicsPathHelper.cs" />
+    <Compile Include="HSControl\Search\MarkTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HSControl\Search\MarkTextBox.designer.cs">
+      <DependentUpon>MarkTextBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\Search\SearchBox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\Search\SearchBox.designer.cs">
+      <DependentUpon>SearchBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HSControl\UserInfoMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="HSControl\UserInfoMenu.Designer.cs">
+      <DependentUpon>UserInfoMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainFrm.Designer.cs">
+      <DependentUpon>MainFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="LoginFrm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoginFrm.Designer.cs">
+      <DependentUpon>LoginFrm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="PublicFunction.cs" />
+    <Compile Include="HSControl\ShapeButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="HSControl\ShapeButton.Designer.cs">
+      <DependentUpon>ShapeButton.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="HSControl\BaseTreeView.resx">
+      <DependentUpon>BaseTreeView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\Custom\Terminal\TerminalControl.resx">
+      <DependentUpon>TerminalControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\Logger\LoggerPannel.resx">
+      <DependentUpon>LoggerPannel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\Logger\QueryPanel.resx">
+      <DependentUpon>QueryPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\Order\FliterPanel.resx">
+      <DependentUpon>FliterPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\Order\OrderControl.resx">
+      <DependentUpon>OrderControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\PageSwitchPanel.resx">
+      <DependentUpon>PageSwitchPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\Priv\GrantControl.resx">
+      <DependentUpon>GrantControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\Priv\RoleControl.resx">
+      <DependentUpon>RoleControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\Setting\SystemSetting.resx">
+      <DependentUpon>SystemSetting.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\NativeBar.resx">
+      <DependentUpon>NativeBar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\Search\SearchBox.resx">
+      <DependentUpon>SearchBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HSControl\UserInfoMenu.resx">
+      <DependentUpon>UserInfoMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainFrm.resx">
+      <DependentUpon>MainFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoginFrm.resx">
+      <DependentUpon>LoginFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <SubType>Designer</SubType>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="bin\Debug\Res\tree_Hover.png" />
+    <None Include="bin\Debug\Res\tree_NodeCollaps.png" />
+    <None Include="bin\Debug\Res\tree_NodeExpend.png" />
+    <None Include="bin\Debug\Res\tree_Selected.png" />
+    <None Include="bin\Debug\Res\white.png" />
+    <Content Include="logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="Microsoft.Office.Core">
+      <Guid>{2DF8D04C-5BFA-101B-BDE5-00AA0044DE52}</Guid>
+      <VersionMajor>2</VersionMajor>
+      <VersionMinor>7</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="Microsoft.Office.Interop.Word">
+      <Guid>{00020905-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>8</VersionMajor>
+      <VersionMinor>6</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+    <COMReference Include="VBIDE">
+      <Guid>{0002E157-0000-0000-C000-000000000046}</Guid>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>primary</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="HSControl\Custom\Agent\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

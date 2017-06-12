@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智搜在线</title>
+    <style>
+
+    </style>
+    <script src="http://apps.bdimg.com/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <link rel="shortcut icon" href="/static/Images/default.png" >
+
+    <style>
+        @import url("/static/css/homecss.css");
+    </style>
+</head>
+
+<body style="text-align: center">
+    <script src="/static/js/jquery.transform-0.9.3.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/static/js/hshome.js"> </script>
+
+    {#顶部标题、登陆信息处#}
+    <div class="top_title">
+    {#    左侧图片#}
+        <img src="/static/Icon/menu0.png">
+
+          智搜在线
+
+    {#    右侧登陆或登陆后的显示状态#}
+        <label id="loginLab">登陆</label>
+    </div>
+
+    {#展示搜索图片#}
+    <div class="large_images">
+        <img src="/static/Icon/searchIcon.png">
+    </div>
+
+    <div class="searchDiv">
+        <INPUT id="searchContext" type="text" >
+        <button id="searchButton" onmouseover="this.style.backgroundColor='yellow';" onmouseout="this.style.backgroundColor='';">智能搜</button>
+    </div>
+
+
+    {#    业务特点#}
+    <div class="service_div" id="service_div_id">
+
+{#        第一排#}
+        <div id="findTration">
+            <img id="findTrantionImage" src="/static/Srv/icon1.png">
+            <br />
+            <a>发现商机</a>
+        </div>
+
+        <div id="queryProductPrice">
+            <img id="queryProductPriceImage" src="/static/Srv/icon2.png">
+            <br />
+            <a>产品询价</a>
+        </div>
+
+        <div id="serviceThree">
+            <img id="serviceThreeImage" src="/static/Srv/icon3.png">
+            <br />
+            <a>jquery:encryptInfo("海外参展")</a>
+        </div>
+
+        <br />
+
+{#        第二排#}
+        <div id="serviceFour">
+            <img id="serviceFourImage" src="/static/Srv/icon4.png">
+            <br />
+            <a>数据服务1</a>
+        </div>
+
+        <div id="serviceFive">
+            <img id="serviceFiveImage" src="/static/Srv/icon5.png">
+            <br />
+            <a>数据服务2</a>
+        </div>
+
+        <div id="serviceSix">
+            <img id="serviceSixImage" src="/static/Srv/icon6.png">
+            <br />
+            <a>数据服务3</a>
+        </div>
+    </div>
+</body>
+</html>

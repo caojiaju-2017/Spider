@@ -1,0 +1,12 @@
+D:\GitWorkSpace\爬虫项目\configManage\HsBrowser\HsService\bin\Debug\HsService.dll
+D:\GitWorkSpace\爬虫项目\configManage\HsBrowser\HsService\bin\Debug\HsService.pdb
+D:\GitWorkSpace\爬虫项目\configManage\HsBrowser\HsService\obj\Debug\HsService.dll
+D:\GitWorkSpace\爬虫项目\configManage\HsBrowser\HsService\obj\Debug\HsService.pdb
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsService\bin\Debug\HsService.dll
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsService\bin\Debug\HsService.pdb
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsService\obj\Debug\HsService.dll
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsService\obj\Debug\HsService.pdb
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsService\bin\Debug\HsServiceCore.dll
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsService\bin\Debug\Newtonsoft.Json.dll
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsService\bin\Debug\HsServiceCore.pdb
+D:\GitWorkSpace\Spider\configManage\HsBrowser\HsService\obj\Debug\HsService.csprojResolveAssemblyReference.cache
