@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'^$',WebCenterApi.goHome),
     url(r'^login.html',WebCenterApi.openLogin),
     url(r'^searchData',WebCenterApi.serviceQuery),
+    url(r'^excuteLogin',WebCenterApi.excuteLogin)
 
 
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

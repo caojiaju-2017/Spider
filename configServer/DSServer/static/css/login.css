@@ -1,7 +1,8 @@
 body {
     background: white;
-    width: 97%;
-    height: 500px;
+    width: 98%;
+    height: 400px;
+    text-align: center;
     overflow-x: hidden;
     overflow-y: hidden;
     border: solid 0.5px;
@@ -18,4 +19,56 @@ body {
     color: #808995;
     background-color: #CCCCCC;
 
+}
+
+.info_panel
+{
+    margin-top: 50px;
+    width: 100%;
+    height: 30%;
+    text-align: center;
+    background-color: white;
+    float: none;
+
+}
+
+.nameLabel
+{
+    width: 100px;
+    height: 40px;
+    display: inline-block;
+}
+
+.pswdLabel
+{
+    width: 100px;
+    height: 40px;
+    display: inline-block;
+}
+
+.inputName
+{
+    width: 180px;
+    height: 30px;
+    margin-left: 2px;
+    font-size: 18px;
+}
+
+.inputPassword
+{
+    width: 180px;
+    height: 30px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.loginButton
+{
+    margin-left: 10px;
+    margin-top: 20px;
+    width: 280px;
+    height: 40px;
+    background-color: navy;
+    color: whitesmoke;
+    font-size: 24px;
 }

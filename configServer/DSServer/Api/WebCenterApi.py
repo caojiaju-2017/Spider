@@ -17,14 +17,22 @@ class WebCenterApi(object):
         return render(request, 'home.html')
 
     @staticmethod
+    @csrf_exempt
     def openLogin(request):
-        print "aaadfs"
+        print "openLogin form"
         return render(request, 'login.html')
 
     @staticmethod
+    @csrf_exempt
     def serviceQuery(request):
         print "servicequery"
         return render(request,"searchService.html")
+
+    @staticmethod
+    @csrf_exempt
+    def excuteLogin(request):
+        print 'i have receive login command'
+        return HttpResponse("login success!")
     #
     # @staticmethod
     # def addTest(request):

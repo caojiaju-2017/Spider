@@ -6,15 +6,6 @@ var userName='caojiaju';
 var loginToken="fsdefasfs#f!@fsae3";
 var selectIndex = -1;
 
-var windowHeight;
-//获取窗口的宽度
-var windowWidth;
-//获取弹窗的宽度
-var popWidth;
-//获取弹窗高度
-var popHeight;
-
-
 window.onload=function()
 {
     $.setPosition();
@@ -30,6 +21,9 @@ $(window).resize(function(){
 
 
 $(document).ready(function(){
+    // var skey = getCookie("p_skey");
+    // alert(skey);
+
     // 窗体生成时注册事件＝＝＝＝＝＝＝＝同图片切换相关
     $("#findTrantionImage").click(function() {
         // 清空其他选项
@@ -130,12 +124,8 @@ $(document).ready(function(){
 
     // 登陆按钮
     $("#loginLab").click(function() {
-
-        //
-        // alert("OpenDialog");
         $.showDialog();
-        // alert("Open Finish");
-
+        // alert(result);
     })
 
 });
@@ -231,10 +221,13 @@ $(document).ready(function(){
            else
            {
                 //modelessDialog可以将modal换成dialog=yes
-               feature ="width=300,height=200,menubar=no,toolbar=no,location=no,";
+               feature ="width=400,height=300,menubar=no,toolbar=no,location=no,";
                feature+="scrollbars=no,status=no,modal=yes";
                feature+="scrollbars=no,status=no,modal=yes";
-               window.showModalDialog("login.html",null,feature);
+               var temp = window.showModalDialog("login.html",null,feature);
+
+               $("#loginLab").text("caojiaju");
+               // alert("result===>" + temp);
            }
         },
 
