@@ -113,6 +113,7 @@ $(document).ready(function(){
 
         alert(urlAddress);
         location.href =urlAddress;
+
         // location.href = "http://www.h-sen.com";
         //向服务器推送指令
         // $.get("./searchData", {'userName':userName, 'loginToken':loginToken,'ServiceIndex':selectIndex},function(data)

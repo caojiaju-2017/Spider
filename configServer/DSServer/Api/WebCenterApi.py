@@ -5,10 +5,9 @@ from django.shortcuts import render,render_to_response
 from django.http import  HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
-# ADD_AD
-# DELE_AD
-# MODI_AD
-# LIST_AD
+
+
+from DSServer.Service.Service1BuildData import *
 
 class WebCenterApi(object):
     @staticmethod
@@ -26,6 +25,7 @@ class WebCenterApi(object):
     @csrf_exempt
     def serviceQuery(request):
         print "servicequery"
+        datas=Service1BuildData.buildData()
         return render(request,"searchService.html")
 
     @staticmethod
