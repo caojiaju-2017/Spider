@@ -54,12 +54,13 @@
  * @author Klaus Hartl/klaus.hartl@stilbuero.de
  */
 jQuery.cookie = function(name, value, options) {
- if (typeof value != 'undefined') { // name and value given, set cookie
-  options = options || {};
-  if (value === null) {
-   value = '';
-   options = $.extend({}, options); // clone object since it's unexpected behavior if the expired property were changed
-   options.expires = -1;
+ if (typeof value != 'undefined')
+ { // name and value given, set cookie
+    options = options || {};
+    if (value === null) {
+     value = '';
+     options = $.extend({}, options); // clone object since it's unexpected behavior if the expired property were changed
+     options.expires = -1;
   }
   var expires = '';
   if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
@@ -79,7 +80,8 @@ jQuery.cookie = function(name, value, options) {
   var domain = options.domain ? '; domain=' + (options.domain) : '';
   var secure = options.secure ? '; secure' : '';
   document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
- } else { // only name given, get cookie
+ }
+ else { // only name given, get cookie
   var cookieValue = null;
   if (document.cookie && document.cookie != '') {
    var cookies = document.cookie.split(';');

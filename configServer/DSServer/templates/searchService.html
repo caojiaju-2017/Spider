@@ -5,19 +5,16 @@
     <title>账户登陆</title>
 </head>
 
-<script>
-    function returnMain()
-    {
-      if(window.opener!=undefined)
-      {
-        window.opener.returnValue = "return from sub";
-      }else{
-        window.returnValue = "return from sub";
-      }
-      window.close();
-    }
-</script>
-<body>
-<INPUT id=button1 type=button value="return and close" name=button1 onclick="returnMain()">
+<body id="resultbody">
+    <script src="/static/js/jquery.transform-0.9.3.min.js"></script>
+    <script src="http://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
+    <script src="/static/js/service1.js"> </script>
+    <script src="/static/js/cookie.js"> </script>
+
+
+
+
+
+
 </body>
 </html>

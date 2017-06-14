@@ -5,10 +5,7 @@ $(document).ready(function(){
         // 发送请求
         $.ajax_post();
         //登陆成功
-        // addCookie("userName",userName,7,"/");
-        // addCookie("userPass",userPass,7,"/");
 
-        // window.close();
     })
 });
 
@@ -28,7 +25,9 @@ $.extend({
                 //   }else{
                 //     window.returnValue = "return from sub";
                 //   }
-                  window.close();
+
+                $.cookie('username', $('#userName').val());
+                window.close();
             },
             "text");//这里返回的类型有：json,html,xml,text
     },

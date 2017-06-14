@@ -33,14 +33,17 @@ class WebCenterApi(object):
     def excuteLogin(request):
         print 'i have receive login command'
         return HttpResponse("login success!")
-    #
-    # @staticmethod
-    # def addTest(request):
-    #     a = request.GET['a']
-    #     b = request.GET['b']
-    #     a = int(a)
-    #     b = int(b)
-    #     return HttpResponse(str(a + b))
+
+    @staticmethod
+    @csrf_exempt
+    def searchData(request):
+        print "searchData"
+        # a = request.GET['a']
+        # b = request.GET['b']
+        # a = int(a)
+        # b = int(b)
+        # return HttpResponse(str(a + b))
+        return HttpResponse("search success!")
     #
     # @staticmethod
     # def product_list(request):

@@ -2,7 +2,7 @@
  * Created by jiaju_cao on 2017/6/7.
  */
 
-var userName='caojiaju';
+var userName=null;
 var loginToken="fsdefasfs#f!@fsae3";
 var selectIndex = -1;
 
@@ -21,8 +21,8 @@ $(window).resize(function(){
 
 
 $(document).ready(function(){
-    // var skey = getCookie("p_skey");
-    // alert(skey);
+    // 设置cookie
+    $.checkCookie();
 
     // 窗体生成时注册事件＝＝＝＝＝＝＝＝同图片切换相关
     $("#findTrantionImage").click(function() {
@@ -109,9 +109,9 @@ $(document).ready(function(){
 
         // alert("start");
         // alert(selectIndex);
-        var urlAddress = "searchData?" + 'userName=' + userName + '&loginToken='+ loginToken + '&ServiceIndex=' + selectIndex;
+        var urlAddress = "searchService.html";
 
-        alert(urlAddress);
+        // alert(urlAddress);
         location.href =urlAddress;
 
         // location.href = "http://www.h-sen.com";
@@ -128,7 +128,11 @@ $(document).ready(function(){
         $.showDialog();
         // alert(result);
     })
-
+    // 登陆按钮
+    $("#exitLab").click(function() {
+        // 退出登陆
+        $.deleteCookie();
+    })
 });
 
     // 自定义函数
@@ -227,9 +231,41 @@ $(document).ready(function(){
                feature+="scrollbars=no,status=no,modal=yes";
                var temp = window.showModalDialog("login.html",null,feature);
 
-               $("#loginLab").text("caojiaju");
-               // alert("result===>" + temp);
+               // alert("ckValue");
+                $.checkCookie();
            }
+        },
+
+        checkCookie:function ()
+        {
+            var ckValue = $.cookie('username');
+
+            // alert(ckValue);
+            if (ckValue != "undefined" && ckValue != ""&& ckValue != null)
+            {
+                $("#userNameLab").text(ckValue);
+                $("#userNameLab").show();
+                $("#exitLab").show();
+                $("#loginLab").hide();
+
+                userName = ckValue;
+
+            }
+        },
+
+        deleteCookie:function ()
+        {
+            var ckValue = $.cookie('username');
+
+            // alert(ckValue);
+            if (ckValue != "undefined" && ckValue != ""&& ckValue != null)
+            {
+                $("#userNameLab").hide()
+                $("#exitLab").hide();
+                $("#loginLab").show();
+            }
+
+            $.cookie("username",null);
         },
 
         encryptInfo:function(orginSrc){
