@@ -43,7 +43,14 @@ class WebCenterApi(object):
         # a = int(a)
         # b = int(b)
         # return HttpResponse(str(a + b))
-        return HttpResponse("search success!")
+        import json
+        abc={}
+        abc["count"] = 4;
+        abc["name1"] = "https://images2015.cnblogs.com/news/24442/201706/24442-20170613154413368-1655528381.jpg";
+        abc["name2"] = "https://images2015.cnblogs.com/news/24442/201706/24442-20170613154413368-1655528381.jpg";
+        abc["name3"] = "http://unionad.vanclimg.com/union/ad_images/200x200_20130826_164651.jpg";
+        abc["name4"] = "https://images2015.cnblogs.com/news/24442/201706/24442-20170613154413368-1655528381.jpg";
+        return HttpResponse(json.dumps(abc))
     #
     # @staticmethod
     # def product_list(request):

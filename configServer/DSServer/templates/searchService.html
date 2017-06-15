@@ -3,18 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>账户登陆</title>
+
+    <style>
+        @import url("/static/css/searchResult.css");
+    </style>
 </head>
 
-<body id="resultbody">
+<body style="float: none" id="result_body_id">
     <script src="/static/js/jquery.transform-0.9.3.min.js"></script>
     <script src="http://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
     <script src="/static/js/service1.js"> </script>
     <script src="/static/js/cookie.js"> </script>
 
+        {#顶部标题、登陆信息处#}
+    <div class="top_title" id="top_titile_id">
+    {#    左侧图片#}
+        <img src="/static/Icon/menu0.png">
+
+          智搜在线
+
+    {#    右侧登陆或登陆后的显示状态#}
+        <label id="loginLab">登陆</label>
+        <label id="userNameLab" hidden="true"></label>
+        <label id="exitLab" hidden="true">退出</label>
+    </div>
 
 
+    <div id="resultLeft">
 
+    </div>
 
+    <div id="resultRight">
 
+    </div>
 </body>
 </html>
