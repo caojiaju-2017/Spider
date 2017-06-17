@@ -6,8 +6,10 @@ from django.http import  HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 
+from DSServer.Service.PublicService import *
 
 from DSServer.Service.Service1BuildData import *
+from HsShareData import *
 
 class WebCenterApi(object):
     @staticmethod
@@ -37,25 +39,114 @@ class WebCenterApi(object):
     @staticmethod
     @csrf_exempt
     def searchData(request):
-        print "searchData"
-        # a = request.GET['a']
-        # b = request.GET['b']
-        # a = int(a)
-        # b = int(b)
-        # return HttpResponse(str(a + b))
-        import json
-        abc={}
-        abc["count"] = 4;
-        abc["name1"] = "https://images2015.cnblogs.com/news/24442/201706/24442-20170613154413368-1655528381.jpg";
-        abc["name2"] = "https://images2015.cnblogs.com/news/24442/201706/24442-20170613154413368-1655528381.jpg";
-        abc["name3"] = "http://unionad.vanclimg.com/union/ad_images/200x200_20130826_164651.jpg";
-        abc["name4"] = "https://images2015.cnblogs.com/news/24442/201706/24442-20170613154413368-1655528381.jpg";
-        return HttpResponse(json.dumps(abc))
-    #
-    # @staticmethod
-    # def product_list(request):
-    #     return render(request, 'product_list.html')
-    #
+        # 获取当前访问IP
+        if request.META.has_key('HTTP_X_FORWARDED_FOR'):
+            ip = request.META['HTTP_X_FORWARDED_FOR']
+        else:
+            ip = request.META['REMOTE_ADDR']
+
+        print "Access Ip ===>" ,ip
+
+        # 提取post参数
+        postDatas = PublicService.getPostData(request)
+
+        print "Recieve Post Datas===>" ,postDatas
+
+        userName = postDatas['username']
+        # 如果是体验账户，则当前IP 每天仅能使用3次
+        rtnDicts = {}
+        if userName == "guest04":
+            if not HsShareData.GuestAccessDict.has_key(ip):
+                HsShareData.GuestAccessDict[ip] = 1
+            else:
+                currentCount = HsShareData.GuestAccessDict[ip]
+                if currentCount >= HsShareData.GuestMaxAccessCount:
+                    rtnDicts["status"] = 1001
+                    rtnDicts["errorinfo"] = "已超过游客每天体验次数"
+                    return HttpResponse(json.dumps(rtnDicts))
+                else:
+                    HsShareData.GuestAccessDict[ip] = currentCount + 1
+
+        rtnDicts["status"] = 0
+        rtnDicts["errorinfo"] = "成功"
+        rtnDicts["ImageCount"] = 4
+
+
+        dicts = {}
+        dicts[""] = 0
+        dicts["语文"] = random.randint(30, 100)
+        dicts["数学"] = random.randint(30, 100)
+        dicts["英语"] = random.randint(30, 100)
+        dicts["地理"] = random.randint(30, 100)
+        dicts["历史"] = random.randint(30, 100)
+        dicts["生物"] = random.randint(30, 100)
+        dicts["英语"] = random.randint(30, 100)
+        rtnDicts["name1"] = HsShareData.DrawBar(dicts,"report1.png")
+
+        dicts = {}
+        dicts["A"] = random.randint(30, 100)
+        dicts["B"] = random.randint(30, 100)
+        dicts["C"] = random.randint(30, 100)
+        rtnDicts["name2"] = HsShareData.DrawBar(dicts,"report2.png")
+
+        dicts = {}
+        dicts["A"] = random.randint(30, 100)
+        dicts["B"] = random.randint(30, 100)
+        dicts["C"] = random.randint(30, 100)
+        rtnDicts["name3"] = HsShareData.DrawBar(dicts,"report3.png")
+
+        dicts = {}
+        dicts["A"] = random.randint(30, 100)
+        dicts["B"] = random.randint(30, 100)
+        dicts["C"] = random.randint(30, 100)
+        rtnDicts["name4"] = HsShareData.DrawBar(dicts,"report4.png")
+
+
+        rtnDicts["ItemCount"] = 10
+        oneItem = {}
+        oneItem["Title"] = ["标题" , "跟婆婆闹矛盾，怎么办？"]
+        oneItem["Info"] =["描述","... ... 内容保密 ... ..."]
+        oneItem["Url"] = ["地址","http://www.h-sen.com"]
+        oneItem["Date"] = ["日期","2017-09-01"]
+        rtnDicts["item1"] = oneItem
+
+        oneItem = {}
+        oneItem["Title"] = ["标题" , "你想用百度所搜嘛？请跟我来。"]
+        oneItem["Info"] =["描述","... ... 内容保密 ... ..."]
+        oneItem["Url"] = ["地址","http://www.baidu.com"]
+        oneItem["Date"] = ["日期","2016-12-23"]
+        rtnDicts["item2"] = oneItem
+
+        oneItem = {}
+        oneItem["Title"] = ["标题" , "跟婆婆闹矛盾，怎么办？"]
+        oneItem["Info"] =["描述","... ... 内容保密 ... ..."]
+        oneItem["Url"] = ["地址","http://www.by-creat.com"]
+        oneItem["Date"] = ["日期","2017-02-21"]
+        rtnDicts["item3"] = oneItem
+
+        oneItem = {}
+        oneItem["Title"] = ["标题" , "快来查字典吧？"]
+        oneItem["Info"] =["描述","... ... 内容保密 ... ..."]
+        oneItem["Url"] = ["地址","http://www.youdao.com"]
+        oneItem["Date"] = ["日期","2016-11-11"]
+        rtnDicts["item4"] = oneItem
+        return HttpResponse(json.dumps(rtnDicts))
+
+    @staticmethod
+    def openImageView(request):
+        from django.template import Context, Template
+        fp = open(os.path.join(TEMPLATE_DIRS[0],'ImageView.html'))
+        t = Template(fp.read())
+        fp.close()
+
+        imgName = request.GET.get('ImageName')
+
+        c = Context({"imageName": imgName})
+        return HttpResponse(t.render(c))
+        # return HttpResponse(template.render(context))
+
+        # return render(request, 'ImageView.html')
+
     # @staticmethod
     # def ajax_list(request):
     #     a = range(100)

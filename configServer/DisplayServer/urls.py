@@ -27,11 +27,12 @@ urlpatterns = [
     # API接口
     url(r'^admin/', admin.site.urls),
     url(r'^$',WebCenterApi.goHome),
+    url(r'^home.html',WebCenterApi.goHome),
     url(r'^login.html',WebCenterApi.openLogin),
     url(r'^excuteLogin',WebCenterApi.excuteLogin),
     url(r'^search_data',WebCenterApi.searchData),
     url(r'^searchService.html',WebCenterApi.serviceQuery),
-
+    url(r'^ImageView.html',WebCenterApi.openImageView),
 
 
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

@@ -26,9 +26,7 @@
     {#顶部标题、登陆信息处#}
     <div class="top_title">
     {#    左侧图片#}
-        <img src="/static/Icon/menu0.png">
-
-          智搜在线
+        <label id="findCompany">商务合作：<a style="color: chocolate;font-size: 14px">17828061593</a> (8:00-20:00，7x12小时）</label>
 
     {#    右侧登陆或登陆后的显示状态#}
         <label id="loginLab">登陆</label>
@@ -42,8 +40,8 @@
     </div>
 
     <div class="searchDiv">
-        <INPUT id="searchContext" type="text" >
-        <button id="searchButton" onmouseover="this.style.backgroundColor='yellow';" onmouseout="this.style.backgroundColor='';">智能搜</button>
+        <INPUT id="searchContext" type="text" value="请输入搜索内容" onfocus="javascript:if(this.value=='请输入搜索内容')this.value='';">
+        <button id="searchButton" onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'" onmouseout="this.style.backgroundColor='';this.style.color='#666666'">智能搜</button>
     </div>
 
 
@@ -52,7 +50,7 @@
 
 {#        第一排#}
         <div id="findTration">
-            <img id="findTrantionImage" src="/static/Srv/icon1.png">
+            <img id="findTrantionImage" src="/static/Srv/icon1.png" title="点击可选择">
             <br />
             <a>发现商机</a>
         </div>

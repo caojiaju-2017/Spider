@@ -1,4 +1,7 @@
-$(document).ready(function(){
+$(document).ready(function()
+{
+    $.setGuestAccount();
+
     $("#btnLogin").click(function()
     {
 
@@ -30,6 +33,10 @@ $.extend({
                 window.close();
             },
             "text");//这里返回的类型有：json,html,xml,text
+    },
+    setGuestAccount:function () {
+        $("#userName").attr("value","guest04");
+        $("#userPassword").attr("value","000000");
     },
 });
 
