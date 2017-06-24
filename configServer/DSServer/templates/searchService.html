@@ -2,25 +2,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>账户登陆</title>
+    <title>查询结果</title>
 
-    <style>
-        @import url("/static/css/searchResult.css");
-    </style>
+    <link rel="stylesheet" href="/static/css/reset.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/searchResult.css">
 </head>
 
 <body style="float: none" id="result_body_id">
-    <script src="/static/js/jquery.transform-0.9.3.min.js"></script>
     <script src="http://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
     <script src="/static/js/service1.js"> </script>
     <script src="/static/js/cookie.js"> </script>
 
-        {#顶部标题、登陆信息处#}
-    <div class="top_title" id="top_titile_id">
+    {#顶部标题、登陆信息处#}
+    <div class="top_title">
     {#    左侧图片#}
-        <img src="/static/Icon/menu0.png">
-
-          智搜在线
+        <label id="findCompany">商务合作：<a style="color: chocolate;font-size: 14px">17828061593</a> (8:00-20:00，7x12小时）</label>
 
     {#    右侧登陆或登陆后的显示状态#}
         <label id="loginLab">登陆</label>
@@ -34,6 +31,13 @@
     </div>
 
     <div id="resultRight">
+        <button class="goUpper" id="btnGoUpper">上一页</button>
+
+        <button class="goNext" id="btnGoNext">下一页</button>
+    </div>
+
+    <div id="MiddleDiv">
+        <img src="/static/AD/ad1.jpg">
 
     </div>
 </body>

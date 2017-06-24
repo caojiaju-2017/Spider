@@ -141,6 +141,9 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'DSServer')
 STATIC_ROOT = os.path.join(STATIC_ROOT, 'static')
 
 
+TempDir = os.path.join(os.getcwd(), 'DSServer')
+TEMPLATE_DIRS = [os.path.join(TempDir, 'templates'),]
+print "TEMPLATE_DIRS",TEMPLATE_DIRS
 # STATICFILES_DIRS = (
 #     # Put strings here, like "/home/html/static" or "C:/www/django/static".
 #     # Always use forward slashes, even on Windows.

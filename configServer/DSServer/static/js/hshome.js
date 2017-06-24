@@ -34,7 +34,7 @@ $(document).ready(function(){
         // 设置当前为选定项
         $("#findTrantionImage").attr("src","/static/Srv/icon1-0.png");
 
-        selectIndex = 1;
+        selectIndex = 1001;
     })
 
     $("#queryProductPriceImage").click(function() {
@@ -46,7 +46,7 @@ $(document).ready(function(){
         // 设置当前为选定项
         $("#queryProductPriceImage").attr("src","/static/Srv/icon2-0.png");
 
-        selectIndex = 2;
+        selectIndex = 1002;
         // alert("cccc");
     })
 
@@ -58,7 +58,7 @@ $(document).ready(function(){
         $("#serviceThreeImage").attr("src","/static/Srv/icon3-0.png");
         // alert("cccc2");
 
-        selectIndex = 3;
+        selectIndex = 1003;
     })
 
     $("#serviceFourImage").click(function() {
@@ -68,7 +68,7 @@ $(document).ready(function(){
         // 设置当前为选定项
         $("#serviceFourImage").attr("src","/static/Srv/icon4-0.png");
 
-        selectIndex = 4;
+        selectIndex = 1004;
         // alert("cccc2");
     })
 
@@ -79,7 +79,7 @@ $(document).ready(function(){
         // 设置当前为选定项
         $("#serviceFiveImage").attr("src","/static/Srv/icon5-0.png");
 
-        selectIndex = 5;
+        selectIndex = 1005;
         // alert("cccc2");
     })
 
@@ -90,25 +90,41 @@ $(document).ready(function(){
         // 设置当前为选定项
         $("#serviceSixImage").attr("src","/static/Srv/icon6-0.png");
 
-        selectIndex = 6;
+        selectIndex = 1006;
         // alert("cccc2");
     })
 
     // 搜索按钮
     $("#searchButton").click(function() {
-        // alert("start1");
-        // 取出过滤字符串
-        var searchContextValue = $("#searchContext").val();
 
-        // 未输入，则不执行查询
-        if(searchContextValue == null || searchContextValue == "" || selectIndex == -1) 
+        // 检查用户是否登陆
+        var username = $.cookie("username");
+        if (username == "" || username == undefined || username == null)
         {
-            alert("请输入搜索内容，并指定业务服务类型（通过下方图片选择即可）");
+            alert("请先登录，体验账号：guest04   密码：000000");
+            return ;
+        }
+        // alert( username);
+
+
+        var searchContextValue = $("#searchContext").val();
+        // 未输入，则不执行查询
+        if(searchContextValue == null || searchContextValue == "" || searchContextValue=="请输入搜索内容" || userName == "undefined") 
+        {
+            alert("请输入搜索内容");
             return ;
         } 
 
-        // alert("start");
-        // alert(selectIndex);
+        if (selectIndex == -1 )
+        {
+            alert("必须指定搜索类型，在搜索框下面，通过鼠标点击选取");
+            return ;
+        }
+
+        // 设置当前搜索类型和过滤字符串
+        $.cookie("servicecode",selectIndex);
+        $.cookie("pageindex",0);
+
         var urlAddress = "searchService.html";
 
         // alert(urlAddress);
@@ -271,5 +287,9 @@ $(document).ready(function(){
         encryptInfo:function(orginSrc){
             alert("encryptInfo");
         },
-
+        
+        isNull:function (datas) {
+            alert("check");
+            return (data == "" || data == undefined || data == null) ? 0 : 1;
+        }
     });
