@@ -34,7 +34,9 @@ class WebCenterApi(object):
     @csrf_exempt
     def excuteLogin(request):
         print 'i have receive login command'
-        return HttpResponse("login success!")
+        abc = {}
+        abc["Result"] = "login success!"
+        return HttpResponse(json.dumps(abc))
 
     @staticmethod
     @csrf_exempt
