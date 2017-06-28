@@ -21,6 +21,9 @@ class SUrlAttribute(object):
         self.CalcWay = None
         self.ExternStr = None
         self.SubAttr = None
+        self.AttachAttr=None
+        self.Code = None
+        self.IsUrl = 0
         self.datas = []
         pass
 
@@ -36,6 +39,9 @@ class SUrlAttribute(object):
         SUrlAttribute.ATTR_map_FIELD.append(Attr2FieldMap("CalcWay", "CalcWay"))
         SUrlAttribute.ATTR_map_FIELD.append(Attr2FieldMap("ExternStr", "ExternStr"))
         SUrlAttribute.ATTR_map_FIELD.append(Attr2FieldMap("SubAttr", "SubAttr"))
+        SUrlAttribute.ATTR_map_FIELD.append(Attr2FieldMap("AttachAttr", "AttachAttr"))
+        SUrlAttribute.ATTR_map_FIELD.append(Attr2FieldMap("Code", "Code"))
+        SUrlAttribute.ATTR_map_FIELD.append(Attr2FieldMap("IsUrl", "IsUrl"))
 
     @staticmethod
     def buildQueryCmd():

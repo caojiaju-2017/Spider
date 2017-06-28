@@ -19,6 +19,7 @@ class SConfig(object):
         self.Code = None
         self.Name = None
         self.Enable = 1
+        self.JobClassName = None
         self.Urls = []
         pass
 
@@ -33,7 +34,7 @@ class SConfig(object):
         SConfig.ATTR_map_FIELD.append(Attr2FieldMap("Code", "Code"))
         SConfig.ATTR_map_FIELD.append(Attr2FieldMap("Name", "Name"))
         SConfig.ATTR_map_FIELD.append(Attr2FieldMap("Enable", "Enable"))
-
+        SConfig.ATTR_map_FIELD.append(Attr2FieldMap("JobClassName", "JobClassName"))
     @staticmethod
     def buildQueryCmd():
         fieldString = None

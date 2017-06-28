@@ -7,15 +7,17 @@ from bs4 import  BeautifulSoup
 from SpMysqlDb.Datas.SUrlAttribute import  *
 from MongoDb.DbOperator import *
 
+from SpMysqlDb.Datas.NationDefine import *
+
 dataCollection={}
 IDLE_WAIT = 30
-class BaseDoJob(object):
+class UrlJobExhibition(object):
     StopFlag = False
     def __init__(self):
         return
 
     def doWork(self,config):
-        while not BaseDoJob.StopFlag :
+        while not UrlJobExhibition.StopFlag :
             # # 循环时间段， 检查是否具有当前需要处理的任务
             # hasValidTime = False
             # for oneTimeSep in config.TimeSep:
@@ -34,6 +36,7 @@ class BaseDoJob(object):
             # 遍历Url配置
             for oneUrl in config.Urls:
                 if oneUrl.Enable == 0:
+                    print "Url was Disable %s" % oneUrl.Code
                     self.waitNextLoop(3)
                     continue
 
@@ -100,6 +103,8 @@ class BaseDoJob(object):
 
             # 提取记录唯一性编码
             data["Unique"] = SUrlAttribute.getUniqueKey(data)
+            data["Nation"] = NationDefine.getNation(data["Name"])
+            data["Classfic"] = oneUrl.Classfic
             rowIndex = rowIndex+ 1
 
             result = DbOperator().insertData(oneUrl.Name,oneUrl.Sheet,data)

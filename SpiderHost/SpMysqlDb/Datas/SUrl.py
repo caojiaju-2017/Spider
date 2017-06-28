@@ -22,6 +22,8 @@ class SUrl(object):
         self.ConfigId = None
         self.Code = None
         self.Enable = 1
+        self.Classfic = None
+
         self.Attrs = []
         pass
 
@@ -42,6 +44,8 @@ class SUrl(object):
         SUrl.ATTR_map_FIELD.append(Attr2FieldMap("Code", "Code"))
 
         SUrl.ATTR_map_FIELD.append(Attr2FieldMap("Enable", "Enable"))
+        SUrl.ATTR_map_FIELD.append(Attr2FieldMap("Classfic", "Classfic"))
+
 
     @staticmethod
     def buildQueryCmd():

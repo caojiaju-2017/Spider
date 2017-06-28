@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os,commands,time,random,threading,bs4,lxml,shutil
+import threading
+
 # from multiprocessing import Pool
-from BaseDoJob import *
-from Map.Line import *
-
-
+from Service.UrlJobExhibition import *
 from SpMysqlDb.Datas.SConfig import *
 from SpMysqlDb.Datas.SUrl import *
 from SpMysqlDb.Datas.SUrlAttribute import *
@@ -46,6 +44,7 @@ def startMain():
 
     for oneConfig in configDatas:
         if oneConfig.Enable == 0:
+            print "Config was Disable %s" % oneConfig.Code
             continue
 
         t = threading.Thread(target=startWorkThread, args=(oneConfig,))
@@ -58,7 +57,17 @@ def startWorkThread(config):
     doJobHandle = None
 
     # 检查当前是否定义了处理类
-    doJobHandle = BaseDoJob()
+    import_string = "from Service.%s import %s" % (config.JobClassName,config.JobClassName, )
+    try:
+        exec import_string
+
+        build_object = "doJobHandle = %s()"%config.JobClassName
+
+        exec  build_object
+
+    except Exception, ex:
+        print "Config Load Work Failed:%s \n"%config.Code
+        return
 
     # 如果没有，则用通用处理函数
     doJobHandle.doWork(config)
