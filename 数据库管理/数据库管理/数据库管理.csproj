@@ -58,7 +58,9 @@
     <Compile Include="CopyUrlWnd.Designer.cs">
       <DependentUpon>CopyUrlWnd.cs</DependentUpon>
     </Compile>
+    <Compile Include="DAL\Sps_serviceDAL.cs" />
     <Compile Include="DAL\Sp_configDAL.cs" />
+    <Compile Include="DAL\Sps_userDAL.cs" />
     <Compile Include="DAL\Sp_urlDAL.cs" />
     <Compile Include="DAL\Sp_url_attrDAL.cs" />
     <Compile Include="frmInfo.cs">
@@ -73,6 +75,9 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageHelper.cs" />
+    <Compile Include="Model\Sps_service.cs" />
+    <Compile Include="Model\Sps_user.cs" />
     <Compile Include="Model\Sp_config.cs" />
     <Compile Include="Model\Sp_url.cs" />
     <Compile Include="Model\Sp_url_attr.cs" />
