@@ -71,7 +71,7 @@ namespace 数据库管理.DAL
         {
             MySqlConnection mycon = new MySqlConnection();
             mycon.ConnectionString = url;
-            string sql2 = string.Format("INSERT into sp_url_attr(Id,UrlCode,HtmlTag,AttrName,Alias,CalcWay,ExternStr,SubAttr,AttachAttr,Code,IsUrl)values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')", new object[]
+            string sql2 = string.Format("INSERT into sp_url_attr(UrlCode,HtmlTag,AttrName,Alias,CalcWay,ExternStr,SubAttr,AttachAttr,Code,IsUrl)values('{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}','{10}')", new object[]
                         {
                             ud.Id,ud.UrlCode,ud.HtmlTag,ud.AttrName,ud.Alias,ud.CalcWay,ud.ExternStr,ud.SubAttr,ud.AttachAttr,ud.Code,ud.IsUrl
                         });

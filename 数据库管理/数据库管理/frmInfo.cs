@@ -78,6 +78,13 @@ namespace 数据库管理
                 }
                 dgvShowUrl.Rows[d].Cells["Id"].Value = spUrl[i].Id;
             }
+            
+            if (dgvShowUrl.Rows.Count > 0)
+            {
+                foreach (DataGridViewRow dgvr in dgvShowUrl.Rows)
+                    dgvr.Selected = false;
+                dgvShowUrl.Rows[0].Selected = true;
+            }
         }
 
         private void btnAddUrl_Click(object sender, EventArgs e)
@@ -88,8 +95,8 @@ namespace 数据库管理
                 return;
             }
             Sp_url spUrl = new Sp_url();
-            Sp_url[] spUrlAll = new Sp_urlDAL().GetAllData();
-            spUrl.Id = spUrlAll.Length + 1;
+            //Sp_url[] spUrlAll = new Sp_urlDAL().GetAllData();
+            //spUrl.Id = spUrlAll.Length + 1;
             spUrl.StartIndex = Convert.ToInt32(txtStartIndex.Text.Trim());
             spUrl.StopIndex = Convert.ToInt32(txtStopIndex.Text.Trim());
             spUrl.Step = Convert.ToInt32(txtStep.Text.Trim());
@@ -223,8 +230,8 @@ namespace 数据库管理
                 {
                     new Sp_urlDAL().DeleteByCode(dgvShowUrl.SelectedRows[0].Cells["记录的唯一索引"].Value.ToString());
                     new Sp_url_attrDAL().DeleteByUrlCode(dgvShowUrl.SelectedRows[0].Cells["记录的唯一索引"].Value.ToString());
-                    MessageBox.Show("您选中的数据已删除！", "提示",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("您选中的数据已删除！", "提示",
+                    //                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ShowDGV();
                     ShowDGVUrl_Attr();
                     txtStartIndex.Text = ""; txtStopIndex.Text = ""; txtStep.Text = ""; txtBaseUrl.Text = ""; txtShortUrl.Text = ""; txtName.Text = ""; txtAlias.Text = ""; txtSheet.Text = ""; txtClassfic.Text = "";
@@ -249,8 +256,8 @@ namespace 数据库管理
                 try
                 {
                     new Sp_url_attrDAL().DeleteByCode(dgvShowUrl_Attr.SelectedRows[0].Cells["属性代码"].Value.ToString());
-                    MessageBox.Show("您选中的数据已删除！", "提示",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("您选中的数据已删除！", "提示",
+                    //                    MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ShowDGVUrl_Attr();
                     txtHtmlTag.Text = ""; txtAttrName.Text = ""; txtAttrAlias.Text = ""; txtExternStr.Text = ""; txtSubAttr.Text = ""; txtAttrCode.Text = "";
                     txtAttachAttr.Text = "";
@@ -270,8 +277,8 @@ namespace 数据库管理
                 return;
             }
             Sp_url_attr spUrl = new Sp_url_attr();
-            Sp_url_attr[] spUrlAll = new Sp_url_attrDAL().GetAllData();
-            spUrl.Id = spUrlAll.Length + 1;
+            //Sp_url_attr[] spUrlAll = new Sp_url_attrDAL().GetAllData();
+            //spUrl.Id = spUrlAll.Length + 1;
             spUrl.HtmlTag = txtHtmlTag.Text.Trim();
             spUrl.Alias = txtAttrAlias.Text.Trim();
             spUrl.ExternStr = txtExternStr.Text.Trim();
@@ -379,6 +386,68 @@ namespace 数据库管理
             cBoxCalcWay.Text = dgvShowUrl_Attr.SelectedRows[0].Cells["结果计算方式"].Value.ToString();
             cBoxIsUrl.Text = dgvShowUrl_Attr.SelectedRows[0].Cells["属性对应值是否是链接"].Value.ToString();
             btnAddUrl_Attr.Text = "修  改";
+        }
+
+        private void btnCopyUrl_Click(object sender, EventArgs e)
+        {
+            if (dgvShowUrl.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show("未选中目标URL,请先添加或选中一个");
+                return;
+            }
+            CopyUrlWnd wnd = new CopyUrlWnd();
+            wnd.UrlCode = dgvShowUrl.SelectedRows[0].Cells["记录的唯一索引"].Value.ToString();
+
+            if (wnd.ShowDialog()== System.Windows.Forms.DialogResult.OK)
+            {
+                Dictionary<string, List<string>> result = wnd.Result;
+                foreach (var key in result.Keys)
+                {
+                    // 有且只有一个
+                    string urlCode = key.ToString();
+                    List<string> attrCopys = result[key];
+
+                    Sp_url_attr[] spUrlAttrs = new Sp_url_attrDAL().GetAllData(urlCode);
+                    List<Sp_url_attr> attrs = spUrlAttrs.ToList();
+
+                    for (int index = 0 ; index < attrs.Count ; index ++)
+                    {
+                        Sp_url_attr attr = attrs[index];
+
+                        if (!attrCopys.Contains(attr.Code))
+                        {
+                            continue;
+                        }
+                        Console.WriteLine(attr.ToString());
+
+                        cloneAndAdd(attr, wnd.UrlCode);
+                    }
+
+                    ShowDGVUrl_Attr();
+                    MessageBox.Show("拷贝成功");
+                }
+            }
+        }
+
+        private void dgvShowUrl_SelectionChanged(object sender, EventArgs e)
+        {
+            ShowDGVUrl_Attr();
+        }
+
+        private void cloneAndAdd(Sp_url_attr srcAttr,string urlCode)
+        {
+            srcAttr.Code = "SUA_" + GetTimeStamp() + new Random().Next(10000, 99999);
+            srcAttr.UrlCode = urlCode;
+
+            try
+            {
+                new Sp_url_attrDAL().Insert(srcAttr);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("添加失败,错误代码为：" + ex.ToString());
+            }
+           
         }
     }
 }

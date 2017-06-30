@@ -52,6 +52,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CopyUrlWnd.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CopyUrlWnd.Designer.cs">
+      <DependentUpon>CopyUrlWnd.cs</DependentUpon>
+    </Compile>
     <Compile Include="DAL\Sp_configDAL.cs" />
     <Compile Include="DAL\Sp_urlDAL.cs" />
     <Compile Include="DAL\Sp_url_attrDAL.cs" />
@@ -72,6 +78,9 @@
     <Compile Include="Model\Sp_url_attr.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CopyUrlWnd.resx">
+      <DependentUpon>CopyUrlWnd.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmInfo.resx">
       <DependentUpon>frmInfo.cs</DependentUpon>
     </EmbeddedResource>

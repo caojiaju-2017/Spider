@@ -79,8 +79,8 @@ namespace 数据库管理
                 return;
             }
             Sp_config sp = new Sp_config();
-            Sp_config[] spAll = new Sp_configDAL().GetAllData();
-            sp.Id = spAll.Length + 1;
+            //Sp_config[] spAll = new Sp_configDAL().GetAllData();
+            //sp.Id = spAll.Length + 1;
             if (cBoxTimeType.Text == "定时")
             {
                 sp.TimeType = "0000000";
@@ -214,8 +214,8 @@ namespace 数据库管理
                         new Sp_url_attrDAL().DeleteByUrlCode(spp[i].Code);
                     }
                     new Sp_urlDAL().DeleteByCode(dgvShow.SelectedRows[0].Cells["唯一编码"].Value.ToString());
-                    MessageBox.Show("您选中的数据已删除！", "提示",
-                                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //MessageBox.Show("您选中的数据已删除！", "提示",
+                                        //MessageBoxButtons.OK, MessageBoxIcon.Information);
                     ShowDGV();
                 }
                 catch (Exception ex)
@@ -225,7 +225,84 @@ namespace 数据库管理
             }
         }
 
-        private void dgvShow_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void cloneRecord()
+        {
+            txtEMail.Text = dgvShow.SelectedRows[0].Cells["邮箱"].Value.ToString();
+            txtMobile.Text = dgvShow.SelectedRows[0].Cells["手机号"].Value.ToString();
+            txtName.Text = dgvShow.SelectedRows[0].Cells["配置名称"].Value.ToString();
+            //txtCode.Text = dgvShow.SelectedRows[0].Cells["唯一编码"].Value.ToString();
+            txtCode.Text = "SC_" + GetTimeStamp() + new Random().Next(10000, 99999);
+            txtJobClassName.Text = dgvShow.SelectedRows[0].Cells["工作类名字"].Value.ToString();
+            if (dgvShow.SelectedRows[0].Cells["时间方案"].Value.ToString() == "0000000")
+            {
+                cBoxTimeType.Text = "定时";
+                txtTimeOne.Text = dgvShow.SelectedRows[0].Cells["时间段"].Value.ToString().Split('~')[0];
+                txtTimeTwo.Text = dgvShow.SelectedRows[0].Cells["时间段"].Value.ToString().Split('~')[1];
+            }
+            else
+            {
+                cBoxTimeType.Text = "循环";
+                txtTimeThree.Text = dgvShow.SelectedRows[0].Cells["时间段"].Value.ToString().Split('~')[0];
+                txtTimeFour.Text = dgvShow.SelectedRows[0].Cells["时间段"].Value.ToString().Split('~')[1];
+                string txt = dgvShow.SelectedRows[0].Cells["时间方案"].Value.ToString();
+                if (txt[0].ToString() == "1")
+                {
+                    cBoxOne.Checked = true;
+                }
+                if (txt[1].ToString() == "1")
+                {
+                    cBoxTwo.Checked = true;
+                }
+                if (txt[2].ToString() == "1")
+                {
+                    cBoxThree.Checked = true;
+                }
+                if (txt[3].ToString() == "1")
+                {
+                    cBoxFour.Checked = true;
+                }
+                if (txt[4].ToString() == "1")
+                {
+                    cBoxFive.Checked = true;
+                }
+                if (txt[5].ToString() == "1")
+                {
+                    cBoxSix.Checked = true;
+                }
+                if (txt[6].ToString() == "1")
+                {
+                    cBoxSeven.Checked = true;
+                }
+                cBoxEnable.Text = dgvShow.SelectedRows[0].Cells["是否生效"].Value.ToString();
+
+                btnAdd.Text = "新  增";
+            }
+        }
+        private void 查看ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvShow.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show("您还没有选中任何数据！", "错误",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            frmInfo f = new frmInfo();
+            f.Code = dgvShow.SelectedRows[0].Cells["唯一编码"].Value.ToString();
+            f.ShowDialog();
+        }
+
+        private void 克隆ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (dgvShow.SelectedRows.Count <= 0)
+            {
+                MessageBox.Show("您还没有选中任何数据！", "错误",
+                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            cloneRecord();
+        }
+
+        private void dgvShow_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             txtEMail.Text = dgvShow.SelectedRows[0].Cells["邮箱"].Value.ToString();
             txtMobile.Text = dgvShow.SelectedRows[0].Cells["手机号"].Value.ToString();
@@ -275,19 +352,6 @@ namespace 数据库管理
                 cBoxEnable.Text = dgvShow.SelectedRows[0].Cells["是否生效"].Value.ToString();
                 btnAdd.Text = "修  改";
             }
-        }
-
-        private void 查看ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (dgvShow.SelectedRows.Count <= 0)
-            {
-                MessageBox.Show("您还没有选中任何数据！", "错误",
-                                    MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            frmInfo f = new frmInfo();
-            f.Code = dgvShow.SelectedRows[0].Cells["唯一编码"].Value.ToString();
-            f.ShowDialog();
         }
     }
 }

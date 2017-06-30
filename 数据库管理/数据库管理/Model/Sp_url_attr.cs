@@ -52,5 +52,10 @@ namespace 数据库管理.Model
         /// </summary>
         public int IsUrl { get; set; }
 
+        public override string ToString()
+        {
+            return Alias;
+        }
+
     }
 }

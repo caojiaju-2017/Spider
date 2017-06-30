@@ -43,5 +43,10 @@ namespace 数据库管理.Model
         /// 工作类名字
         /// </summary>
         public string JobClassName { get; set; }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

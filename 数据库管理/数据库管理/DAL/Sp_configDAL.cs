@@ -69,7 +69,7 @@ namespace 数据库管理.DAL
         {
             MySqlConnection mycon = new MySqlConnection();
             mycon.ConnectionString = url;
-            string sql2 = string.Format("INSERT into sp_config(Id,TimeType,TimeSep,EMail,Mobile,Code,Name,Enable,JobClassName)values('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", new object[]
+            string sql2 = string.Format("INSERT into sp_config(TimeType,TimeSep,EMail,Mobile,Code,Name,Enable,JobClassName)values('{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}')", new object[]
                         {
                             ud.Id,ud.TimeType,ud.TimeSep,ud.EMail,ud.Mobile,ud.Code,ud.Name,ud.Enable,ud.JobClassName
                         });

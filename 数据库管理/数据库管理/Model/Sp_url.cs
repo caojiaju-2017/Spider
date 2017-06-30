@@ -63,5 +63,11 @@ namespace 数据库管理.Model
         /// 分类
         /// </summary>
         public string Classfic { get; set; }
+
+
+        public override string ToString()
+        {
+            return Alias;
+        }
     }
 }
