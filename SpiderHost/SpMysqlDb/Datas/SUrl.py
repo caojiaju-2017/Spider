@@ -90,7 +90,9 @@ class SUrl(object):
 
     def buildUrlList(self):
         rtnUrl = []
-        for i in range(self.StartIndex, self.StopIndex,self.Step):
-            rtnUrl.append(self.BaseUrl+self.ShortUrl%i)
-
+        try:
+            for i in range(self.StartIndex, self.StopIndex,self.Step):
+                rtnUrl.append(self.BaseUrl+self.ShortUrl%i)
+        except Exception,ex:
+            pass
         return rtnUrl

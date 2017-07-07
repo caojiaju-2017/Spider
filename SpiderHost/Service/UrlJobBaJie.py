@@ -6,18 +6,19 @@ from bs4 import  BeautifulSoup
 
 from SpMysqlDb.Datas.SUrlAttribute import  *
 from MongoDb.DbOperator import *
+from Notice.BaseEmail import *
 
 from SpMysqlDb.Datas.NationDefine import *
 
 dataCollection={}
-IDLE_WAIT = 30
-class UrlJobExhibition(object):
+IDLE_WAIT = 60*10
+class UrlJobBaJie(object):
     StopFlag = False
     def __init__(self):
         return
 
     def doWork(self,config):
-        while not UrlJobExhibition.StopFlag :
+        while not UrlJobBaJie.StopFlag :
             # # 循环时间段， 检查是否具有当前需要处理的任务
             # hasValidTime = False
             # for oneTimeSep in config.TimeSep:
@@ -40,11 +41,18 @@ class UrlJobExhibition(object):
                     self.waitNextLoop(3)
                     continue
 
-                self.startSpiderData(oneUrl)
-                self.waitNextLoop(3)
+                successCount,urls = self.startSpiderData(oneUrl)
+
+                if successCount > 0:
+                    BaseEmail.sendMail(config,urls,oneUrl.Alias)
+
+                self.waitNextLoop(1)
+
+
                 continue
 
             # 等待下一次循环
+            print "准备循环刷新"
             self.waitNextLoop(IDLE_WAIT)
         return
 
@@ -55,6 +63,8 @@ class UrlJobExhibition(object):
         if not oneUrl:
             return
 
+        successCount = 0
+        emailUrls = []
         urlList = []
         if oneUrl.LoopType == 1:
             url = oneUrl.BaseUrl + oneUrl.ShortUrl
@@ -83,8 +93,8 @@ class UrlJobExhibition(object):
                 time.sleep(1)
 
             # 当前连接怕取完毕
-            self.writeToDb(oneUrl)
-        pass
+            successCount,emailUrls = self.writeToDb(oneUrl)
+        return  successCount,emailUrls
 
     def spiderCombineAttr(self,htmlTag, oneUrl):
         if not oneUrl:
@@ -119,6 +129,8 @@ class UrlJobExhibition(object):
 
     def writeToDb(self,oneUrl):
         rowIndex = 0
+        result = 0
+        rtnUrls = []
         while True:
             data = {}
             nullColumn = 0
@@ -132,7 +144,11 @@ class UrlJobExhibition(object):
                     data[oneAttr.AttrName] = ""
                     nullColumn = nullColumn + 1
                 else:
-                    data[oneAttr.AttrName] = SUrlAttribute.getValue(oneUrl,oneAttr,oneAttr.datas[rowIndex])
+                    valueTemp = SUrlAttribute.getValue(oneUrl,oneAttr,oneAttr.datas[rowIndex])
+                    valueTemp = valueTemp.replace('<hl>','')
+                    valueTemp = valueTemp.replace('</hl>', '')
+                    valueTemp = valueTemp.strip()
+                    data[oneAttr.AttrName] = valueTemp
 
             # 如果属性遍历完毕
             if nullColumn == len(oneUrl.Attrs):
@@ -140,8 +156,8 @@ class UrlJobExhibition(object):
 
             # 提取记录唯一性编码
             data["Unique"] = SUrlAttribute.getUniqueKey(data)
-            data["Nation"] = NationDefine.getNation(data["Name"])
-            data["Classfic"] = oneUrl.Classfic
+            # data["Nation"] = NationDefine.getNation(data["Name"])
+            # data["Classfic"] = "人脸识别"
             rowIndex = rowIndex+ 1
 
             # 处理关联属性============================================
@@ -160,11 +176,13 @@ class UrlJobExhibition(object):
                 # time.sleep(1)
             # 处理关联属性============================================
 
-            result = DbOperator().insertData(oneUrl.Name,oneUrl.Sheet,data)
+            if DbOperator().insertData(oneUrl.Name,oneUrl.Sheet,data):
+                result = result + 1
+                rtnUrls.append("%10s %s" % (data['Price'],data['Url']))
 
             # if result:
             #     self.plusCount(oneUrl.Alias)
-        return
+        return result,rtnUrls
 
     def plusCount(self,keyName):
         global dataCollection

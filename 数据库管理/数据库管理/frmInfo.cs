@@ -89,7 +89,7 @@ namespace 数据库管理
 
         private void btnAddUrl_Click(object sender, EventArgs e)
         {
-            if (txtStartIndex.Text.Trim() == "" || txtStopIndex.Text.Trim() == "" || txtStep.Text.Trim() == "" || txtBaseUrl.Text.Trim() == "" || txtShortUrl.Text.Trim() == "" || txtName.Text.Trim() == "" || txtAlias.Text.Trim() == "" || txtSheet.Text.Trim() == "" || txtClassfic.Text.Trim() == "")
+            if (txtStartIndex.Text.Trim() == "" || txtStopIndex.Text.Trim() == "" || txtStep.Text.Trim() == "" || txtBaseUrl.Text.Trim() == "" || txtName.Text.Trim() == "" || txtAlias.Text.Trim() == "" || txtSheet.Text.Trim() == "" || txtClassfic.Text.Trim() == "")
             {
                 MessageBox.Show("索引步长等信息为必填项！");
                 return;
