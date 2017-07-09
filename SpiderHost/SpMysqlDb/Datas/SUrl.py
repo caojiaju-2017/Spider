@@ -92,7 +92,8 @@ class SUrl(object):
         rtnUrl = []
         try:
             for i in range(self.StartIndex, self.StopIndex,self.Step):
-                rtnUrl.append(self.BaseUrl+self.ShortUrl%i)
+                absUrl = self.BaseUrl+self.ShortUrl
+                rtnUrl.append(absUrl%i)
         except Exception,ex:
             pass
         return rtnUrl

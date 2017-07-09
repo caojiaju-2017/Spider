@@ -15,6 +15,7 @@ namespace 数据库管理.DAL
           ConfigurationManager.ConnectionStrings["connstr"].ConnectionString;
         public Sp_config[] GetAllData()
         {
+            
             MySql.Data.MySqlClient.MySqlConnection mycon = new MySqlConnection();
             mycon.ConnectionString = url;
             string sql2 = "select * from sp_config ";
@@ -86,7 +87,7 @@ namespace 数据库管理.DAL
         {
             MySqlConnection mycon = new MySqlConnection();
             mycon.ConnectionString = url;
-            string sql2 = string.Format("update sp_config set TimeType='" + ud.TimeType + "',TimeSep='" + ud.TimeSep + "',EMail='" + ud.EMail + "',Mobile='" + ud.Mobile + "',Code='" + ud.Code + "',Name='" + ud.Name + "',Enable='" + ud.Enable + "',JobClassName='" + ud.JobClassName +"' where Id =" + ud.Id + "");
+            string sql2 = string.Format("update sp_config set TimeType='" + ud.TimeType + "',TimeSep='" + ud.TimeSep + "',EMail='" + ud.EMail + "',Mobile='" + ud.Mobile + "',Code='" + ud.Code + "',Name='" + ud.Name + "',Enable='" + ud.Enable + "',JobClassName='" + ud.JobClassName + "' where Code ='" + ud.Code + "'");
             MySqlCommand comm = new MySqlCommand(sql2, mycon);
             mycon.Open();
             int result = comm.ExecuteNonQuery();

@@ -75,17 +75,33 @@
             this.cBoxIsUrl = new System.Windows.Forms.ComboBox();
             this.btnAddUrl = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.dgvShowUrl = new System.Windows.Forms.DataGridView();
+            this.编号Url = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.索引开始 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.索引结束 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.步长 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.基础URL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.动态变化URL = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.循环模式 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.网站名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.网站别名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Sheet名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.归属配置Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.记录的唯一索引 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.是否生效 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.分类 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cMstripUrl = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnCopyUrl = new System.Windows.Forms.Button();
             this.txtAttachAttr = new System.Windows.Forms.TextBox();
             this.btnAddUrl_Attr = new System.Windows.Forms.Button();
             this.txtUrlCode = new System.Windows.Forms.TextBox();
             this.label18 = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.dgvShowUrl_Attr = new System.Windows.Forms.DataGridView();
-            this.cMstripUrl_Attr = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.删除 = new System.Windows.Forms.ToolStripMenuItem();
             this.编号Url_Attr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.归属URL的代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.HTML标签 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -98,32 +114,18 @@
             this.属性代码 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.属性对应值是否是链接 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.IdUrl_Attr = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dgvShowUrl = new System.Windows.Forms.DataGridView();
-            this.分类 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.是否生效 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.记录的唯一索引 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.归属配置Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Sheet名称 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.网站别名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.网站名 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.循环模式 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.动态变化URL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.基础URL = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.步长 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.索引结束 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.索引开始 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.编号Url = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnCopyUrl = new System.Windows.Forms.Button();
+            this.cMstripUrl_Attr = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.删除 = new System.Windows.Forms.ToolStripMenuItem();
+            this.克隆ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.克隆含属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvShowUrl)).BeginInit();
             this.cMstripUrl.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowUrl_Attr)).BeginInit();
             this.cMstripUrl_Attr.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvShowUrl)).BeginInit();
-            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // txtStartIndex
@@ -188,17 +190,17 @@
             // 
             // txtBaseUrl
             // 
-            this.txtBaseUrl.Location = new System.Drawing.Point(368, 18);
+            this.txtBaseUrl.Location = new System.Drawing.Point(332, 18);
             this.txtBaseUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txtBaseUrl.Name = "txtBaseUrl";
-            this.txtBaseUrl.Size = new System.Drawing.Size(137, 21);
+            this.txtBaseUrl.Size = new System.Drawing.Size(247, 21);
             this.txtBaseUrl.TabIndex = 20;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("宋体", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label3.Location = new System.Drawing.Point(280, 24);
+            this.label3.Location = new System.Drawing.Point(252, 24);
             this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(76, 15);
@@ -256,17 +258,17 @@
             // 
             // txtShortUrl
             // 
-            this.txtShortUrl.Location = new System.Drawing.Point(368, 55);
+            this.txtShortUrl.Location = new System.Drawing.Point(332, 55);
             this.txtShortUrl.Margin = new System.Windows.Forms.Padding(2);
             this.txtShortUrl.Name = "txtShortUrl";
-            this.txtShortUrl.Size = new System.Drawing.Size(137, 21);
+            this.txtShortUrl.Size = new System.Drawing.Size(173, 21);
             this.txtShortUrl.TabIndex = 22;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("宋体", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label8.Location = new System.Drawing.Point(280, 58);
+            this.label8.Location = new System.Drawing.Point(252, 58);
             this.label8.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(76, 15);
@@ -347,10 +349,10 @@
             // 
             // txtClassfic
             // 
-            this.txtClassfic.Location = new System.Drawing.Point(368, 90);
+            this.txtClassfic.Location = new System.Drawing.Point(332, 90);
             this.txtClassfic.Margin = new System.Windows.Forms.Padding(2);
             this.txtClassfic.Name = "txtClassfic";
-            this.txtClassfic.Size = new System.Drawing.Size(137, 21);
+            this.txtClassfic.Size = new System.Drawing.Size(173, 21);
             this.txtClassfic.TabIndex = 39;
             this.txtClassfic.Text = "家电";
             // 
@@ -358,7 +360,7 @@
             // 
             this.label14.AutoSize = true;
             this.label14.Font = new System.Drawing.Font("宋体", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label14.Location = new System.Drawing.Point(304, 93);
+            this.label14.Location = new System.Drawing.Point(276, 93);
             this.label14.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(52, 15);
@@ -635,19 +637,164 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Url";
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.dgvShowUrl);
+            this.groupBox2.Location = new System.Drawing.Point(7, 115);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
+            this.groupBox2.Size = new System.Drawing.Size(1417, 239);
+            this.groupBox2.TabIndex = 73;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "URL列表";
+            // 
+            // dgvShowUrl
+            // 
+            this.dgvShowUrl.AllowUserToAddRows = false;
+            this.dgvShowUrl.AllowUserToResizeRows = false;
+            this.dgvShowUrl.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dgvShowUrl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvShowUrl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.编号Url,
+            this.Id,
+            this.索引开始,
+            this.索引结束,
+            this.步长,
+            this.基础URL,
+            this.动态变化URL,
+            this.循环模式,
+            this.网站名,
+            this.网站别名,
+            this.Sheet名称,
+            this.归属配置Code,
+            this.记录的唯一索引,
+            this.是否生效,
+            this.分类});
+            this.dgvShowUrl.ContextMenuStrip = this.cMstripUrl;
+            this.dgvShowUrl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvShowUrl.Location = new System.Drawing.Point(2, 16);
+            this.dgvShowUrl.Margin = new System.Windows.Forms.Padding(2);
+            this.dgvShowUrl.MultiSelect = false;
+            this.dgvShowUrl.Name = "dgvShowUrl";
+            this.dgvShowUrl.ReadOnly = true;
+            this.dgvShowUrl.RowHeadersVisible = false;
+            this.dgvShowUrl.RowTemplate.Height = 27;
+            this.dgvShowUrl.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvShowUrl.Size = new System.Drawing.Size(1413, 221);
+            this.dgvShowUrl.TabIndex = 1;
+            this.dgvShowUrl.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowUrl_CellClick);
+            this.dgvShowUrl.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowUrl_CellDoubleClick);
+            this.dgvShowUrl.SelectionChanged += new System.EventHandler(this.dgvShowUrl_SelectionChanged);
+            // 
+            // 编号Url
+            // 
+            this.编号Url.HeaderText = "编号";
+            this.编号Url.Name = "编号Url";
+            this.编号Url.ReadOnly = true;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            this.Id.Visible = false;
+            // 
+            // 索引开始
+            // 
+            this.索引开始.HeaderText = "索引开始";
+            this.索引开始.Name = "索引开始";
+            this.索引开始.ReadOnly = true;
+            // 
+            // 索引结束
+            // 
+            this.索引结束.HeaderText = "索引结束";
+            this.索引结束.Name = "索引结束";
+            this.索引结束.ReadOnly = true;
+            // 
+            // 步长
+            // 
+            this.步长.HeaderText = "步长";
+            this.步长.Name = "步长";
+            this.步长.ReadOnly = true;
+            // 
+            // 基础URL
+            // 
+            this.基础URL.HeaderText = "基础URL";
+            this.基础URL.Name = "基础URL";
+            this.基础URL.ReadOnly = true;
+            // 
+            // 动态变化URL
+            // 
+            this.动态变化URL.HeaderText = "变化URL";
+            this.动态变化URL.Name = "动态变化URL";
+            this.动态变化URL.ReadOnly = true;
+            // 
+            // 循环模式
+            // 
+            this.循环模式.HeaderText = "循环模式";
+            this.循环模式.Name = "循环模式";
+            this.循环模式.ReadOnly = true;
+            // 
+            // 网站名
+            // 
+            this.网站名.HeaderText = "网站名";
+            this.网站名.Name = "网站名";
+            this.网站名.ReadOnly = true;
+            // 
+            // 网站别名
+            // 
+            this.网站别名.HeaderText = "网站别名";
+            this.网站别名.Name = "网站别名";
+            this.网站别名.ReadOnly = true;
+            // 
+            // Sheet名称
+            // 
+            this.Sheet名称.HeaderText = "Sheet名称";
+            this.Sheet名称.Name = "Sheet名称";
+            this.Sheet名称.ReadOnly = true;
+            // 
+            // 归属配置Code
+            // 
+            this.归属配置Code.HeaderText = "归属配置";
+            this.归属配置Code.Name = "归属配置Code";
+            this.归属配置Code.ReadOnly = true;
+            // 
+            // 记录的唯一索引
+            // 
+            this.记录的唯一索引.HeaderText = "唯一索引";
+            this.记录的唯一索引.Name = "记录的唯一索引";
+            this.记录的唯一索引.ReadOnly = true;
+            // 
+            // 是否生效
+            // 
+            this.是否生效.HeaderText = "是否生效";
+            this.是否生效.Name = "是否生效";
+            this.是否生效.ReadOnly = true;
+            // 
+            // 分类
+            // 
+            this.分类.HeaderText = "数据分类";
+            this.分类.Name = "分类";
+            this.分类.ReadOnly = true;
+            // 
             // cMstripUrl
             // 
             this.cMstripUrl.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.cMstripUrl.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.cMstripUrl.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.删除ToolStripMenuItem});
+            this.删除ToolStripMenuItem,
+            this.克隆ToolStripMenuItem,
+            this.克隆含属性ToolStripMenuItem});
             this.cMstripUrl.Name = "cMstrip";
-            this.cMstripUrl.Size = new System.Drawing.Size(109, 28);
+            this.cMstripUrl.Size = new System.Drawing.Size(175, 76);
             // 
             // 删除ToolStripMenuItem
             // 
             this.删除ToolStripMenuItem.Name = "删除ToolStripMenuItem";
-            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(108, 24);
+            this.删除ToolStripMenuItem.Size = new System.Drawing.Size(174, 24);
             this.删除ToolStripMenuItem.Text = "删除";
             this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
@@ -687,6 +834,19 @@
             this.groupBox3.TabIndex = 74;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Url属性";
+            // 
+            // btnCopyUrl
+            // 
+            this.btnCopyUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnCopyUrl.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnCopyUrl.Location = new System.Drawing.Point(1196, 242);
+            this.btnCopyUrl.Margin = new System.Windows.Forms.Padding(2);
+            this.btnCopyUrl.Name = "btnCopyUrl";
+            this.btnCopyUrl.Size = new System.Drawing.Size(46, 101);
+            this.btnCopyUrl.TabIndex = 77;
+            this.btnCopyUrl.Text = "从URL复制";
+            this.btnCopyUrl.UseVisualStyleBackColor = true;
+            this.btnCopyUrl.Click += new System.EventHandler(this.btnCopyUrl_Click);
             // 
             // txtAttachAttr
             // 
@@ -782,22 +942,6 @@
             this.dgvShowUrl_Attr.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowUrl_Attr_CellClick);
             this.dgvShowUrl_Attr.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowUrl_Attr_CellDoubleClick);
             // 
-            // cMstripUrl_Attr
-            // 
-            this.cMstripUrl_Attr.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cMstripUrl_Attr.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.cMstripUrl_Attr.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.删除});
-            this.cMstripUrl_Attr.Name = "cMstrip";
-            this.cMstripUrl_Attr.Size = new System.Drawing.Size(109, 28);
-            // 
-            // 删除
-            // 
-            this.删除.Name = "删除";
-            this.删除.Size = new System.Drawing.Size(108, 24);
-            this.删除.Text = "删除";
-            this.删除.Click += new System.EventHandler(this.删除_Click);
-            // 
             // 编号Url_Attr
             // 
             this.编号Url_Attr.HeaderText = "编号";
@@ -871,161 +1015,35 @@
             this.IdUrl_Attr.ReadOnly = true;
             this.IdUrl_Attr.Visible = false;
             // 
-            // dgvShowUrl
+            // cMstripUrl_Attr
             // 
-            this.dgvShowUrl.AllowUserToAddRows = false;
-            this.dgvShowUrl.AllowUserToResizeRows = false;
-            this.dgvShowUrl.BackgroundColor = System.Drawing.SystemColors.Control;
-            this.dgvShowUrl.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvShowUrl.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.编号Url,
-            this.Id,
-            this.索引开始,
-            this.索引结束,
-            this.步长,
-            this.基础URL,
-            this.动态变化URL,
-            this.循环模式,
-            this.网站名,
-            this.网站别名,
-            this.Sheet名称,
-            this.归属配置Code,
-            this.记录的唯一索引,
-            this.是否生效,
-            this.分类});
-            this.dgvShowUrl.ContextMenuStrip = this.cMstripUrl;
-            this.dgvShowUrl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvShowUrl.Location = new System.Drawing.Point(2, 16);
-            this.dgvShowUrl.Margin = new System.Windows.Forms.Padding(2);
-            this.dgvShowUrl.MultiSelect = false;
-            this.dgvShowUrl.Name = "dgvShowUrl";
-            this.dgvShowUrl.ReadOnly = true;
-            this.dgvShowUrl.RowHeadersVisible = false;
-            this.dgvShowUrl.RowTemplate.Height = 27;
-            this.dgvShowUrl.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvShowUrl.Size = new System.Drawing.Size(1413, 221);
-            this.dgvShowUrl.TabIndex = 1;
-            this.dgvShowUrl.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowUrl_CellClick);
-            this.dgvShowUrl.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvShowUrl_CellDoubleClick);
-            this.dgvShowUrl.SelectionChanged += new System.EventHandler(this.dgvShowUrl_SelectionChanged);
+            this.cMstripUrl_Attr.Font = new System.Drawing.Font("Microsoft YaHei UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cMstripUrl_Attr.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.cMstripUrl_Attr.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.删除});
+            this.cMstripUrl_Attr.Name = "cMstrip";
+            this.cMstripUrl_Attr.Size = new System.Drawing.Size(109, 28);
             // 
-            // 分类
+            // 删除
             // 
-            this.分类.HeaderText = "数据分类";
-            this.分类.Name = "分类";
-            this.分类.ReadOnly = true;
+            this.删除.Name = "删除";
+            this.删除.Size = new System.Drawing.Size(108, 24);
+            this.删除.Text = "删除";
+            this.删除.Click += new System.EventHandler(this.删除_Click);
             // 
-            // 是否生效
+            // 克隆ToolStripMenuItem
             // 
-            this.是否生效.HeaderText = "是否生效";
-            this.是否生效.Name = "是否生效";
-            this.是否生效.ReadOnly = true;
+            this.克隆ToolStripMenuItem.Name = "克隆ToolStripMenuItem";
+            this.克隆ToolStripMenuItem.Size = new System.Drawing.Size(174, 24);
+            this.克隆ToolStripMenuItem.Text = "克隆-不含属性";
+            this.克隆ToolStripMenuItem.Click += new System.EventHandler(this.克隆ToolStripMenuItem_Click);
             // 
-            // 记录的唯一索引
+            // 克隆含属性ToolStripMenuItem
             // 
-            this.记录的唯一索引.HeaderText = "唯一索引";
-            this.记录的唯一索引.Name = "记录的唯一索引";
-            this.记录的唯一索引.ReadOnly = true;
-            // 
-            // 归属配置Code
-            // 
-            this.归属配置Code.HeaderText = "归属配置";
-            this.归属配置Code.Name = "归属配置Code";
-            this.归属配置Code.ReadOnly = true;
-            // 
-            // Sheet名称
-            // 
-            this.Sheet名称.HeaderText = "Sheet名称";
-            this.Sheet名称.Name = "Sheet名称";
-            this.Sheet名称.ReadOnly = true;
-            // 
-            // 网站别名
-            // 
-            this.网站别名.HeaderText = "网站别名";
-            this.网站别名.Name = "网站别名";
-            this.网站别名.ReadOnly = true;
-            // 
-            // 网站名
-            // 
-            this.网站名.HeaderText = "网站名";
-            this.网站名.Name = "网站名";
-            this.网站名.ReadOnly = true;
-            // 
-            // 循环模式
-            // 
-            this.循环模式.HeaderText = "循环模式";
-            this.循环模式.Name = "循环模式";
-            this.循环模式.ReadOnly = true;
-            // 
-            // 动态变化URL
-            // 
-            this.动态变化URL.HeaderText = "变化URL";
-            this.动态变化URL.Name = "动态变化URL";
-            this.动态变化URL.ReadOnly = true;
-            // 
-            // 基础URL
-            // 
-            this.基础URL.HeaderText = "基础URL";
-            this.基础URL.Name = "基础URL";
-            this.基础URL.ReadOnly = true;
-            // 
-            // 步长
-            // 
-            this.步长.HeaderText = "步长";
-            this.步长.Name = "步长";
-            this.步长.ReadOnly = true;
-            // 
-            // 索引结束
-            // 
-            this.索引结束.HeaderText = "索引结束";
-            this.索引结束.Name = "索引结束";
-            this.索引结束.ReadOnly = true;
-            // 
-            // 索引开始
-            // 
-            this.索引开始.HeaderText = "索引开始";
-            this.索引开始.Name = "索引开始";
-            this.索引开始.ReadOnly = true;
-            // 
-            // Id
-            // 
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
-            this.Id.Visible = false;
-            // 
-            // 编号Url
-            // 
-            this.编号Url.HeaderText = "编号";
-            this.编号Url.Name = "编号Url";
-            this.编号Url.ReadOnly = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.dgvShowUrl);
-            this.groupBox2.Location = new System.Drawing.Point(7, 115);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(1417, 239);
-            this.groupBox2.TabIndex = 73;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "URL列表";
-            // 
-            // btnCopyUrl
-            // 
-            this.btnCopyUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnCopyUrl.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnCopyUrl.Location = new System.Drawing.Point(1196, 242);
-            this.btnCopyUrl.Margin = new System.Windows.Forms.Padding(2);
-            this.btnCopyUrl.Name = "btnCopyUrl";
-            this.btnCopyUrl.Size = new System.Drawing.Size(46, 101);
-            this.btnCopyUrl.TabIndex = 77;
-            this.btnCopyUrl.Text = "从URL复制";
-            this.btnCopyUrl.UseVisualStyleBackColor = true;
-            this.btnCopyUrl.Click += new System.EventHandler(this.btnCopyUrl_Click);
+            this.克隆含属性ToolStripMenuItem.Name = "克隆含属性ToolStripMenuItem";
+            this.克隆含属性ToolStripMenuItem.Size = new System.Drawing.Size(174, 24);
+            this.克隆含属性ToolStripMenuItem.Text = "克隆-含属性";
+            this.克隆含属性ToolStripMenuItem.Click += new System.EventHandler(this.克隆含属性ToolStripMenuItem_Click);
             // 
             // frmInfo
             // 
@@ -1044,14 +1062,14 @@
             this.Load += new System.EventHandler(this.frmInfo_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgvShowUrl)).EndInit();
             this.cMstripUrl.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowUrl_Attr)).EndInit();
             this.cMstripUrl_Attr.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvShowUrl)).EndInit();
-            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1144,5 +1162,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn 属性对应值是否是链接;
         private System.Windows.Forms.DataGridViewTextBoxColumn IdUrl_Attr;
         private System.Windows.Forms.Button btnCopyUrl;
+        private System.Windows.Forms.ToolStripMenuItem 克隆ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 克隆含属性ToolStripMenuItem;
     }
 }

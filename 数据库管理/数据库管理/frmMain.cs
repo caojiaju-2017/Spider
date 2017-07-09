@@ -149,21 +149,30 @@ namespace 数据库管理
             {
                 if (btnAdd.Text == "新  增")
                 {
+                    this.Cursor = Cursors.WaitCursor;
                     new Sp_configDAL().Insert(sp);
+                    this.Cursor = Cursors.Arrow;
                     MessageBox.Show("添加成功");
                     txtCode.Text = "SC_" + GetTimeStamp() + new Random().Next(10000, 99999);
+
+                    addOneRow(sp);
+                    GlobalShare.SystemConfigs.Add(sp);
                 }
                 else
                 {
-                    sp.Id = Convert.ToInt32(dgvShow.SelectedRows[0].Cells["Id"].Value);
+                    //sp.Id = Convert.ToInt32(dgvShow.SelectedRows[0].Cells["Id"].Value);
                     new Sp_configDAL().Update(sp);
                     MessageBox.Show("修改成功");
                     txtCode.Text = "SC_" + GetTimeStamp() + new Random().Next(10000, 99999);
                     btnAdd.Text = "新  增";
+
+                    updateRow(dgvShow.SelectedRows[0], sp);
+                    updateGlobalBuffer(dgvShow.SelectedRows[0].Index, sp);
+                    //ShowDGV();
                 }
                 txtEMail.Text= ""; txtMobile.Text= ""; txtName.Text= ""; txtJobClassName.Text= "";
                 txtCode.Text = "SC_" + GetTimeStamp() + new Random().Next(10000, 99999);
-                ShowDGV();
+                //ShowDGV();
             }
             catch (Exception ex)
             {
@@ -178,33 +187,68 @@ namespace 数据库管理
             }
         }
 
+        private void updateGlobalBuffer(int p, Sp_config sp)
+        {
+            GlobalShare.SystemConfigs.RemoveAt(p);
+            GlobalShare.SystemConfigs.Insert(p, sp);
+        }
+
+        private void updateRow(DataGridViewRow dataGridViewRow, Sp_config config)
+        {
+            //dataGridViewRow.Cells["编号"].Value = d;
+            dataGridViewRow.Cells["时间方案"].Value = config.TimeType;
+            dataGridViewRow.Cells["时间段"].Value = config.TimeSep;
+            dataGridViewRow.Cells["邮箱"].Value = config.EMail;
+            dataGridViewRow.Cells["手机号"].Value = config.Mobile;
+            dataGridViewRow.Cells["唯一编码"].Value = config.Code;
+            dataGridViewRow.Cells["配置名称"].Value = config.Name;
+            if (config.Enable == 1)
+            {
+                dataGridViewRow.Cells["是否生效"].Value = "是";
+            }
+            else
+            {
+                dataGridViewRow.Cells["是否生效"].Value = "否";
+            }
+            dataGridViewRow.Cells["工作类名字"].Value = config.JobClassName;
+            dataGridViewRow.Cells["Id"].Value = config.Id;
+        }
+
         private void ShowDGV()
         {
             dgvShow.Rows.Clear();
             Sp_config[] sp = new Sp_configDAL().GetAllData();
-            for (int i = 0; i < sp.Length; i++)
+            GlobalShare.SystemConfigs = sp.ToList<Sp_config>();
+            for (int i = 0; i < GlobalShare.SystemConfigs.Count; i++)
             {
-                int d = dgvShow.Rows.Add();
-                dgvShow.Rows[d].Cells["编号"].Value = d;
-                dgvShow.Rows[d].Cells["时间方案"].Value = sp[i].TimeType;
-                dgvShow.Rows[d].Cells["时间段"].Value = sp[i].TimeSep;
-                dgvShow.Rows[d].Cells["邮箱"].Value = sp[i].EMail;
-                dgvShow.Rows[d].Cells["手机号"].Value = sp[i].Mobile;
-                dgvShow.Rows[d].Cells["唯一编码"].Value = sp[i].Code;
-                dgvShow.Rows[d].Cells["配置名称"].Value = sp[i].Name;
-                if (sp[i].Enable == 1)
-                {
-                    dgvShow.Rows[d].Cells["是否生效"].Value = "是";
-                }
-                else
-                {
-                    dgvShow.Rows[d].Cells["是否生效"].Value = "否";
-                }
-                dgvShow.Rows[d].Cells["工作类名字"].Value = sp[i].JobClassName;
-                dgvShow.Rows[d].Cells["Id"].Value = sp[i].Id;
+                Sp_config config = GlobalShare.SystemConfigs[i];
+
+                addOneRow(config);
             }
         }
 
+
+        private void addOneRow(Sp_config config)
+        {
+            int d = dgvShow.Rows.Add();
+            dgvShow.Rows[d].Cells["编号"].Value = d;
+            dgvShow.Rows[d].Cells["时间方案"].Value = config.TimeType;
+            dgvShow.Rows[d].Cells["时间段"].Value = config.TimeSep;
+            dgvShow.Rows[d].Cells["邮箱"].Value = config.EMail;
+            dgvShow.Rows[d].Cells["手机号"].Value = config.Mobile;
+            dgvShow.Rows[d].Cells["唯一编码"].Value = config.Code;
+            dgvShow.Rows[d].Cells["配置名称"].Value = config.Name;
+            if (config.Enable == 1)
+            {
+                dgvShow.Rows[d].Cells["是否生效"].Value = "是";
+            }
+            else
+            {
+                dgvShow.Rows[d].Cells["是否生效"].Value = "否";
+            }
+            dgvShow.Rows[d].Cells["工作类名字"].Value = config.JobClassName;
+            dgvShow.Rows[d].Cells["Id"].Value = config.Id;
+        }
         private void 删除ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (dgvShow.SelectedRows.Count <= 0)
@@ -218,15 +262,19 @@ namespace 数据库管理
                 try
                 {
                     new Sp_configDAL().Delete(dgvShow.SelectedRows[0].Cells["唯一编码"].Value.ToString());
-                    Sp_url[] spp = new Sp_urlDAL().GetAllData(dgvShow.SelectedRows[0].Cells["唯一编码"].Value.ToString()) ;
-                    for (int i = 0; i < spp.Length; i++)
-                    {
-                        new Sp_url_attrDAL().DeleteByUrlCode(spp[i].Code);
-                    }
-                    new Sp_urlDAL().DeleteByCode(dgvShow.SelectedRows[0].Cells["唯一编码"].Value.ToString());
+
+                    int index = dgvShow.SelectedRows[0].Index;
+                    dgvShow.Rows.RemoveAt(index);
+                    GlobalShare.SystemConfigs.RemoveAt(index);
+                    //Sp_url[] spp = new Sp_urlDAL().GetAllData(dgvShow.SelectedRows[0].Cells["唯一编码"].Value.ToString()) ;
+                    //for (int i = 0; i < spp.Length; i++)
+                    //{
+                    //    new Sp_url_attrDAL().DeleteByUrlCode(spp[i].Code);
+                    //}
+                    //new Sp_urlDAL().DeleteByCode(dgvShow.SelectedRows[0].Cells["唯一编码"].Value.ToString());
                     //MessageBox.Show("您选中的数据已删除！", "提示",
                                         //MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    ShowDGV();
+                    //ShowDGV();
                 }
                 catch (Exception ex)
                 {

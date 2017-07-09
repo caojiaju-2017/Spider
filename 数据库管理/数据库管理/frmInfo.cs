@@ -449,5 +449,47 @@ namespace 数据库管理
             }
            
         }
+
+        private void 克隆ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            txtStartIndex.Text = dgvShowUrl.SelectedRows[0].Cells["索引开始"].Value.ToString();
+            txtStopIndex.Text = dgvShowUrl.SelectedRows[0].Cells["索引结束"].Value.ToString();
+            txtStep.Text = dgvShowUrl.SelectedRows[0].Cells["步长"].Value.ToString();
+            txtBaseUrl.Text = dgvShowUrl.SelectedRows[0].Cells["基础URL"].Value.ToString();
+            txtShortUrl.Text = dgvShowUrl.SelectedRows[0].Cells["动态变化URL"].Value.ToString();
+            txtName.Text = dgvShowUrl.SelectedRows[0].Cells["网站名"].Value.ToString();
+            txtAlias.Text = dgvShowUrl.SelectedRows[0].Cells["网站别名"].Value.ToString();
+            txtSheet.Text = dgvShowUrl.SelectedRows[0].Cells["Sheet名称"].Value.ToString();
+            txtConfigId.Text = dgvShowUrl.SelectedRows[0].Cells["归属配置Code"].Value.ToString();
+            txtCode.Text = "SU_" + GetTimeStamp() + new Random().Next(10000, 99999);
+            txtClassfic.Text = dgvShowUrl.SelectedRows[0].Cells["分类"].Value.ToString();
+            cBoxEnable.Text = dgvShowUrl.SelectedRows[0].Cells["是否生效"].Value.ToString();
+            cBoxLoopType.Text = dgvShowUrl.SelectedRows[0].Cells["循环模式"].Value.ToString();
+            btnAddUrl.Text = "新  增";
+            ShowDGVUrl_Attr();
+            txtUrlCode.Text = txtCode.Text;
+            txtAttrCode.Text = "SUA_" + GetTimeStamp() + new Random().Next(10000, 99999);
+        }
+
+        private void 克隆含属性ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //txtStartIndex.Text = dgvShowUrl.SelectedRows[0].Cells["索引开始"].Value.ToString();
+            //txtStopIndex.Text = dgvShowUrl.SelectedRows[0].Cells["索引结束"].Value.ToString();
+            //txtStep.Text = dgvShowUrl.SelectedRows[0].Cells["步长"].Value.ToString();
+            //txtBaseUrl.Text = dgvShowUrl.SelectedRows[0].Cells["基础URL"].Value.ToString();
+            //txtShortUrl.Text = dgvShowUrl.SelectedRows[0].Cells["动态变化URL"].Value.ToString();
+            //txtName.Text = dgvShowUrl.SelectedRows[0].Cells["网站名"].Value.ToString();
+            //txtAlias.Text = dgvShowUrl.SelectedRows[0].Cells["网站别名"].Value.ToString();
+            //txtSheet.Text = dgvShowUrl.SelectedRows[0].Cells["Sheet名称"].Value.ToString();
+            //txtConfigId.Text = dgvShowUrl.SelectedRows[0].Cells["归属配置Code"].Value.ToString();
+            //txtCode.Text = "SU_" + GetTimeStamp() + new Random().Next(10000, 99999);
+            //txtClassfic.Text = dgvShowUrl.SelectedRows[0].Cells["分类"].Value.ToString();
+            //cBoxEnable.Text = dgvShowUrl.SelectedRows[0].Cells["是否生效"].Value.ToString();
+            //cBoxLoopType.Text = dgvShowUrl.SelectedRows[0].Cells["循环模式"].Value.ToString();
+            //btnAddUrl.Text = "新  增";
+            //ShowDGVUrl_Attr();
+            //txtUrlCode.Text = txtCode.Text;
+            //txtAttrCode.Text = "SUA_" + GetTimeStamp() + new Random().Next(10000, 99999);
+        }
     }
 }
