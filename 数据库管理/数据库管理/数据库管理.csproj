@@ -35,6 +35,8 @@
     <ApplicationIcon>浏览器图标下载8.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="IronPython, Version=2.7.0.40, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Scripting, Version=1.1.0.20, Culture=neutral, PublicKeyToken=7f709c5b713576e1, processorArchitecture=MSIL" />
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\自作成功项目\2017\时时彩\快乐星期五\bin\Debug\MySql.Data.dll</HintPath>
@@ -125,6 +127,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="attrTest.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="浏览器图标下载8.ico" />
   </ItemGroup>
   <ItemGroup />

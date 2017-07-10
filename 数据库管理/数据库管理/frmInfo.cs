@@ -1,4 +1,5 @@
-﻿using System;
+﻿using IronPython.Hosting;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Windows.Forms;
 using 数据库管理.DAL;
 using 数据库管理.Model;
+using Microsoft.Scripting.Hosting; //导入微软脚本解释库文件
 
 namespace 数据库管理
 {
@@ -490,6 +492,19 @@ namespace 数据库管理
             //ShowDGVUrl_Attr();
             //txtUrlCode.Text = txtCode.Text;
             //txtAttrCode.Text = "SUA_" + GetTimeStamp() + new Random().Next(10000, 99999);
+        }
+
+        private void btnTestAttribute_Click(object sender, EventArgs e)
+        {
+            string url = dgvShowUrl.SelectedRows[0].Cells["基础URL"].Value.ToString();
+            string htmlTag = txtHtmlTag.Text;
+
+            //ScriptRuntime pyRuntime = Python.CreateRuntime(); //创建一下运行环境
+            //dynamic obj = pyRuntime.UseFile("attrTest.py"); //调用一个Python文件
+
+            //string result = obj.add(url, htmlTag); //调用Python文件中的求和函数
+            //Console.Write("result:");
+            Console.WriteLine(String.Format("print testAttribute('{0}','{1}')", url, htmlTag));
         }
     }
 }

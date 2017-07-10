@@ -94,6 +94,8 @@
             this.分类 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cMstripUrl = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.克隆ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.克隆含属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btnCopyUrl = new System.Windows.Forms.Button();
             this.txtAttachAttr = new System.Windows.Forms.TextBox();
@@ -116,8 +118,7 @@
             this.IdUrl_Attr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cMstripUrl_Attr = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除 = new System.Windows.Forms.ToolStripMenuItem();
-            this.克隆ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.克隆含属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnTestAttribute = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowUrl)).BeginInit();
@@ -798,11 +799,26 @@
             this.删除ToolStripMenuItem.Text = "删除";
             this.删除ToolStripMenuItem.Click += new System.EventHandler(this.删除ToolStripMenuItem_Click);
             // 
+            // 克隆ToolStripMenuItem
+            // 
+            this.克隆ToolStripMenuItem.Name = "克隆ToolStripMenuItem";
+            this.克隆ToolStripMenuItem.Size = new System.Drawing.Size(174, 24);
+            this.克隆ToolStripMenuItem.Text = "克隆-不含属性";
+            this.克隆ToolStripMenuItem.Click += new System.EventHandler(this.克隆ToolStripMenuItem_Click);
+            // 
+            // 克隆含属性ToolStripMenuItem
+            // 
+            this.克隆含属性ToolStripMenuItem.Name = "克隆含属性ToolStripMenuItem";
+            this.克隆含属性ToolStripMenuItem.Size = new System.Drawing.Size(174, 24);
+            this.克隆含属性ToolStripMenuItem.Text = "克隆-含属性";
+            this.克隆含属性ToolStripMenuItem.Click += new System.EventHandler(this.克隆含属性ToolStripMenuItem_Click);
+            // 
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.btnTestAttribute);
             this.groupBox3.Controls.Add(this.btnCopyUrl);
             this.groupBox3.Controls.Add(this.txtAttachAttr);
             this.groupBox3.Controls.Add(this.btnAddUrl_Attr);
@@ -1031,19 +1047,18 @@
             this.删除.Text = "删除";
             this.删除.Click += new System.EventHandler(this.删除_Click);
             // 
-            // 克隆ToolStripMenuItem
+            // btnTestAttribute
             // 
-            this.克隆ToolStripMenuItem.Name = "克隆ToolStripMenuItem";
-            this.克隆ToolStripMenuItem.Size = new System.Drawing.Size(174, 24);
-            this.克隆ToolStripMenuItem.Text = "克隆-不含属性";
-            this.克隆ToolStripMenuItem.Click += new System.EventHandler(this.克隆ToolStripMenuItem_Click);
-            // 
-            // 克隆含属性ToolStripMenuItem
-            // 
-            this.克隆含属性ToolStripMenuItem.Name = "克隆含属性ToolStripMenuItem";
-            this.克隆含属性ToolStripMenuItem.Size = new System.Drawing.Size(174, 24);
-            this.克隆含属性ToolStripMenuItem.Text = "克隆-含属性";
-            this.克隆含属性ToolStripMenuItem.Click += new System.EventHandler(this.克隆含属性ToolStripMenuItem_Click);
+            this.btnTestAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnTestAttribute.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnTestAttribute.Location = new System.Drawing.Point(1260, 277);
+            this.btnTestAttribute.Margin = new System.Windows.Forms.Padding(2);
+            this.btnTestAttribute.Name = "btnTestAttribute";
+            this.btnTestAttribute.Size = new System.Drawing.Size(109, 34);
+            this.btnTestAttribute.TabIndex = 78;
+            this.btnTestAttribute.Text = "测试该属性";
+            this.btnTestAttribute.UseVisualStyleBackColor = true;
+            this.btnTestAttribute.Click += new System.EventHandler(this.btnTestAttribute_Click);
             // 
             // frmInfo
             // 
@@ -1164,5 +1179,6 @@
         private System.Windows.Forms.Button btnCopyUrl;
         private System.Windows.Forms.ToolStripMenuItem 克隆ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 克隆含属性ToolStripMenuItem;
+        private System.Windows.Forms.Button btnTestAttribute;
     }
 }
