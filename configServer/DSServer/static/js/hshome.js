@@ -9,8 +9,6 @@ var selectIndex = -1;
 window.onload=function()
 {
     $.setPosition();
-
-    $.init();
 };
 
 $(window).resize(function(){
@@ -26,25 +24,44 @@ $(document).ready(function(){
 
     // 窗体生成时注册事件＝＝＝＝＝＝＝＝同图片切换相关
     $("#findTrantionImage").click(function() {
-        // 清空其他选项
-        $.clearSelection();
+        // // 清空其他选项
+        // $.clearSelection();
+        //
+        // // $.sleep(100);
+        //
+        // // 设置当前为选定项
+        // $("#findTrantionImage").attr("src","/static/Srv/icon1-0.png");
 
-        // $.sleep(100);
 
-        // 设置当前为选定项
-        $("#findTrantionImage").attr("src","/static/Srv/icon1-0.png");
+        if($("#findTrantionRightImg").is(":hidden"))
+        {
+             $("#findTrantionRightImg").show();
+        }
+        else
+        {
+            $("#findTrantionRightImg").hide();
+        }
 
         selectIndex = 1001;
     })
 
     $("#queryProductPriceImage").click(function() {
-        // 清空其他选项
-        $.clearSelection();
+        // // 清空其他选项
+        // $.clearSelection();
+        //
+        // // $.sleep(100);
+        //
+        // // 设置当前为选定项
+        // $("#queryProductPriceImage").attr("src","/static/Srv/icon2-0.png");
 
-        // $.sleep(100);
-
-        // 设置当前为选定项
-        $("#queryProductPriceImage").attr("src","/static/Srv/icon2-0.png");
+        if($("#queryProductPriceRightImg").is(":hidden"))
+        {
+             $("#queryProductPriceRightImg").show();
+        }
+        else
+        {
+            $("#queryProductPriceRightImg").hide();
+        }
 
         selectIndex = 1002;
         // alert("cccc");
@@ -52,46 +69,62 @@ $(document).ready(function(){
 
     $("#serviceThreeImage").click(function() {
         // 清空其他选项
-        $.clearSelection();
+        // $.clearSelection();
         // $.sleep(3000);
         // 设置当前为选定项
-        $("#serviceThreeImage").attr("src","/static/Srv/icon3-0.png");
-        // alert("cccc2");
+        // $("#rightImg").attr("hidden","show");
 
+
+        if($("#serviceThreeRightImg").is(":hidden"))
+        {
+             $("#serviceThreeRightImg").show();
+        }
+        else
+        {
+            $("#serviceThreeRightImg").hide();
+        }
+
+
+        // if( =='visible')
+        //     $("rightImg").css().visibility='hidden';
+        // else
+        //     $("rightImg").css().visibility='visible';
+
+        // alert("b");
         selectIndex = 1003;
     })
 
     $("#serviceFourImage").click(function() {
         // 清空其他选项
-        $.clearSelection();
-        // $.sleep(3000);
-        // 设置当前为选定项
-        $("#serviceFourImage").attr("src","/static/Srv/icon4-0.png");
-
-        selectIndex = 1004;
-        // alert("cccc2");
+        // $.clearSelection();
+        // // $.sleep(3000);
+        // // 设置当前为选定项
+        // $("#serviceFourImage").attr("src","/static/Srv/icon4-0.png");
+        //
+        // selectIndex = 1004;
+        // // alert("cccc2");
     })
 
     $("#serviceFiveImage").click(function() {
         // 清空其他选项
-        $.clearSelection();
-        // $.sleep(3000);
-        // 设置当前为选定项
-        $("#serviceFiveImage").attr("src","/static/Srv/icon5-0.png");
-
-        selectIndex = 1005;
+        // $.clearSelection();
+        // // $.sleep(3000);
+        // // 设置当前为选定项
+        // $("#serviceFiveImage").attr("src","/static/Srv/icon5-0.png");
+        //
+        // selectIndex = 1005;
         // alert("cccc2");
     })
 
     $("#serviceSixImage").click(function() {
-        // 清空其他选项
-        $.clearSelection();
-        // $.sleep(3000);
-        // 设置当前为选定项
-        $("#serviceSixImage").attr("src","/static/Srv/icon6-0.png");
-
-        selectIndex = 1006;
-        // alert("cccc2");
+        // // 清空其他选项
+        // $.clearSelection();
+        // // $.sleep(3000);
+        // // 设置当前为选定项
+        // $("#serviceSixImage").attr("src","/static/Srv/icon6-0.png");
+        //
+        // selectIndex = 1006;
+        // // alert("cccc2");
     })
 
     // 搜索按钮
@@ -149,6 +182,21 @@ $(document).ready(function(){
         // 退出登陆
         $.deleteCookie();
     })
+
+    $("#ewmImage").mouseover(function (){
+            // alert("aaaaaa");
+            $("#ewmImageLarge").show();
+        }).mouseout(function (){
+            // $(".content").hide();
+
+        // $("#ewmImageLarge").offset().left = $("#ewmImage").offset().left;
+
+        $("#ewmImageLarge").css("left",$("#ewmImage").offset().left + 15);
+
+
+        // $("#ewmImageLarge").left = $("#ewmImage").left;
+        $("#ewmImageLarge").hide();
+        });
 });
 
     // 自定义函数

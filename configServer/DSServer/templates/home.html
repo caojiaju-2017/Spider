@@ -26,7 +26,11 @@
     {#顶部标题、登陆信息处#}
     <div class="top_title">
     {#    左侧图片#}
-        <label id="findCompany">商务合作：<a style="color: chocolate;font-size: 14px">17828061593</a> (8:00-20:00，7x12小时）</label>
+        <label id="findCompany">商务合作：<a style="color: chocolate;font-size: 16px">17828061593</a> (8:00-20:00，7x12小时）</label>
+        <img id="ewmImage" src="/static/Icon/ewmImg.png">
+
+        <img id="ewmImageLarge" src="/static/Icon/ewmImg.png" style="width: 160px;height: 160px;position: absolute;left: 10px;top: 50px" hidden>
+
 
     {#    右侧登陆或登陆后的显示状态#}
         <label id="loginLab">登陆</label>
@@ -36,12 +40,13 @@
 
     {#展示搜索图片#}
     <div class="large_images">
-        <img src="/static/Icon/searchIcon.png">
+        <img class="imgIcon" src="/static/Icon/searchIcon.png">
+        <img class="imgtext" src="/static/Icon/searchOnline.png">
     </div>
 
     <div class="searchDiv">
         <INPUT id="searchContext" type="text" value="请输入搜索内容" onfocus="javascript:if(this.value=='请输入搜索内容')this.value='';">
-        <button id="searchButton" onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'" onmouseout="this.style.backgroundColor='';this.style.color='#666666'">智能搜</button>
+        <button id="searchButton" onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'" onmouseout="this.style.backgroundColor='';this.style.color='#666666'">搜索</button>
     </div>
 
 
@@ -50,21 +55,24 @@
 
 {#        第一排#}
         <div id="findTration">
-            <img id="findTrantionImage" src="/static/Srv/icon1.png" title="点击可选择">
+            <img id="findTrantionImage" src="/static/Srv/zhanhui.png" title="点击可选择">
+            <img id="findTrantionRightImg" src="/static/Icon/ok.png" hidden style="position: absolute;width: 26px;height: 26px">
             <br />
-            <a>发现商机</a>
+            <a>国际展会</a>
         </div>
 
         <div id="queryProductPrice">
-            <img id="queryProductPriceImage" src="/static/Srv/icon2.png">
+            <img id="queryProductPriceImage" src="/static/Srv/zhaotoubiao.png">
+            <img id="queryProductPriceRightImg" src="/static/Icon/ok.png" hidden style="position: absolute;width: 26px;height: 26px">
             <br />
-            <a>产品询价</a>
+            <a>招投标数据</a>
         </div>
 
         <div id="serviceThree">
-            <img id="serviceThreeImage" src="/static/Srv/icon3.png">
+            <img id="serviceThreeImage" src="/static/Srv/phone.png">
+            <img id="serviceThreeRightImg" src="/static/Icon/ok.png" hidden style="position: absolute;width: 26px;height: 26px">
             <br />
-            <a>jquery:encryptInfo("海外参展")</a>
+            <a>二手手机</a>
         </div>
 
         <br />
@@ -72,21 +80,21 @@
 
 {#        第二排#}
         <div id="serviceFour">
-            <img id="serviceFourImage" src="/static/Srv/icon4.png">
+            <img id="serviceFourImage" src="/static/Srv/myorder.png">
             <br />
-            <a>数据服务1</a>
+            <a>我的订阅</a>
         </div>
 
         <div id="serviceFive">
-            <img id="serviceFiveImage" src="/static/Srv/icon5.png">
+            <img id="serviceFiveImage" src="/static/Srv/serviceintr.png">
             <br />
-            <a>数据服务2</a>
+            <a>服务介绍</a>
         </div>
 
         <div id="serviceSix">
-            <img id="serviceSixImage" src="/static/Srv/icon6.png">
+            <img id="serviceSixImage" src="/static/Srv/reportdef.png">
             <br />
-            <a>数据服务3</a>
+            <a>企业报表定制</a>
         </div>
     </div>
 
