@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'DisplayServer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'hssp',
+        'NAME': 'spiderconfig',
         'USER': 'root',
         'PASSWORD': 'caojj123',
         'HOST':'www.h-sen.com',

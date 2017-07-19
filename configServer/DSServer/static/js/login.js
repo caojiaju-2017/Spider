@@ -16,7 +16,7 @@ $(document).ready(function()
 $.extend({
     ajax_post: function ()
     {
-        $.post("excuteLogin", {email: $('#userName').val(), address: $('#userPassword').val()},
+        $.post("excuteLogin", {username: $('#userName').val(), password: $('#userPassword').val()},
             function (data)
             {
                 // alert(data)

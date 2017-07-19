@@ -120,17 +120,19 @@ from django.db import models
 #         db_table = 'django_session'
 #
 #
-# class SpAgency(models.Model):
-#     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
-#     account = models.CharField(db_column='Account', max_length=20)  # Field name made lowercase.
-#     password = models.CharField(db_column='Password', max_length=20)  # Field name made lowercase.
-#     alias = models.CharField(db_column='Alias', max_length=200, blank=True, null=True)  # Field name made lowercase.
-#     profile = models.CharField(db_column='ProFile', max_length=2000, blank=True, null=True)  # Field name made lowercase.
-#     mobile = models.CharField(db_column='Mobile', max_length=20, blank=True, null=True)  # Field name made lowercase.
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'sp_agency'
+class SpsUser(models.Model):
+    id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    account = models.CharField(db_column='Account', max_length=20)  # Field name made lowercase.
+    email = models.CharField(db_column='EMail', max_length=64)  # Field name made lowercase.
+    alias = models.CharField(db_column='Alias', max_length=12, blank=True, null=True)  # Field name made lowercase.
+    address = models.CharField(db_column='Address', max_length=128, blank=True, null=True)  # Field name made lowercase.
+    orgname = models.CharField(db_column='OrgName', max_length=128, blank=True, null=True)  # Field name made lowercase.
+    lantudite = models.FloatField(db_column='Lantudite', blank=True, null=True)
+    longdite = models.FloatField(db_column='Longdite', blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sps_user'
 #
 #
 # class SpAgencyCustom(models.Model):

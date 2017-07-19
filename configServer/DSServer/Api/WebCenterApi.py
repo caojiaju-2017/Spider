@@ -11,6 +11,9 @@ from DSServer.Service.PublicService import *
 from DSServer.Service.Service1BuildData import *
 from HsShareData import *
 
+
+from DSServer.models import *
+
 class WebCenterApi(object):
     @staticmethod
     @csrf_exempt
@@ -34,8 +37,30 @@ class WebCenterApi(object):
     @csrf_exempt
     def excuteLogin(request):
         print 'i have receive login command'
+
+        # 提取post数据
+        postDataList = {}
+        if request.method == 'POST':
+            for key in request.POST:
+                postDataList[key] = request.POST.getlist(key)[0]
+
+        # 查询 账户
+        users = SpsUser.objects.filter(account=postDataList['username'])
+        # 验证账户
+        count = len(users)
+
+        if count != 1:
+            abc = {}
+            abc["Result"] = "账户数据异常!"
+            abc["ErrorCode"] = 10001
+            return HttpResponse(json.dumps(abc))
+
+        # 查询账户开通的服务
+
+        # 定义返回值
         abc = {}
-        abc["Result"] = "login success!"
+        abc["Result"] = "login succhess!"
+
         return HttpResponse(json.dumps(abc))
 
     @staticmethod

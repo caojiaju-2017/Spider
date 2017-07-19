@@ -22,6 +22,8 @@ $(document).ready(function(){
     // 设置cookie
     $.checkCookie();
 
+    $("#ewmImageLarge").css("left",$("#ewmImage").offset().left + 15);
+
     // 窗体生成时注册事件＝＝＝＝＝＝＝＝同图片切换相关
     $("#findTrantionImage").click(function() {
         // // 清空其他选项
