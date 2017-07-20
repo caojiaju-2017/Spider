@@ -56,10 +56,28 @@ class WebCenterApi(object):
             return HttpResponse(json.dumps(abc))
 
         # 查询账户开通的服务
+        user = users[0]
+        if user.password != postDataList['password']:
+            abc = {}
+            abc["Result"] = "账户或密码不正确!"
+            abc["ErrorCode"] = 10002
+            return HttpResponse(json.dumps(abc))
+
+        # 查询用户关联服务
+        binds = SpsUserService.objects.filter(account=user.account)
+
 
         # 定义返回值
         abc = {}
         abc["Result"] = "login succhess!"
+        abc["ErrorCode"] = 0
+
+        srvCodes = []
+        for oneBind in binds:
+            #  判断时间范围
+            srvCodes.append(oneBind.scode)
+
+        abc['ServiceCOdes'] = srvCodes
 
         return HttpResponse(json.dumps(abc))
 

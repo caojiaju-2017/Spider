@@ -297,7 +297,6 @@ $(document).ready(function(){
                feature+="scrollbars=no,status=no,modal=yes";
                var temp = window.showModalDialog("login.html",null,feature);
 
-               // alert("ckValue");
                 $.checkCookie();
            }
         },

@@ -123,6 +123,7 @@ from django.db import models
 class SpsUser(models.Model):
     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
     account = models.CharField(db_column='Account', max_length=20)  # Field name made lowercase.
+    password = models.CharField(db_column='Password', max_length=64)  # Field name made lowercase.
     email = models.CharField(db_column='EMail', max_length=64)  # Field name made lowercase.
     alias = models.CharField(db_column='Alias', max_length=12, blank=True, null=True)  # Field name made lowercase.
     address = models.CharField(db_column='Address', max_length=128, blank=True, null=True)  # Field name made lowercase.
@@ -133,16 +134,18 @@ class SpsUser(models.Model):
     class Meta:
         managed = False
         db_table = 'sps_user'
-#
-#
-# class SpAgencyCustom(models.Model):
-#     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
-#     acode = models.CharField(db_column='ACode', max_length=20)  # Field name made lowercase.
-#     ccode = models.CharField(db_column='CCode', max_length=20)  # Field name made lowercase.
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'sp_agency_custom'
+
+
+class SpsUserService(models.Model):
+    id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    account = models.CharField(db_column='Account', max_length=20)  # Field name made lowercase.
+    scode = models.CharField(db_column='SCode', max_length=20)  # Field name made lowercase.
+    startdate = models.CharField(db_column='StartDate', max_length=10)  # Field name made lowercase.
+    stopdate = models.CharField(db_column='StopDate', max_length=10)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'sps_user_service'
 #
 #
 # class SpConfig(models.Model):
