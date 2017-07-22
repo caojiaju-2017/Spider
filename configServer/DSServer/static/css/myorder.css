@@ -1,0 +1,83 @@
+
+
+.MyOrderMainDiv
+{
+    width: 70%;
+    height: 200px;
+    position: fixed;
+    background-color: #CCCCCC;
+    text-align: center;
+}
+
+.sepLineClass
+{
+    background-color: #C0C0C0;
+    height: 1px;
+}
+
+#_leftdiv
+{
+    height: 100%;
+    position: fixed;
+    background-color: #EFEFEF;
+    text-align: center;
+    border:1px solid #C0C0C0
+
+}
+
+#_rightdiv
+{
+    height: 100%;
+    position: fixed;
+    background-color: #EFEFEF;
+    text-align: center;
+    border:1px solid #C0C0C0
+}
+
+.oneOderCfgDiv
+{
+    margin-top: 30px;
+    height: 60px;
+}
+
+.tagLabel
+{
+    font-size: 22px;
+    text-align: center;
+    color: #686868;
+    font-family: "仿宋"
+
+}
+.listTypeListItem
+{
+    font-size: 18px;
+    text-align: center;
+    color: #686868;
+    font-family: "仿宋";
+    float: left;
+    margin-left: 10px;
+    height: 80%;
+    width: 150px
+
+}
+.listTypeListSelItem
+{
+    font-size: 18px;
+    text-align: center;
+    color: #686868;
+    font-family: "仿宋"
+
+}
+
+.orderTextInput
+{
+    font-size: 18px;
+    text-align: left;
+    color: #686868;
+    font-family: "仿宋";
+    float: left;
+    margin-left: 70px;
+    height: 30px;
+    width: 150px
+}
+

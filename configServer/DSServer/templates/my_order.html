@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智搜在线</title>
+
+    <style>
+        @import url("/static/css/myorder.css");
+    </style>
+</head>
+<body style="text-align: center">
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/myorder.js"> </script>
+
+    <div class="MyOrderMainDiv" id="_myorder">
+        <div id="_leftdiv">
+            <div style="width: 100%;height: 60px;text-align: center;line-height: 60px;margin-top: 30px">
+                <img src="/static/Srv/ordersetting.png" style="width: 200px;height: 70px">
+            </div>
+
+            <!-- 分割线 -->
+            <div class="sepLineClass" style="width: 100%;margin-top: 20px"></div>
+
+            <!-- 一项订阅属性1 -->
+            <div class="oneOderCfgDiv">
+
+                <!-- 标签 -->
+                <label class="tagLabel" style="float: left;margin-left: 20px;height: 100%"> 订阅类别 </label>
+
+                <!-- 订阅list -->
+                <div id="_orderType">
+                    <select id="u702_input" class="listTypeListSelItem">
+                        <option class="listTypeListItem" selected value="软件外包订阅">软件外包订阅</option>
+                        <option class="listTypeListItem" value="展会数据订阅">展会数据订阅</option>
+                        <option class="listTypeListItem" value="股市咨询订阅">股市咨询订阅</option>
+                    </select>
+                  </div>
+            </div>
+
+            <div class="oneOderCfgDiv">
+
+                <!-- 标签 -->
+                <label class="tagLabel" style="float: left;margin-left: 20px;height: 100%"> 关键字 </label>
+
+                <!-- 订阅list -->
+                <input class="orderTextInput" type="text" value="人脸识别"/>
+
+                <button id="addButton" onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                        onmouseout="this.style.backgroundColor='';this.style.color='#666666'" style="font-size: 20px;width: 50px">+</button>
+
+            </div>
+
+            <div class="oneOderCfgDiv">
+
+                <!-- 标签 -->
+                <label class="tagLabel" style="float: left;margin-left: 20px;height: 100%"> 已选关键字 </label>
+
+                  <div id="u714" class="ax_default list_box" style="scroll-">
+                    <select id="u714_input" size="2">
+                      <option value="人脸识别">人脸识别</option>
+                      <option value="广告发布">广告发布</option>
+                      <option value="软件翻译">软件翻译</option>
+                    </select>
+                  </div>
+            </div>
+
+            <div class="oneOderCfgDiv">
+
+                <!-- 标签 -->
+                <label class="tagLabel" style="float: left;margin-left: 20px;height: 100%"> 通知方式 </label>
+
+                <!-- 订阅list -->
+                <div id="_orderType">
+                    <select id="u702_input" class="listTypeListSelItem">
+                        <option class="listTypeListItem" selected value="短信">短信</option>
+                        <option class="listTypeListItem" value="邮件">邮件</option>
+                    </select>
+                  </div>
+            </div>
+
+            <div class="oneOderCfgDiv">
+
+                <!-- 标签 -->
+                <label class="tagLabel" style="float: left;margin-left: 20px;height: 100%"> 接收号码 </label>
+
+                <!-- 订阅list -->
+                <input class="orderTextInput" type="text" value="h-sen@foxmail.com"/>
+
+            </div>
+
+            <div class="oneOderCfgDiv">
+
+                <!-- 标签 -->
+                <label class="tagLabel" style="float: left;margin-left: 20px;height: 100%"> 开始日期 </label>
+
+                <!-- 订阅list -->
+                <input class="orderTextInput" type="text" value="2017-02-09"/>
+
+            </div>
+
+
+            <div class="oneOderCfgDiv">
+
+                <!-- 标签 -->
+                <label class="tagLabel" style="float: left;margin-left: 20px;height: 100%"> 结束日期 </label>
+
+                <!-- 订阅list -->
+                <input class="orderTextInput" type="text" value="2017-10-09"/>
+
+            </div>
+
+            <button id="applyChange" onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                        onmouseout="this.style.backgroundColor='';this.style.color='#666666'" style="font-size: 20px;width: 150px;height:50px;
+                        position: fixed;bottom: 30px">应用修改</button>
+        </div>
+
+        <div id="_rightdiv">
+            <div style="width: 100%;height: 60px;text-align: center;line-height: 60px;margin-top: 30px">
+                <img src="/static/Srv/hisnotice.png" style="width: 200px;height: 70px">
+            </div>
+
+            <div class="sepLineClass" style="width: 100%;margin-top: 20px"></div>
+        </div>
+    </div>
+</body>
+</html>
