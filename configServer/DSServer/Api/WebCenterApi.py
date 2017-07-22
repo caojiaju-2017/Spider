@@ -77,7 +77,7 @@ class WebCenterApi(object):
             #  判断时间范围
             srvCodes.append(oneBind.scode)
 
-        abc['ServiceCOdes'] = srvCodes
+        abc['ServiceCodes'] = srvCodes
 
         return HttpResponse(json.dumps(abc))
 
@@ -192,22 +192,10 @@ class WebCenterApi(object):
 
         # return render(request, 'ImageView.html')
 
-    # @staticmethod
-    # def ajax_list(request):
-    #     a = range(100)
-    #     return HttpResponse(json.dumps(a), content_type='application/json')
-    #
-    # @staticmethod
-    # def ajax_dict(request):
-    #     name_dict = {'twz': 'Love python and Django', 'zqxt': 'I am teaching Django'}
-    #     return HttpResponse(json.dumps(name_dict), content_type='application/json')
-    #
-    #
-    # @staticmethod
-    # def loadWish(request):
-    #     return render(request, 'wishing.html')
-    #
-    #
-    # @staticmethod
-    # def viewProduct(request):
-    #     return render(request, 'view_product.html')
+
+    @staticmethod
+    @csrf_exempt
+    def openMyOrder(request):
+        print "openMyOrder"
+        datas=Service1BuildData.buildData()
+        return render(request,"my_order.html")

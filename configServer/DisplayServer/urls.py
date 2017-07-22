@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^search_data',WebCenterApi.searchData),
     url(r'^searchService.html',WebCenterApi.serviceQuery),
     url(r'^ImageView.html',WebCenterApi.openImageView),
+    url(r'^my_order.html',WebCenterApi.openMyOrder),
 
 
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

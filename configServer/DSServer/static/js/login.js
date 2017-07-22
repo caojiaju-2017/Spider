@@ -30,7 +30,17 @@ $.extend({
                 // alert(data)
                 window.returnValue = data;
 
+                srvCodes = receiveObj.ServiceCodes;
 
+                var codeString = "";
+                for (i=0;i<srvCodes.length ;i++ )
+                {
+                    var oneCode = srvCodes[i];
+                    oneCode = oneCode.replace(/|/g,"");
+                    codeString = codeString + "|" + oneCode
+                }
+
+                $.cookie('codedefine', codeString);
                 $.cookie('username', $('#userName').val());
 
                 // 设置cookie
@@ -41,7 +51,7 @@ $.extend({
     },
     setGuestAccount:function () {
         $("#userName").attr("value","guest04");
-        $("#userPassword").attr("value","000000");
+        $("#userPassword").attr("value","caojj123");
     },
 });
 

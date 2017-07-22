@@ -4,7 +4,9 @@
 
 var userName=null;
 var loginToken="fsdefasfs#f!@fsae3";
-var selectIndex = -1;
+var selectIndex = null;
+
+var serviceCodes ;
 
 window.onload=function()
 {
@@ -26,85 +28,144 @@ $(document).ready(function(){
 
     // 窗体生成时注册事件＝＝＝＝＝＝＝＝同图片切换相关
     $("#findTrantionImage").click(function() {
-        // // 清空其他选项
-        // $.clearSelection();
-        //
-        // // $.sleep(100);
-        //
-        // // 设置当前为选定项
-        // $("#findTrantionImage").attr("src","/static/Srv/icon1-0.png");
 
-
-        if($("#findTrantionRightImg").is(":hidden"))
+        // change
+        var isHasCode = $.checkService("SS_149886674647457");
+        if (!isHasCode)
         {
-             $("#findTrantionRightImg").show();
+            alert("当前账户未开通此业务");
+            return;
+        }
+        var currentState = $("#findTrantionRightImg").is(":hidden");
+
+        if (!currentState)
+        {
+            $.unCheckAllService();
         }
         else
         {
-            $("#findTrantionRightImg").hide();
+            $("#findTrantionRightImg").left = $("#findTrantionImage").left + $("#findTrantionImage").width;
+            $("#findTrantionRightImg").top = $("#findTrantionImage").top;
+
+             $("#findTrantionRightImg").show();
         }
 
-        selectIndex = 1001;
+
+        selectIndex = "SS_149886674647457";
     })
 
     $("#queryProductPriceImage").click(function() {
-        // // 清空其他选项
-        // $.clearSelection();
-        //
-        // // $.sleep(100);
-        //
-        // // 设置当前为选定项
-        // $("#queryProductPriceImage").attr("src","/static/Srv/icon2-0.png");
 
-        if($("#queryProductPriceRightImg").is(":hidden"))
+        // change
+        // var isHasCode = $.checkService("SS_149886674647454");
+        // if (!isHasCode)
+        // {
+        //     alert("当前账户未开通此业务");
+        //     return;
+        // }
+        //
+        // $.unCheckAllService();
+        //
+        // if($("#queryProductPriceRightImg").is(":hidden"))
+        // {
+        //      $("#queryProductPriceRightImg").show();
+        // }
+        // else
+        // {
+        //     $("#queryProductPriceRightImg").hide();
+        // }
+        //
+        // selectIndex = 1002;
+        // // alert("cccc");
+
+        var isHasCode = $.checkService("SS_149886674647454");
+        if (!isHasCode)
         {
-             $("#queryProductPriceRightImg").show();
+            alert("当前账户未开通此业务");
+            return;
+        }
+        var currentState = $("#queryProductPriceRightImg").is(":hidden");
+
+        if (!currentState)
+        {
+            $.unCheckAllService();
         }
         else
         {
-            $("#queryProductPriceRightImg").hide();
+            $("#queryProductPriceRightImg").left = $("#queryProductPriceImage").left + $("#queryProductPriceImage").width;
+            $("#queryProductPriceRightImg").top = $("#queryProductPriceImage").top;
+
+             $("#queryProductPriceRightImg").show();
         }
 
-        selectIndex = 1002;
-        // alert("cccc");
+
+        selectIndex = "SS_149886674647454";
     })
 
     $("#serviceThreeImage").click(function() {
-        // 清空其他选项
-        // $.clearSelection();
-        // $.sleep(3000);
-        // 设置当前为选定项
-        // $("#rightImg").attr("hidden","show");
 
+        // change
+        // var isHasCode = $.checkService("SS_149886674647455");
+        // if (!isHasCode)
+        // {
+        //     alert("当前账户未开通此业务");
+        //     return;
+        // }
+        // var currentState = $("#serviceThreeRightImg").is(":hidden");
+        //
+        // if (currentState)
+        // {
+        //     $.unCheckAllService();
+        // }
+        // else
+        // {
+        //     $("#serviceThreeRightImg").left = $("#findTrantionImage").left + $("#findTrantionImage").width;
+        //     $("#serviceThreeRightImg").top = $("#findTrantionImage").top;
+        //
+        //      $("#serviceThreeRightImg").show();
+        // }
+        //
+        // selectIndex = "SS_149886674647455";
 
-        if($("#serviceThreeRightImg").is(":hidden"))
+        var isHasCode = $.checkService("SS_149886674647455");
+        if (!isHasCode)
         {
-             $("#serviceThreeRightImg").show();
+            alert("当前账户未开通此业务");
+            return;
+        }
+        var currentState = $("#serviceThreeRightImg").is(":hidden");
+
+        if (!currentState)
+        {
+            $.unCheckAllService();
         }
         else
         {
-            $("#serviceThreeRightImg").hide();
+            $("#serviceThreeRightImg").left = $("#serviceThreeImage").left + $("#serviceThreeImage").width;
+            $("#serviceThreeRightImg").top = $("#serviceThreeImage").top;
+
+             $("#serviceThreeRightImg").show();
         }
 
 
-        // if( =='visible')
-        //     $("rightImg").css().visibility='hidden';
-        // else
-        //     $("rightImg").css().visibility='visible';
-
-        // alert("b");
-        selectIndex = 1003;
+        selectIndex = "SS_149886674647455";
     })
 
     $("#serviceFourImage").click(function() {
-        // 清空其他选项
-        // $.clearSelection();
-        // // $.sleep(3000);
-        // // 设置当前为选定项
-        // $("#serviceFourImage").attr("src","/static/Srv/icon4-0.png");
-        //
-        // selectIndex = 1004;
-        // // alert("cccc2");
+
+        // change
+        var isHasCode = $.checkService("SS_149886674647457");
+        if (!isHasCode)
+        {
+            alert("当前账户未开通此业务");
+            return;
+        }
+
+        $.unCheckAllService();
+
+        // 跳转页面
+        self.location='my_order.html';
+
     })
 
     $("#serviceFiveImage").click(function() {
@@ -304,6 +365,7 @@ $(document).ready(function(){
         checkCookie:function ()
         {
             var ckValue = $.cookie('username');
+            var ckCodedefine = $.cookie('codedefine');
 
             // alert(ckValue);
             if (ckValue != "undefined" && ckValue != ""&& ckValue != null)
@@ -315,12 +377,56 @@ $(document).ready(function(){
 
                 userName = ckValue;
 
+                var srvCodes = ckCodedefine.split('|')
+
+                // 将业务代码放到页面全局变量
+                // change
+                serviceCodes = new Array();
+                serviceCodes = ckCodedefine.split("|")
+
             }
+        },
+
+        checkService:function (code)
+        {
+            if("undefined" == typeof serviceCodes)
+            {
+                alert("请登录后操作");
+                return false;
+            }
+            for (i=0;i<serviceCodes.length ;i++ )
+            {
+                var oneCode = serviceCodes[i];
+
+                if (oneCode == null || oneCode == "")
+                {
+                    continue;
+                }
+
+                if (oneCode == code)
+                {
+                    return true;
+                }
+
+            }
+
+            return false;
+        },
+
+        unCheckAllService:function ()
+        {
+            $("#findTrantionRightImg").hide();
+            $("#queryProductPriceRightImg").hide();
+            $("#serviceThreeRightImg").hide();
+
+            selectIndex = null;
+            return false;
         },
 
         deleteCookie:function ()
         {
             var ckValue = $.cookie('username');
+            var ckCodedefine = $.cookie('codedefine');
 
             // alert(ckValue);
             if (ckValue != "undefined" && ckValue != ""&& ckValue != null)
@@ -331,6 +437,7 @@ $(document).ready(function(){
             }
 
             $.cookie("username",null);
+            $.cookie("codedefine",null);
         },
 
         encryptInfo:function(orginSrc){
