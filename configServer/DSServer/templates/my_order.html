@@ -11,7 +11,9 @@
 <body style="text-align: center">
 
     <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/cookie.js"> </script>
     <script src="/static/js/myorder.js"> </script>
+
 
     <div class="MyOrderMainDiv" id="_myorder">
         <div id="_leftdiv">
@@ -30,10 +32,10 @@
 
                 <!-- 订阅list -->
                 <div id="_orderType">
-                    <select id="u702_input" class="listTypeListSelItem">
-                        <option class="listTypeListItem" selected value="软件外包订阅">软件外包订阅</option>
-                        <option class="listTypeListItem" value="展会数据订阅">展会数据订阅</option>
-                        <option class="listTypeListItem" value="股市咨询订阅">股市咨询订阅</option>
+                    <select id="u702_input" class="listTypeListSelItem1">
+                        <option class="listTypeListItem1" selected value="软件外包订阅">软件外包订阅</option>
+                        <option class="listTypeListItem1" value="展会数据订阅">展会数据订阅</option>
+                        <option class="listTypeListItem1" value="股市咨询订阅">股市咨询订阅</option>
                     </select>
                   </div>
             </div>
@@ -44,7 +46,7 @@
                 <label class="tagLabel" style="float: left;margin-left: 20px;height: 100%"> 关键字 </label>
 
                 <!-- 订阅list -->
-                <input class="orderTextInput" type="text" value="人脸识别"/>
+                <input class="orderTextInput1" type="text" value="人脸识别"/>
 
                 <button id="addButton" onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
                         onmouseout="this.style.backgroundColor='';this.style.color='#666666'" style="font-size: 20px;width: 50px">+</button>
@@ -56,9 +58,9 @@
                 <!-- 标签 -->
                 <label class="tagLabel" style="float: left;margin-left: 20px;height: 100%"> 已选关键字 </label>
 
-                  <div id="u714" class="ax_default list_box" style="scroll-">
-                    <select id="u714_input" size="2">
-                      <option value="人脸识别">人脸识别</option>
+                  <div id="u714" class="ax_default_list_box">
+                    <select id="u714_input" class="box_select" size="2">
+                      <option value="人脸识别" class="box_item">人脸识别</option>
                       <option value="广告发布">广告发布</option>
                       <option value="软件翻译">软件翻译</option>
                     </select>
@@ -121,6 +123,37 @@
             </div>
 
             <div class="sepLineClass" style="width: 100%;margin-top: 20px"></div>
+
+            <!-- 内容div -->
+            <div class="detailInfoView" id="_detailInfoView">
+
+
+            </div>
+
+            <!-- 翻页div -->
+            <div class="multiPageControl" id="_multiPageControl">
+                <div class="pageSwitch">
+                    <label class="buttonLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">上一页</label>
+                    <label class="buttonDigLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">1</label>
+                    <label class="buttonDigLabel"
+                            onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                            onmouseout="this.style.backgroundColor='';this.style.color='#666666'">2</label>
+                    <label class="buttonDigLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">3</label>
+                    <label class="buttonDigLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">4</label>
+                    <label class="buttonLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">下一页</label>
+                </div>
+            </div>
+
         </div>
     </div>
 </body>

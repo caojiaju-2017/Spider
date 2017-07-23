@@ -45,13 +45,15 @@
     font-size: 22px;
     text-align: center;
     color: #686868;
-    font-family: "仿宋"
+    font-family: "仿宋";
+    font-weight: bold;
 
 }
-.listTypeListItem
+
+.listTypeListItem1
 {
     font-size: 18px;
-    text-align: center;
+    text-align: left;
     color: #686868;
     font-family: "仿宋";
     float: left;
@@ -60,16 +62,29 @@
     width: 150px
 
 }
+
+.listTypeListItem
+{
+    font-size: 18px;
+    text-align: left;
+    color: #686868;
+    font-family: "仿宋";
+    float: left;
+    margin-left: 00px;
+    height: 80%;
+    width: 100px
+
+}
 .listTypeListSelItem
 {
     font-size: 18px;
-    text-align: center;
+    text-align: left;
     color: #686868;
     font-family: "仿宋"
 
 }
 
-.orderTextInput
+.orderTextInput1
 {
     font-size: 18px;
     text-align: left;
@@ -81,3 +96,186 @@
     width: 150px
 }
 
+
+.orderTextInput
+{
+    font-size: 18px;
+    text-align: left;
+    color: #686868;
+    font-family: "仿宋";
+    float: left;
+    margin-left: 50px;
+    height: 30px;
+    width: 200px
+}
+
+.ax_default_list_box
+{
+    text-align: left;
+    float: left;
+    margin-left: 30px;
+    /*height: 80px;*/
+    width: 200px
+}
+
+.box_select
+{
+    text-align: left;
+    float: left;
+    margin-left: 00px;
+    height: 70px;
+    width: 200px
+}
+
+.detailInfoView
+{
+    position: fixed;
+    margin-top: 20px;
+    width: 100%;
+    height: 100px;
+    /*background-color: #CCCCCC;*/
+
+    border-bottom-color: #3b4246;
+    overflow-x: hidden;
+    overflow-y:scroll;
+    border:0px solid;
+    /*scrollbar-arrow-color: #f4ae21; !*三角箭头的颜色*!*/
+    /*scrollbar-face-color: #333; !*立体滚动条的颜色*!*/
+    /*scrollbar-3dlight-color: #666; !*立体滚动条亮边的颜色*!*/
+    /*scrollbar-highlight-color: #666; !*滚动条空白部分的颜色*!*/
+    /*scrollbar-shadow-color: #999; !*立体滚动条阴影的颜色*!*/
+    /*scrollbar-darkshadow-color: #666; !*立体滚动条强阴影的颜色*!*/
+    /*scrollbar-track-color: #666; !*立体滚动条背景颜色*!*/
+    /*scrollbar-base-color:#f8f8f8; !*滚动条的基本颜色*!*/
+
+}
+
+
+.multiPageControl
+{
+    position: fixed;
+    left:0px;
+    top: 200px;
+    height: 100px;
+    width: 100%;
+
+    text-align: center;
+}
+
+
+.pageSwitch
+{
+    width: 60%;
+    margin-left: 20%;
+    height: 50px;
+    /*background-color: white;*/
+    text-align: center;
+    line-height: 50px;
+    border-radius: 5px;
+}
+
+.buttonDigLabel
+{
+    display: inline-block;
+    width: 40px;
+    height: 30px;
+    color: #686868;
+    border:1px solid #ccc;
+    background-color: white;
+    text-align: center;
+    border-radius: 5px;
+    line-height: 30px;
+}
+
+.buttonLabel
+{
+    display: inline-block;
+    width: 80px;
+    height: 30px;
+    color: #686868;
+    border:1px solid #ccc;
+    background-color: white;
+    border-radius: 5px;
+    line-height: 30px;
+}
+
+
+
+
+/*   内容Item */
+.itemTitle
+{
+    float: left;
+    width: 20%;
+    height: 80px;
+    /*background-color: rebeccapurple;*/
+    line-height: 80px;
+}
+.titleLabel
+{
+    display:inline;
+    /*width: 100%;*/
+    /*height: 80px;*/
+    /*word-wrap:break-word;*/
+    /*word-break:keep-all;*/
+    /*overflow:hidden;*/
+}
+
+.itemInfo1
+{
+    float: left;
+    width: 30%;
+    height: 80px;
+    text-align: center;
+    /*background-color: red;*/
+    line-height: 80px;
+}
+.itemInfo1Attr1
+{
+
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    /*background: #3b4246;*/
+
+}
+.itemInfo1Attr2
+{
+
+    width: 100%;
+    height: 40px;
+    line-height: 40px;
+    /*background: #aaa;*/
+}
+
+.itemInfo2Attr1
+{
+    width: 100%;
+    height: 80px;
+    line-height: 80px;
+}
+
+.itemInfo2
+{
+    float: left;
+    width: 30%;
+    height: 80px;
+    /*background-color: darkorange;*/
+    line-height: 80px;
+}
+
+.detailViewButton
+{
+    float: left;
+    width: 20%;
+    height: 80px;
+    /*background-color: darkgreen;*/
+    line-height: 80px;
+
+}
+
+.viewButton
+{
+    width: 50%;
+    height: 40%;
+}

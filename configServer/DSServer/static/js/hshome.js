@@ -29,6 +29,12 @@ $(document).ready(function(){
     // 窗体生成时注册事件＝＝＝＝＝＝＝＝同图片切换相关
     $("#findTrantionImage").click(function() {
 
+        if("undefined" == typeof serviceCodes)
+        {
+            alert("请登录后操作");
+            return ;
+        }
+
         // change
         var isHasCode = $.checkService("SS_149886674647457");
         if (!isHasCode)
@@ -55,28 +61,12 @@ $(document).ready(function(){
     })
 
     $("#queryProductPriceImage").click(function() {
+        if("undefined" == typeof serviceCodes)
+        {
+            alert("请登录后操作");
+            return ;
+        }
 
-        // change
-        // var isHasCode = $.checkService("SS_149886674647454");
-        // if (!isHasCode)
-        // {
-        //     alert("当前账户未开通此业务");
-        //     return;
-        // }
-        //
-        // $.unCheckAllService();
-        //
-        // if($("#queryProductPriceRightImg").is(":hidden"))
-        // {
-        //      $("#queryProductPriceRightImg").show();
-        // }
-        // else
-        // {
-        //     $("#queryProductPriceRightImg").hide();
-        // }
-        //
-        // selectIndex = 1002;
-        // // alert("cccc");
 
         var isHasCode = $.checkService("SS_149886674647454");
         if (!isHasCode)
@@ -103,29 +93,11 @@ $(document).ready(function(){
     })
 
     $("#serviceThreeImage").click(function() {
-
-        // change
-        // var isHasCode = $.checkService("SS_149886674647455");
-        // if (!isHasCode)
-        // {
-        //     alert("当前账户未开通此业务");
-        //     return;
-        // }
-        // var currentState = $("#serviceThreeRightImg").is(":hidden");
-        //
-        // if (currentState)
-        // {
-        //     $.unCheckAllService();
-        // }
-        // else
-        // {
-        //     $("#serviceThreeRightImg").left = $("#findTrantionImage").left + $("#findTrantionImage").width;
-        //     $("#serviceThreeRightImg").top = $("#findTrantionImage").top;
-        //
-        //      $("#serviceThreeRightImg").show();
-        // }
-        //
-        // selectIndex = "SS_149886674647455";
+        if("undefined" == typeof serviceCodes)
+        {
+            alert("请登录后操作");
+            return ;
+        }
 
         var isHasCode = $.checkService("SS_149886674647455");
         if (!isHasCode)
@@ -152,6 +124,11 @@ $(document).ready(function(){
     })
 
     $("#serviceFourImage").click(function() {
+        if("undefined" == typeof serviceCodes)
+        {
+            alert("请登录后操作");
+            return ;
+        }
 
         // change
         var isHasCode = $.checkService("SS_149886674647457");
@@ -389,11 +366,6 @@ $(document).ready(function(){
 
         checkService:function (code)
         {
-            if("undefined" == typeof serviceCodes)
-            {
-                alert("请登录后操作");
-                return false;
-            }
             for (i=0;i<serviceCodes.length ;i++ )
             {
                 var oneCode = serviceCodes[i];

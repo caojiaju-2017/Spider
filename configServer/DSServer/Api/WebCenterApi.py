@@ -199,3 +199,76 @@ class WebCenterApi(object):
         print "openMyOrder"
         datas=Service1BuildData.buildData()
         return render(request,"my_order.html")
+
+    @staticmethod
+    @csrf_exempt
+    def getMyOrderData(request):
+        print "getMyOrderData"
+        abc = WebCenterApi.queryData()
+
+        return HttpResponse(json.dumps(abc))
+
+    @staticmethod
+    def getTestData():
+
+        abc = {}
+        abc["Count"] = 10
+        abc["PageMax"] = 9
+        abc["PageIndex"] = 1
+
+        datas = []
+
+        for index in range(10):
+            oneData = {}
+            oneData["Title"] = "XXX人脸识别开发%d" % index
+            oneData["State"] = 1
+            oneData["Price"] = "45000.0"
+            oneData["ReceiveCode"] = "xxxx@qq.com"
+            datas.append(oneData)
+
+        abc["Datas"] = datas
+        return abc
+
+    @staticmethod
+    def queryData():
+        from pymongo import MongoClient
+        client = MongoClient('www.h-sen.com', 27017)
+
+        db = client['ZhuBaJie']
+        AdFliter = db["AdFliter"]
+        FaceRecognize = db["FaceRecognize"]
+        PyDev = db["PyDev"]
+
+        abc = {}
+        datas = []
+        for item in db.FaceRecognize.find():
+            oneData = {}
+            title = item["Title"]
+
+            if len(title) > 10:
+                title = title[0:7] + "..."
+            oneData["Title"] = title
+            oneData["State"] = 1
+            oneData["Price"] = item["Price"]
+            oneData["ReceiveCode"] = "h-sen@qq.com"
+            datas.append(oneData)
+
+        for item in db.AdFliter.find():
+            oneData = {}
+
+            title = item["Title"]
+            if len(title) > 10:
+                title = title[0:7] + "..."
+
+            oneData["Title"] = title
+            oneData["State"] = 1
+            oneData["Price"] = item["Price"]
+            oneData["ReceiveCode"] = "h-sen@qq.com"
+            datas.append(oneData)
+
+        abc["Datas"] = datas
+        abc["Count"] = len(datas)
+        abc["PageMax"] = 10
+        abc["PageIndex"] = 1
+
+        return  abc
