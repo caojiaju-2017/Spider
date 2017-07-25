@@ -1,0 +1,78 @@
+/*最顶端 title*/
+.top_title
+{
+    height: 40px;
+    float: None;
+    font-size: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+    background-color: darkgrey;
+    line-height: 100%;
+}
+
+#findCompany
+{
+    padding-left: 20px;
+    height: 26px;
+    float: left;
+    font-style: normal;
+    font-size: 14px;
+    color: white;
+}
+#ewmImage
+{
+    padding-left: 20px;
+    padding-top: 7px;
+    height: 26px;
+    width: 26px;
+    float: left;
+    font-style: normal;
+    font-size: 14px;
+    color: white;
+}
+.top_title label
+{
+    padding-right: 20px;
+    height: 30px;
+    padding-top: 3px;
+    float: right;
+    font-style: oblique;
+    margin-top: 0px;
+    font-size: 16px;
+    cursor: pointer;
+    color: whitesmoke;
+}
+.sepLine
+{
+    width: 100%;
+    height: 1px;
+    background: #3b4246;
+}
+
+#labTitle1
+{
+    color: #3b4246;
+    font-size: 36px;
+    text-align: center;
+
+}
+
+#labTitle2
+{
+    width: 100%;
+
+    color: #3b4246;
+    font-size: 26px;
+    text-align: center;
+
+}
+
+#labTitle3
+{
+    width: 100%;
+    color: #3b4246;
+    font-size: 16px;
+    text-align: center;
+
+}

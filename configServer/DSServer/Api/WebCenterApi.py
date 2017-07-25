@@ -272,3 +272,15 @@ class WebCenterApi(object):
         abc["PageIndex"] = 1
 
         return  abc
+
+    @staticmethod
+    @csrf_exempt
+    def openIntro(request):
+        print "openIntro"
+        return render(request, 'intro.html')
+
+    @staticmethod
+    @csrf_exempt
+    def openReportIntro(request):
+        print "openIntro"
+        return render(request, 'reportIntro.html')

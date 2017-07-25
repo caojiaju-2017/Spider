@@ -146,25 +146,12 @@ $(document).ready(function(){
     })
 
     $("#serviceFiveImage").click(function() {
-        // 清空其他选项
-        // $.clearSelection();
-        // // $.sleep(3000);
-        // // 设置当前为选定项
-        // $("#serviceFiveImage").attr("src","/static/Srv/icon5-0.png");
-        //
-        // selectIndex = 1005;
-        // alert("cccc2");
+        // 跳转页面
+        self.location='intro.html';
     })
 
     $("#serviceSixImage").click(function() {
-        // // 清空其他选项
-        // $.clearSelection();
-        // // $.sleep(3000);
-        // // 设置当前为选定项
-        // $("#serviceSixImage").attr("src","/static/Srv/icon6-0.png");
-        //
-        // selectIndex = 1006;
-        // // alert("cccc2");
+        self.location='reportIntro.html';
     })
 
     // 搜索按钮

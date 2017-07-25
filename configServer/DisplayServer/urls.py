@@ -35,6 +35,9 @@ urlpatterns = [
     url(r'^ImageView.html',WebCenterApi.openImageView),
     url(r'^my_order.html',WebCenterApi.openMyOrder),
     url(r'^getMyOrderData',WebCenterApi.getMyOrderData),
+    url(r'^intro.html',WebCenterApi.openIntro),
+    url(r'^reportIntro.html',WebCenterApi.openReportIntro),
+
 
 
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
