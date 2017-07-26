@@ -13,11 +13,11 @@ var serviceCodes ;
 
 window.onload=function()
 {
-    $.setPosition();
+    // $.setPosition();
 };
 
 $(window).resize(function(){
-    $.setPosition();
+    // $.setPosition();
 });
 
 
@@ -25,10 +25,34 @@ $(document).ready(function(){
     // 设置cookie
     $.checkCookie();
 
+    setInterval("$.imgLoop()",3000);
+
 });
 
     // 自定义函数
     $.extend({
+        imgLoop: function () {
+        imageIndex = imageIndex + 1;
+
+        if (imageIndex > 2)
+        {
+            imageIndex = 0;
+        }
+
+        if (imageIndex == 0) // 第一张
+        {
+            $("#topImg").attr("src","/static/intro/1.jpg");
+        }
+        else if (imageIndex == 1)
+        {
+            $("#topImg").attr("src","/static/intro/2.jpg");
+        }
+        else if(imageIndex == 2)
+        {
+            $("#topImg").attr("src","/static/intro/3.jpg");
+        }
+
+    },
         sleep: function (numberMillis) {
             var now = new Date();
             var exitTime = now.getTime() + numberMillis;

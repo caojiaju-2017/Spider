@@ -43,3 +43,40 @@
     cursor: pointer;
     color: whitesmoke;
 }
+
+        /*bottom*/
+        .bottomDiv
+        {
+            width: 100%;
+            height: 30px;
+            position: fixed;
+            left: 0px;
+            bottom: 0px;
+            text-align: center;
+            background-color: lightblue;
+        }
+
+.labTitle1
+{
+    color: #3b4246;
+    font-size: 36px;
+    text-align: center;
+
+}
+
+.sepLine
+{
+    width: 100%;
+    height: 1px;
+    background: #3b4246;
+}
+
+.introDiv1
+{
+    width: 20%;
+    height: 300px;
+    float: left;
+    margin-left: 10%;
+    margin-top: 20px;
+    /*background: #d5d5d5;*/
+}
