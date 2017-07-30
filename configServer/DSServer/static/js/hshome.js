@@ -10,6 +10,7 @@ var serviceCodes ;
 
 window.onload=function()
 {
+    $("#_loginPanel").hide();
     $.setPosition();
 };
 
@@ -185,7 +186,12 @@ $(document).ready(function(){
         $.cookie("servicecode",selectIndex);
         $.cookie("pageindex",0);
 
-        var urlAddress = "searchService.html";
+        var urlAddress = "";
+        if (selectIndex == "SS_149886674647457")
+        {
+            urlAddress = "my_service1.html";
+        }
+
 
         // alert(urlAddress);
         location.href =urlAddress;
@@ -308,22 +314,7 @@ $(document).ready(function(){
         },
 
         showDialog: function () {
-
-           if(   document.all   ) //IE
-           {
-               feature="dialogWidth:300px;dialogHeight:200px;status:no;help:no";
-               window.showModalDialog("login.html",null,feature);
-           }
-           else
-           {
-                //modelessDialog可以将modal换成dialog=yes
-               feature ="width=400,height=300,menubar=no,toolbar=no,location=no,";
-               feature+="scrollbars=no,status=no,modal=yes";
-               feature+="scrollbars=no,status=no,modal=yes";
-               var temp = window.showModalDialog("login.html",null,feature);
-
-                $.checkCookie();
-           }
+            $("#_loginPanel").show();
         },
 
         checkCookie:function ()

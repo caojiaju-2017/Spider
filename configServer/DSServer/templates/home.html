@@ -18,8 +18,11 @@
 </head>
 
 <body style="text-align: center">
+    <div>
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/hshome.js"> </script>
+        <script src="/static/js/md5.js"></script>
+        <script src="/static/js/login.js"> </script>
     <script src="/static/js/cookie.js"> </script>
 
     {#顶部标题、登陆信息处#}
@@ -101,5 +104,23 @@
     <div class="bottomDiv">
         Copyright@2013汉森教育
     </div>
+        </div>
+
+
+<div class="loginPanel" id="_loginPanel">
+    <div class="loginTitle">
+        登陆系统
+    </div>
+
+    <div style="margin-top: 40px"></div>
+                <label class="nameLabel">用户名</label>
+                <INPUT class="inputName" id="userName" type="text" >
+                <br />
+                <label class="pswdLabel">密码</label>
+                <INPUT class="inputPassword"  id="userPassword" type="password" >
+                <br />
+                <button class="loginButton" id="btnLogin">登陆</button>
+                <button class="cancelButton" id="btnCancel">取消</button>
+</div>
 </body>
 </html>

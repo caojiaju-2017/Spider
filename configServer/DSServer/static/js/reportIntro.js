@@ -26,7 +26,22 @@ $(document).ready(function(){
     $.checkCookie();
 
     setInterval("$.imgLoop()",3000);
+    $("#ewmImageLarge").css("left",$("#ewmImage").offset().left + 15);
 
+    $("#ewmImage").mouseover(function (){
+            // alert("aaaaaa");
+            $("#ewmImageLarge").show();
+        }).mouseout(function (){
+            // $(".content").hide();
+
+        // $("#ewmImageLarge").offset().left = $("#ewmImage").offset().left;
+
+        $("#ewmImageLarge").css("left",$("#ewmImage").offset().left + 15);
+
+
+        // $("#ewmImageLarge").left = $("#ewmImage").left;
+        $("#ewmImageLarge").hide();
+        });
 });
 
     // 自定义函数

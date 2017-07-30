@@ -11,6 +11,8 @@ from DSServer.Service.PublicService import *
 from DSServer.Service.Service1BuildData import *
 from HsShareData import *
 
+from ServiceData import *
+from BuildImage import *
 
 from DSServer.models import *
 
@@ -253,9 +255,14 @@ class WebCenterApi(object):
             oneData["ReceiveCode"] = "h-sen@qq.com"
             datas.append(oneData)
 
+            if len(datas) >= 20:
+                break
+
         for item in db.AdFliter.find():
             oneData = {}
 
+            if len(datas) >= 20:
+                break
             title = item["Title"]
             if len(title) > 10:
                 title = title[0:7] + "..."
@@ -284,3 +291,37 @@ class WebCenterApi(object):
     def openReportIntro(request):
         print "openIntro"
         return render(request, 'reportIntro.html')
+
+    @staticmethod
+    @csrf_exempt
+    def serviceDataQuery(request):
+        print "serviceDataQuery"
+        return render(request, 'my_service1.html')
+
+    @staticmethod
+    def getServiceDataData(request):
+        print "getServiceDataData"
+
+        from QueryStruct import *
+        qStruct = QueryStruct()
+        qStruct.userName = request.GET.get('username')
+        qStruct.pageIndex = int(request.GET.get('pageindex'))
+        qStruct.pageSize = int(request.GET.get('pagesize'))
+        qStruct.srvCode = request.GET.get('servicecode')
+        qStruct.fliterStr = request.GET.get('fliterstr')
+
+        abs = {}
+        imageFiles = []
+        results = {}
+        if qStruct.srvCode == "SS_149886674647457":
+            results = ServiceData.getService1Data(qStruct)
+            abs["Datas"] = results[2]
+        elif qStruct.srvCode == "SS_149886674647454":
+            abs["Datas"] = ServiceData.getService2Data(qStruct)
+        elif qStruct.srvCode == "SS_149886674647455":
+            abs["Datas"] = ServiceData.getService3Data(qStruct)
+
+        imgShortUrl = BuildImage.buildImage(results,"Classfic",ImageType.Bar)
+        imageFiles.append(imgShortUrl)
+        abs["Images"] = imageFiles
+        return HttpResponse(json.dumps(abs))

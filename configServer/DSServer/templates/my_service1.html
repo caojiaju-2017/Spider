@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智搜在线</title>
+    <link rel="shortcut icon" href="/static/Icon/default.png" >
+    <style>
+        @import url("/static/css/my_service1.css");
+    </style>
+</head>
+<body style="text-align: center">
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/cookie.js"> </script>
+    <script src="/static/js/my_service1.js"> </script>
+
+
+    <div class="MyOrderMainDiv" id="_myorder">
+        <div id="_leftdiv">
+            <div style="width: 100%;height: 60px;text-align: center;line-height: 60px;margin-top: 30px">
+                <img src="/static/Srv/imgReport.png" style="width: 200px;height: 70px">
+            </div>
+
+            <!-- 分割线 -->
+            <div class="sepLineClass" style="width: 100%;margin-top: 20px"></div>
+
+{#            <img src="/static/ReportImage/caojiaju.png" style="width: 90%;height: 300px;margin-top: 20px">#}
+
+        </div>
+
+         <img id="_imageLarge" src="/static/Icon/ewmImg.png" style="width: 50%;height: 40%;position: absolute;left: 30%;top: 25%" hidden>
+
+        <div id="_rightdiv">
+            <div style="width: 100%;height: 60px;text-align: center;line-height: 60px;margin-top: 30px">
+                <img src="/static/Srv/dataInfo.png" style="width: 200px;height: 70px">
+            </div>
+
+            <div class="sepLineClass" style="width: 100%;margin-top: 20px"></div>
+
+            <!-- 内容div -->
+            <div class="detailInfoView" id="_detailInfoView">
+{#                <div style="height: 90px;width: 100%;border-bottom:1px solid #d4d4e4">#}
+{##}
+{#                    <div style="width: 40%;height: 100%;float: left">#}
+{#                        <label id="_showTitle" style='text-align: left;display: inline-block;width: 100%;height:30px '><b>印尼混凝土展Concrete Show South East Asia</b></label>#}
+{#                        <label id="_showType" style='text-align: left;display: inline-block;width: 100%;height:30px;margin-left: 40px;color: #686868'>建材/石材/照明/暖通</label>#}
+{#                        <label id="_nation" style='text-align: left;display: inline-block;width: 100%;height:30px;margin-left: 40px;color: #686868'>印尼</label>#}
+{#                    </div>#}
+{##}
+{#                    <div style="width: 40%;height: 100%;float: left">#}
+{#                        <label id="_showDetail" style='text-align: left;display: inline-block;width: 100%;height:30px;color: mediumblue'>印尼最大的工混凝土器械及建筑设备展 　　作为世界上发展最快的市场之一，印度尼西亚拥有东南亚最大的建筑、工程...</label>#}
+{#                    </div>#}
+{##}
+{#                    <div style="width: 20%;height: 100%;float: left ">#}
+{#                        <button style='text-align: center;display: inline-block;width: 60px;height:30px;margin-top: 15px;border-radius: 5px'>查看</button>#}
+{#                        <label id="_showTime" style='text-align: center;display: inline-block;width: 100%;height:40px ;margin-top: 10px'>2017年9月13日-16日</label>#}
+{#                    </div>#}
+{#                </div>#}
+            </div>
+
+            <!-- 翻页div -->
+            <div class="multiPageControl" id="_multiPageControl">
+                <div class="pageSwitch">
+                    <label class="buttonLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">上一页</label>
+                    <label class="buttonDigLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">1</label>
+                    <label class="buttonDigLabel"
+                            onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                            onmouseout="this.style.backgroundColor='';this.style.color='#666666'">2</label>
+                    <label class="buttonDigLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">3</label>
+                    <label class="buttonDigLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">4</label>
+                    <label class="buttonLabel"
+                           onmouseover="this.style.backgroundColor='#98AFC7';this.style.color='white'"
+                           onmouseout="this.style.backgroundColor='';this.style.color='#666666'">下一页</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>

@@ -10,6 +10,11 @@ $(document).ready(function()
         //登陆成功
 
     })
+
+    $("#btnCancel").click(function()
+    {
+        $("#_loginPanel").hide();
+    })
 });
 
 
@@ -45,7 +50,10 @@ $.extend({
 
                 // 设置cookie
 
-                window.close();
+                //window.close();
+                $.checkCookie();
+
+                $("#_loginPanel").hide();
             },
             "text");//这里返回的类型有：json,html,xml,text
     },

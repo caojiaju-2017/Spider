@@ -31,13 +31,14 @@ urlpatterns = [
     url(r'^login.html',WebCenterApi.openLogin),
     url(r'^excuteLogin',WebCenterApi.excuteLogin),
     url(r'^search_data',WebCenterApi.searchData),
-    url(r'^searchService.html',WebCenterApi.serviceQuery),
+    # url(r'^searchService.html',WebCenterApi.serviceQuery),
     url(r'^ImageView.html',WebCenterApi.openImageView),
     url(r'^my_order.html',WebCenterApi.openMyOrder),
     url(r'^getMyOrderData',WebCenterApi.getMyOrderData),
     url(r'^intro.html',WebCenterApi.openIntro),
     url(r'^reportIntro.html',WebCenterApi.openReportIntro),
-
+    url(r'^my_service1.html',WebCenterApi.serviceDataQuery),
+    url(r'^getServiceData',WebCenterApi.getServiceDataData),
 
 
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
