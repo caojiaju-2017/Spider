@@ -17,7 +17,7 @@ $(window).resize(function(){
 $(document).ready(function() {
     // set cookie
     $.setPosition();
-
+$.blockUI();
     $.loadData();
 });
 
@@ -52,6 +52,7 @@ $.extend({
                     //alert(title);
                 }
 
+                $.unblockUI();
             },
             "text");//这里返回的类型有：json,html,xml,text
     },

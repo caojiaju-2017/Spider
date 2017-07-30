@@ -300,8 +300,6 @@ class WebCenterApi(object):
 
     @staticmethod
     def getServiceDataData(request):
-        print "getServiceDataData"
-
         from QueryStruct import *
         qStruct = QueryStruct()
         qStruct.userName = request.GET.get('username')
@@ -309,7 +307,7 @@ class WebCenterApi(object):
         qStruct.pageSize = int(request.GET.get('pagesize'))
         qStruct.srvCode = request.GET.get('servicecode')
         qStruct.fliterStr = request.GET.get('fliterstr')
-
+        # print "getServiceDataData2"
         abs = {}
         imageFiles = []
         results = {}
@@ -320,8 +318,10 @@ class WebCenterApi(object):
             abs["Datas"] = ServiceData.getService2Data(qStruct)
         elif qStruct.srvCode == "SS_149886674647455":
             abs["Datas"] = ServiceData.getService3Data(qStruct)
-
+        # print "getServiceDataData3"
         imgShortUrl = BuildImage.buildImage(results,"Classfic",ImageType.Bar)
         imageFiles.append(imgShortUrl)
         abs["Images"] = imageFiles
+
+        # print "getServiceDataData4"
         return HttpResponse(json.dumps(abs))

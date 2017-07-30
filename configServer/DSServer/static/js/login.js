@@ -4,7 +4,8 @@ $(document).ready(function()
 
     $("#btnLogin").click(function()
     {
-
+        // alert("aaaaa");
+$.blockUI();
         // 发送请求
         $.ajax_post();
         //登陆成功
@@ -52,8 +53,10 @@ $.extend({
 
                 //window.close();
                 $.checkCookie();
-
+$.unblockUI();
                 $("#_loginPanel").hide();
+
+
             },
             "text");//这里返回的类型有：json,html,xml,text
     },

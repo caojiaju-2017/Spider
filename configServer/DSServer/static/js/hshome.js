@@ -207,6 +207,7 @@ $(document).ready(function(){
 
     // 登陆按钮
     $("#loginLab").click(function() {
+
         $.showDialog();
         // alert(result);
     })

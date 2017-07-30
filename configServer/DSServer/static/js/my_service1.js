@@ -18,7 +18,11 @@ $(document).ready(function() {
     // set cookie
     $.setPosition();
 
+$.blockUI();
+
     $.loadServiceData();
+
+    //
 
     $("#_thumalImage").mouseover(function (){
             // alert("aaaaaa");
@@ -60,7 +64,7 @@ $.extend({
                     var oneCode = Images[index];
                     $.addOneImage(oneCode);
                 }
-
+                $.unblockUI();
             },
             "text");//这里返回的类型有：json,html,xml,text
     },
