@@ -1,5 +1,4 @@
-﻿using IronPython.Hosting;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -9,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using 数据库管理.DAL;
 using 数据库管理.Model;
-using Microsoft.Scripting.Hosting; //导入微软脚本解释库文件
 
 namespace 数据库管理
 {

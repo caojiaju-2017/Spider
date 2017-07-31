@@ -45,7 +45,7 @@ $.extend({
                     oneCode = oneCode.replace(/|/g,"");
                     codeString = codeString + "|" + oneCode
                 }
-
+                alert(codeString);
                 $.cookie('codedefine', codeString);
                 $.cookie('username', $('#userName').val());
 

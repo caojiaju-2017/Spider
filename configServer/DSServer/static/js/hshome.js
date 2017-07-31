@@ -8,6 +8,10 @@ var selectIndex = null;
 
 var serviceCodes ;
 
+var serviceOne = "SS_149886674647457"
+var serviceTwo = "SS_150149933924948"
+var serviceThree = "SS_150149937194280"
+
 window.onload=function()
 {
     $("#_loginPanel").hide();
@@ -37,7 +41,7 @@ $(document).ready(function(){
         }
 
         // change
-        var isHasCode = $.checkService("SS_149886674647457");
+        var isHasCode = $.checkService(serviceOne);
         if (!isHasCode)
         {
             alert("当前账户未开通此业务");
@@ -58,7 +62,7 @@ $(document).ready(function(){
         }
 
 
-        selectIndex = "SS_149886674647457";
+        selectIndex = serviceOne;
     })
 
     $("#queryProductPriceImage").click(function() {
@@ -69,7 +73,7 @@ $(document).ready(function(){
         }
 
 
-        var isHasCode = $.checkService("SS_149886674647454");
+        var isHasCode = $.checkService(serviceTwo);
         if (!isHasCode)
         {
             alert("当前账户未开通此业务");
@@ -90,7 +94,7 @@ $(document).ready(function(){
         }
 
 
-        selectIndex = "SS_149886674647454";
+        selectIndex = serviceTwo;
     })
 
     $("#serviceThreeImage").click(function() {
@@ -100,7 +104,7 @@ $(document).ready(function(){
             return ;
         }
 
-        var isHasCode = $.checkService("SS_149886674647455");
+        var isHasCode = $.checkService(serviceThree);
         if (!isHasCode)
         {
             alert("当前账户未开通此业务");
@@ -121,23 +125,23 @@ $(document).ready(function(){
         }
 
 
-        selectIndex = "SS_149886674647455";
+        selectIndex = serviceThree;
     })
 
     $("#serviceFourImage").click(function() {
-        if("undefined" == typeof serviceCodes)
-        {
-            alert("请登录后操作");
-            return ;
-        }
+        // if("undefined" == typeof serviceCodes)
+        // { SS_149886674647457   SS_150149933924948   SS_150149937194280
+        //     alert("请登录后操作");
+        //     return ;
+        // }
 
         // change
-        var isHasCode = $.checkService("SS_149886674647457");
-        if (!isHasCode)
-        {
-            alert("当前账户未开通此业务");
-            return;
-        }
+        // var isHasCode = $.checkService(serviceOne);
+        // if (!isHasCode)
+        // {
+        //     alert("当前账户未开通此业务");
+        //     return;
+        // }
 
         $.unCheckAllService();
 
@@ -187,9 +191,17 @@ $(document).ready(function(){
         $.cookie("pageindex",0);
 
         var urlAddress = "";
-        if (selectIndex == "SS_149886674647457")
+        if (selectIndex == serviceOne)
         {
             urlAddress = "my_service1.html";
+        }
+        else if (selectIndex == serviceTwo)
+        {
+            urlAddress = "my_service2.html";
+        }
+        else if (selectIndex == serviceThree)
+        {
+            urlAddress = "my_service3.html";
         }
 
 

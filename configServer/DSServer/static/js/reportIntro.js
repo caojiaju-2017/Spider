@@ -49,7 +49,7 @@ $(document).ready(function(){
         imgLoop: function () {
         imageIndex = imageIndex + 1;
 
-        if (imageIndex > 2)
+        if (imageIndex > 3)
         {
             imageIndex = 0;
         }
@@ -66,7 +66,10 @@ $(document).ready(function(){
         {
             $("#topImg").attr("src","/static/intro/3.jpg");
         }
-
+        else if(imageIndex == 3)
+        {
+            $("#topImg").attr("src","/static/intro/4.jpg");
+        }
     },
         sleep: function (numberMillis) {
             var now = new Date();
