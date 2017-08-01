@@ -1,13 +1,16 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import urllib2
+import urllib2,urllib
 from bs4 import  BeautifulSoup
 
 
 def testAttribute(absoluteUrl,htmlTag):
     try:
-        page = urllib2.urlopen(absoluteUrl, timeout=30)
-        html_doc = page.read()
+        user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
+        headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/34.0.1847.137 Safari/537.36 LBBROWSER'  }
+        req = urllib2.Request(absoluteUrl,data=None,headers=headers,origin_req_host=None,unverifiable=False)
+        response = urllib2.urlopen(req)
+        html_doc = response.read()
     except Exception, ex:
         return  None
 
@@ -17,6 +20,14 @@ def testAttribute(absoluteUrl,htmlTag):
 
     return str(datas)
 
+def snapPng(url):
+
+    pass
 if __name__ == "__main__":
-    print testAttribute('http://cd.58.com/sale/?key=%E8%8B%B9%E6%9E%9C%E6%89%8B%E6%9C%BA', 'td.img > a')
-    # testAttribute("","")
+    snapPng(
+        'http://www.sczfcg.com/CmsNewsController.do?method=recommendBulletinList&rp=25&page=1&moreType=provincebuyBulletinMore&channelCode=cggg',
+        'div.colsList > ul > li > a')
+    # print testAttribute('http://www.qianlima.com/zbgg/', 'div.sevenday_list > dl > dt > a')
+    # print testAttribute('http://www.sczfcg.com/CmsNewsController.do?method=recommendBulletinList&rp=25&page=1&moreType=provincebuyBulletinMore&channelCode=cggg', 'div.colsList > ul > li > a')
+
+    # testAttribute("","")  HTTP Error 403: Forbidden

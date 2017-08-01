@@ -1,0 +1,22 @@
+招投标属性定义：
+	发布时间
+	招投标标题
+	采购项目编号
+	采购项目名称
+	采购方式
+	行政区划
+	采 购 人
+	
+四川采购网：http://www.sczfcg.com/view/srplatform/portal/index.html
+	省级采购
+	http://www.sczfcg.com/CmsNewsController.do?method=recommendBulletinList&rp=25&page=1&moreType=provincebuyBulletinMore&channelCode=cggg
+	市采购公告
+	http://www.sczfcg.com/CmsNewsController.do?method=recommendBulletinList&rp=25&page=1&moreType=provincebuyBulletinMore&channelCode=shiji_cggg
+
+
+湖南政府采购网：http://www.ccgp-hunan.gov.cn/#
+	http://www.ccgp-hunan.gov.cn/page/notice/more.jsp?noticeTypeID=dealNotices
+	http://www.ccgp-hunan.gov.cn/page/notice/more.jsp?prcmMode=01
+
+
+python webkit2png.py -x 1024 768 -g 1024 0 http://www.ccgp-hunan.gov.cn/page/notice/more.jsp?noticeTypeID=dealNotices -o d:\test.png
