@@ -14,6 +14,7 @@ def testAttribute(absoluteUrl,htmlTag):
     except Exception, ex:
         return  None
 
+
     soup = BeautifulSoup(html_doc, 'lxml')
 
     datas = soup.select(htmlTag)

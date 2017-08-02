@@ -1,0 +1,35 @@
+#: import ListItemButton kivy.uix.listview.ListItemButton
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+
+<GuidePage>:
+    orientation:"vertical"
+    search_input: search_box       # attribute bind widget
+    search_results:search_results_list
+    BoxLayout:
+        # box 设置
+        height:"40dp"
+        size_hint_y:None
+
+        TextInput:
+            size_hint_x:1
+            id: search_box  #widget id define
+            text:"Vancouver"
+        Button:
+            text:"Search"
+            size_hint_x:0.5
+            on_press: root.search_location()   #event
+
+        Button:
+            text:"My Location"
+            size_hint_x:0.5
+            on_press:app.root.show_other_wnd()
+
+    ListView:
+        id: search_results_list #
+        item_strings: []
+        adapter:
+            ListAdapter(data=[], cls=ListItemButton)
+
+<HelpPage>:
+<LoginPage>:
+<MainHome>:

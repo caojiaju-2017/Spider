@@ -4,14 +4,14 @@
 import pymongo
 
 class DbConfig(object):
-    # ip = "115.159.224.102"
-    # port = 3306
-    # dbName = "spiderconfig"
-    # userName = "root"
-    # password = "caojj123"
-
-    ip = "localhost"
+    ip = "115.159.224.102"
     port = 3306
     dbName = "spiderconfig"
     userName = "root"
-    password = "123456"
+    password = "caojj123"
+
+    # ip = "localhost"
+    # port = 3306
+    # dbName = "spiderconfig"
+    # userName = "root"
+    # password = "123456"
