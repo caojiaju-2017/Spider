@@ -26,7 +26,6 @@ def startWorkThread():
 
     # 每个用户一个线程
     for oneConfig in dateValidDatas:
-
         t = threading.Thread(target=threadWork, args=(oneConfig,))
         t.daemon = True
         t.start()
@@ -48,6 +47,8 @@ def threadWork(config):
     elif serviceCode == "HS_WB_RP_0001":  #外包数据订阅
         pass
 
+    for oneResult in results:
+        print oneResult["Title"]
     # 生成excel导出数据
     fileName = BuildExcel.buildExcel(results)
 
@@ -65,4 +66,6 @@ if __name__ == "__main__":
     startWorkThread()
 
     # 启动定时重启线程
-    startRestartSchema()
+    # startRestartSchema()
+
+    result = raw_input("waiting:")

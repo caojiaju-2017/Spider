@@ -19,16 +19,18 @@ def testAttribute(absoluteUrl,htmlTag):
 
     datas = soup.select(htmlTag)
 
+    print datas[0].get_text()
+    # get_text
     return str(datas)
 
 def snapPng(url):
 
     pass
 if __name__ == "__main__":
-    snapPng(
-        'http://www.sczfcg.com/CmsNewsController.do?method=recommendBulletinList&rp=25&page=1&moreType=provincebuyBulletinMore&channelCode=cggg',
-        'div.colsList > ul > li > a')
+    # snapPng(
+    #     'http://www.sczfcg.com/CmsNewsController.do?method=recommendBulletinList&rp=25&page=1&moreType=provincebuyBulletinMore&channelCode=cggg',
+    #     'div.colsList > ul > li > a')
     # print testAttribute('http://www.qianlima.com/zbgg/', 'div.sevenday_list > dl > dt > a')
-    # print testAttribute('http://www.sczfcg.com/CmsNewsController.do?method=recommendBulletinList&rp=25&page=1&moreType=provincebuyBulletinMore&channelCode=cggg', 'div.colsList > ul > li > a')
+    print testAttribute('http://202.61.88.152:9002/view/staticpags/xjcggg/2017-08-03/731bca7b6169457d870226b1393e4454.html', 'table > tr:nth-of-type(2) > td.bordertt.confont')
 
     # testAttribute("","")  HTTP Error 403: Forbidden

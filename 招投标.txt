@@ -1,11 +1,12 @@
 招投标属性定义：
-	发布时间
-	招投标标题
-	采购项目编号
-	采购项目名称
-	采购方式
+	发布时间   ok
+	招投标标题  ok
+	采购项目编号  OK  #table_main > tbody > tr:nth-of-type(2) > td.bordertt.confont   
+	采购项目名称  ok  #table_main > tbody > tr:nth-of-type(1) > td.bordertt.confont   
+	采购方式    ok  #table_main > tbody > tr:nth-of-type(3) > td.bordertt.confont   
 	行政区划
-	采 购 人
+	采 购 人  #table_main > tbody > tr:nth-of-type(7) > td.bordertt.confont
+	详细链接   ok
 	
 四川采购网：http://www.sczfcg.com/view/srplatform/portal/index.html
 	省级采购
