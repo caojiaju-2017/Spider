@@ -1,0 +1,14 @@
+--dist_name py2dist
+--android_api 19
+--sdk_dir /home/kivydev/andr/android-sdk-linux
+--ndk_dir /home/kivydev/andr/android-ndk-r10e
+
+
+--requirements python2,kivy
+--private . 
+--package com.hsen.zbdemo
+--name py2apk
+--version 1.0 
+--bootstrap sdl2 
+
+

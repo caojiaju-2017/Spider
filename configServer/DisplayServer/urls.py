@@ -40,5 +40,7 @@ urlpatterns = [
     url(r'^my_service1.html',WebCenterApi.serviceDataQuery),
     url(r'^getServiceData',WebCenterApi.getServiceDataData),
 
+    url(r'^my_service2.html',WebCenterApi.serviceDataQuery2),
+
 
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

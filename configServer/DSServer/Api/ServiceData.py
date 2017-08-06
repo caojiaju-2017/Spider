@@ -11,7 +11,7 @@ class ServiceData(object):
 
         db = client['ShowGuide']
 
-        dbList = ['Zhbuilding','beauty','zhaf_nl','zhauto','zhfood']
+        dbList = ['ShowGuide']
         CountList =[]
         OneObjects = []
         totalResults = []
