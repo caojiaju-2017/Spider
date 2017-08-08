@@ -11,9 +11,7 @@ from DisplayServer.settings import *
 class BuildImage(object):
     @staticmethod
     def buildImage(datas,attrName,type):
-        # print "buildImage1"
-        countList = datas[0]
-        oneObjs = datas[1]
+        oneObjs = datas
 
         dicts = {}
 
@@ -24,7 +22,11 @@ class BuildImage(object):
 
             if className:
                 className = className.encode('utf-8')
-            dicts[className] = countList[index]
+
+            if dicts.has_key(className):
+                dicts[className] = dicts[className] + 1
+            else:
+                dicts[className] = 1
 
         # print "buildImage2"
 
@@ -35,6 +37,34 @@ class BuildImage(object):
         # print "buildImage3"
         return rtnFileName
 
+    @staticmethod
+    def buildImage2(datas, attrName, type):
+        # print "buildImage1"
+        oneObjs = datas
+
+        dicts = {}
+
+        for index, one in enumerate(oneObjs):
+            className = None
+            execstr = "className = one['%s']" % attrName
+            exec execstr
+
+            if className:
+                className = className.encode('utf-8')
+
+            if dicts.has_key(className):
+                dicts[className] = dicts[className] + 1
+            else:
+                dicts[className] = 1
+
+        # print "buildImage2"
+
+        rtnFileName = None
+        if type == ImageType.Bar:
+            rtnFileName = BuildImage.DrawBar(dicts, "%s.png" % uuid.uuid1(), u"日期轴", u"标的数量", u"四川省招标数据统计(按日期)")
+            pass
+        # print "buildImage3"
+        return rtnFileName
 
     @staticmethod
     def DrawBar(dicts,name,xNanme,yName,title):

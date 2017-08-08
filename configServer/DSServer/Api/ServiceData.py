@@ -19,17 +19,12 @@ class ServiceData(object):
         sheetCount = qStruct.pageSize / len(dbList)
         for one in dbList:
             dbSheets = db[one]
-            CountList.append(dbSheets.find().count())
-            tempIndex = sheetCount
+            CountList = dbSheets.find()
 
-            for item in dbSheets.find():
-                if tempIndex <= 0:
+            for item in CountList:
+                if len(totalResults) >= 20:
                     break
 
-                if tempIndex == sheetCount:
-                    OneObjects.append(item)
-
-                tempIndex = tempIndex - 1
                 oneData = {}
                 oneData["Info"] = item["Info"].strip("\u3000")
                 oneData["Classfic"] = item["Classfic"]
@@ -42,11 +37,44 @@ class ServiceData(object):
                 pass
 
         # 组合报表
-        return CountList,OneObjects,totalResults
+        return totalResults,CountList
 
     @staticmethod
     def getService2Data(qStruct):
-        pass
+        # 先查出所有数据
+        from pymongo import MongoClient
+        client = MongoClient('www.h-sen.com', 27017)
+
+        db = client['TenderDb']
+
+        dbList = ['ZhaoBiao']
+        CountList = []
+        OneObjects = []
+        totalResults = []
+
+        for one in dbList:
+            dbSheets = db[one]
+
+            CountList = dbSheets.find()
+            # tempIndex = sheetCount
+
+            for item in CountList:
+                if len(totalResults) >= 20:
+                    break
+
+                oneData = {}
+                oneData["Classfic"] = item["Classfic"]
+                oneData["ProjectNo"] = item["ProjectNo"]
+                oneData["Url"] = item["Url"]
+                oneData["ProjectName"] = item["ProjectName"]
+                oneData["Title"] = item["Title"]
+                oneData["Way"] = item["Way"]
+                oneData["Time"] = item["Time"]
+                oneData["Owner"] = item["Owner"]
+                oneData["Unique"] = item["Time"]
+                totalResults.append(oneData)
+                pass
+        return totalResults,CountList
 
     @staticmethod
     def getService3Data(qStruct):

@@ -18,19 +18,18 @@ $(document).ready(function() {
     // set cookie
     $.setPosition();
 
-$.blockUI();
+    $.blockUI();
 
+    // $("#testImageId").mouseenter(function ()
+    // {
+    //     alert("abcedef1");
+    // }).mouseout(function ()
+    // {
+    //     alert("abcedef2");
+    // });
     $.loadServiceData();
 
-    //
 
-    $("#_thumalImage").mouseover(function (){
-            // alert("aaaaaa");
-            $("#_imageLarge").show();
-        }).mouseout(function ()
-    {
-            $("#_imageLarge").hide();
-    });
 });
 
 
@@ -48,6 +47,7 @@ $.extend({
             },
             function (data)
             {
+
                 var receiveObj = eval("("+data+")");
                 var Images = receiveObj.Images;
                 var Datas = receiveObj.Datas;
@@ -58,12 +58,23 @@ $.extend({
                     $.unblockUI();
                     return;
                 }
+                // alert("abc2");
                 for (i=0;i<Datas.length ;i++ )
                 {
                     var oneCode = Datas[i];
+
+                    var prjName = oneCode.Title;
+
+                    prjName = prjName.trim(" ");
+
+                    if (prjName.length == 0)
+                    {
+                        continue;
+                    }
                     $.addOneItem(oneCode);
                 }
 
+                $.unblockUI();
                 // 添加
                 for (index =0 ; index < Images.length; index ++)
                 {
@@ -86,7 +97,7 @@ $.extend({
           "                    </div>\n" +
           "\n" +
           "                    <div style=\"width: 40%;height: 100%;float: left\">\n" +
-          "                        <label id=\"_showDetail\" style='text-align: left;display: inline-block;width: 100%;height:30px;color: cornflowerblue;font-size: 13px;line-height: 25px'>{Info}</label>\n" +
+          "                        <label id=\"_showDetail\" style='text-align: left;display: inline-block;width: 100%;height:30px;color: cornflowerblue;font-size: 13px;line-height: 20px'>{Info}</label>\n" +
           "                    </div>\n" +
           "\n" +
           "                    <div style=\"width: 20%;height: 100%;float: left \">\n" +
@@ -102,11 +113,12 @@ $.extend({
             oneT = "";
         }
 
+
         var abcTemp = {
-            Name:oneCode.Name,
+            Name: oneCode.Title.substr(0,15),
             Classfic:oneCode.Classfic,
-            Nation:oneCode.Nation,
-            Info:oneCode.Info,
+            Nation:oneCode.Way,
+            Info:oneCode.ProjectName +  "<br />"  + oneCode.ProjectNo +  "<br />" + oneCode.Owner,
             Time:oneCode.Time
         }
         $("#_detailInfoView").html(oneT + $.format(oneTemp,abcTemp) );

@@ -313,16 +313,22 @@ class WebCenterApi(object):
         results = {}
         if qStruct.srvCode == "SS_149886674647457":
             results = ServiceData.getService1Data(qStruct)
-            abs["Datas"] = results[2]
+            abs["Datas"] = results[0]
+            if results[1].count() > 0:
+                imgShortUrl = BuildImage.buildImage(results[1],"Classfic",ImageType.Bar)
+                imageFiles.append(imgShortUrl)
+                abs["Images"] = imageFiles
         elif qStruct.srvCode == "SS_149886674647454":
-            abs["Datas"] = ServiceData.getService2Data(qStruct)
+            results = ServiceData.getService2Data(qStruct)
+            abs["Datas"] = results[0]
+            if results[1].count() > 0:
+                imgShortUrl = BuildImage.buildImage2(results[1],"Time",ImageType.Bar)
+                imageFiles.append(imgShortUrl)
+                abs["Images"] = imageFiles
         elif qStruct.srvCode == "SS_149886674647455":
             abs["Datas"] = ServiceData.getService3Data(qStruct)
         # print "getServiceDataData3"
-        if len(results) > 0:
-            imgShortUrl = BuildImage.buildImage(results,"Classfic",ImageType.Bar)
-            imageFiles.append(imgShortUrl)
-            abs["Images"] = imageFiles
+
 
         # print "getServiceDataData4"
         return HttpResponse(json.dumps(abs))
@@ -333,33 +339,33 @@ class WebCenterApi(object):
     def serviceDataQuery2(request):
         print "serviceDataQuery2"
         return render(request, 'my_service2.html')
-
-    @staticmethod
-    def getServiceDataData(request):
-        from QueryStruct import *
-        qStruct = QueryStruct()
-        qStruct.userName = request.GET.get('username')
-        qStruct.pageIndex = int(request.GET.get('pageindex'))
-        qStruct.pageSize = int(request.GET.get('pagesize'))
-        qStruct.srvCode = request.GET.get('servicecode')
-        qStruct.fliterStr = request.GET.get('fliterstr')
-        # print "getServiceDataData2"
-        abs = {}
-        imageFiles = []
-        results = {}
-        if qStruct.srvCode == "SS_149886674647457":
-            results = ServiceData.getService1Data(qStruct)
-            abs["Datas"] = results[2]
-        elif qStruct.srvCode == "SS_149886674647454":
-            abs["Datas"] = ServiceData.getService2Data(qStruct)
-        elif qStruct.srvCode == "SS_149886674647455":
-            abs["Datas"] = ServiceData.getService3Data(qStruct)
-        # print "getServiceDataData3"
-
-        if len(results) > 0:
-            imgShortUrl = BuildImage.buildImage(results,"Classfic",ImageType.Bar)
-            imageFiles.append(imgShortUrl)
-            abs["Images"] = imageFiles
-
-        # print "getServiceDataData4"
-        return HttpResponse(json.dumps(abs))
+    #
+    # @staticmethod
+    # def getServiceDataData(request):
+    #     from QueryStruct import *
+    #     qStruct = QueryStruct()
+    #     qStruct.userName = request.GET.get('username')
+    #     qStruct.pageIndex = int(request.GET.get('pageindex'))
+    #     qStruct.pageSize = int(request.GET.get('pagesize'))
+    #     qStruct.srvCode = request.GET.get('servicecode')
+    #     qStruct.fliterStr = request.GET.get('fliterstr')
+    #     # print "getServiceDataData2"
+    #     abs = {}
+    #     imageFiles = []
+    #     results = {}
+    #     if qStruct.srvCode == "SS_149886674647457":
+    #         results = ServiceData.getService1Data(qStruct)
+    #         abs["Datas"] = results[2]
+    #     elif qStruct.srvCode == "SS_149886674647454":
+    #         abs["Datas"] = ServiceData.getService2Data(qStruct)
+    #     elif qStruct.srvCode == "SS_149886674647455":
+    #         abs["Datas"] = ServiceData.getService3Data(qStruct)
+    #     # print "getServiceDataData3"
+    #
+    #     # if len(results) > 0:
+    #     #     imgShortUrl = BuildImage.buildImage(results,"Classfic",ImageType.Bar)
+    #     #     imageFiles.append(imgShortUrl)
+    #     #     abs["Images"] = imageFiles
+    #
+    #     # print "getServiceDataData4"
+    #     return HttpResponse(json.dumps(abs))

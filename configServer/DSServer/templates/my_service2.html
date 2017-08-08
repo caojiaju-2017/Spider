@@ -7,14 +7,24 @@
     <style>
         @import url("/static/css/my_service1.css");
     </style>
-</head>
-<body style="text-align: center">
-
     <script src="/static/js/jquery.min.js"></script>
     <script src="/static/js/cookie.js"> </script>
     <script src="/static/js/jquery.blockUI.js"> </script>
     <script src="/static/js/my_service2.js"> </script>
 
+<script type="text/javascript">
+$(document).ready(function(){
+  $("#testImageId").mouseenter(function(){
+        alert("abe");
+  });
+  $("#testImageId").mouseleave(function(){
+        alert("erawf");
+  });
+});
+</script>
+
+</head>
+<body style="text-align: center">
 
     <div class="MyOrderMainDiv" id="_myorder">
         <div id="_leftdiv">
@@ -25,7 +35,7 @@
             <!-- 分割线 -->
             <div class="sepLineClass" style="width: 100%;margin-top: 20px"></div>
 
-{#            <img src="/static/ReportImage/caojiaju.png" style="width: 90%;height: 300px;margin-top: 20px">#}
+            <img id="testImageId" name="testImageId" src="/static/ReportImage/6ce20b80-7b6b-11e7-a017-54271e0e125e.png" style="width: 90%;height: 300px;margin-top: 20px">
 
         </div>
 
