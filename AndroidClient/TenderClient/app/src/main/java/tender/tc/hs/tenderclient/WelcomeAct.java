@@ -7,6 +7,8 @@ import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.os.Handler;
 
+import tender.tc.hs.tenderclient.Login.LoginActivity;
+
 
 public class WelcomeAct extends Activity {
 	
@@ -54,7 +56,7 @@ public class WelcomeAct extends Activity {
 	}
 	
 	private void goHome(){
-		Intent i = new Intent(WelcomeAct.this,MainActivity.class);
+		Intent i = new Intent(WelcomeAct.this,LoginActivity.class);
 		startActivity(i);
 		finish();
 	}

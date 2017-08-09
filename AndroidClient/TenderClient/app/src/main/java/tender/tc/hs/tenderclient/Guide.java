@@ -14,6 +14,8 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import tender.tc.hs.tenderclient.Login.LoginActivity;
+
 public class Guide extends Activity implements OnPageChangeListener {
 
 	private ViewPager vp;
@@ -47,7 +49,7 @@ public class Guide extends Activity implements OnPageChangeListener {
 
 			@Override
 			public void onClick(View arg0) {
-				Intent i = new Intent(Guide.this, MainActivity.class);
+				Intent i = new Intent(Guide.this, LoginActivity.class);
 				startActivity(i);
 				finish();
 			}
