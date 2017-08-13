@@ -9,4 +9,9 @@
     <dimen name="loginingdlg_height">42dp</dimen>
     <dimen name="loginingdlg_lr_margin">10dp</dimen>
     <dimen name="loginingdlg_top_margin">20dp</dimen>
+
+    <!--listview change-->
+    <dimen name="list_foot_padding">10dp</dimen>
+    <dimen name="list_head_height">10dp</dimen>
+
 </resources>

@@ -28,7 +28,9 @@ SECRET_KEY = 'g^4)=h@ir_n!azd^wh8*+p6*y1#uvsjd%d4lzyv_egwyj^$hi_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','192.168.1.104']
+APPEND_SLASH=False
+
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','192.168.1.104','192.168.1.103']
 
 
 # Application definition
@@ -80,7 +82,7 @@ DATABASES = {
         'NAME': 'spiderconfig',
         'USER': 'root',
         'PASSWORD': 'caojj123',
-        'HOST':'www.h-sen.com',
+        'HOST':'115.159.224.102',
         'PORT': '3306',
     }
 }

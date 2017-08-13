@@ -22,7 +22,7 @@ public class WelcomeAct extends Activity {
 		public void handleMessage(android.os.Message msg) {
 			switch (msg.what) {
 			case GO_HOME:
-				goHome();
+				goLogin();
 				break;
 
 			case GO_GUIDE:
@@ -55,7 +55,7 @@ public class WelcomeAct extends Activity {
 		
 	}
 	
-	private void goHome(){
+	private void goLogin(){
 		Intent i = new Intent(WelcomeAct.this,LoginActivity.class);
 		startActivity(i);
 		finish();

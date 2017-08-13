@@ -7,4 +7,9 @@
     <color name="transparent">#7f000000</color>
     <!-- 透明的 -->
     <color name="white">#ffffff</color>
+
+    <color name="bar_color">#232325</color>
+
+    <color name="greeny">#ff11aca6</color>
+
 </resources>

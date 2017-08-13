@@ -22,6 +22,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from DSServer.Api.WebCenterApi import *
+from DSServer.Api.AppServiceApi import *
 
 urlpatterns = [
     # API接口
@@ -41,6 +42,6 @@ urlpatterns = [
     url(r'^getServiceData',WebCenterApi.getServiceDataData),
 
     url(r'^my_service2.html',WebCenterApi.serviceDataQuery2),
-
+    url(r'^api/account/$', AppServiceApi.CommandDispatch),
 
 ] + static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)

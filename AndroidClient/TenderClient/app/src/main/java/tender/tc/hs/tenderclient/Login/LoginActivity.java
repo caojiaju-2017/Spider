@@ -1,11 +1,16 @@
 package tender.tc.hs.tenderclient.Login;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
@@ -31,7 +36,17 @@ import android.widget.PopupWindow.OnDismissListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import tender.tc.hs.tenderclient.HsApplication;
+import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
+import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
+import tender.tc.hs.tenderclient.MainActivity;
 import tender.tc.hs.tenderclient.R;
+import tender.tc.hs.tenderclient.Util.HsUtils;
+import tender.tc.hs.tenderclient.Util.LogUtil;
 
 public class LoginActivity extends Activity implements OnClickListener,
 		OnItemClickListener, OnDismissListener {
@@ -44,6 +59,8 @@ public class LoginActivity extends Activity implements OnClickListener,
 	private EditText mPwdEditText; // 登录密码编辑框
 	private ImageView mMoreUser; // 下拉图标
 	private Button mLoginButton; // 登录按钮
+	private  TextView registerBtn;
+	private  TextView forgetPassword;
 	private ImageView mLoginMoreUserView; // 弹出下拉弹出窗的按钮
 	private String mIdString;
 	private String mPwdString;
@@ -52,16 +69,21 @@ public class LoginActivity extends Activity implements OnClickListener,
 	private MyAapter mAdapter; // ListView的监听器
 	private PopupWindow mPop; // 下拉弹出窗
 
+	Handler mainHandlers = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		HsApplication application = (HsApplication) this.getApplication();
+		HsApplication.Global_App = application;
+
+		registerComminucation();
 		initView();
 		setListener();
 		mLoginLinearLayout.startAnimation(mTranslate); // Y轴水平移动
 
 		/* 获取已经保存好的用户密码 */
-		mUsers = Utils.getUserList(LoginActivity.this);
+		mUsers = UserUtils.getUserList(LoginActivity.this);
 
 		if (mUsers.size() > 0) {
 			/* 将列表中的第一个user显示在编辑框 */
@@ -151,6 +173,8 @@ public class LoginActivity extends Activity implements OnClickListener,
 		});
 		mLoginButton.setOnClickListener(this);
 		mLoginMoreUserView.setOnClickListener(this);
+		registerBtn.setOnClickListener(this);
+		forgetPassword.setOnClickListener(this);
 	}
 
 	private void initView() {
@@ -162,6 +186,8 @@ public class LoginActivity extends Activity implements OnClickListener,
 		mLoginLinearLayout = (LinearLayout) findViewById(R.id.login_linearLayout);
 		mUserIdLinearLayout = (LinearLayout) findViewById(R.id.userId_LinearLayout);
 		mTranslate = AnimationUtils.loadAnimation(this, R.anim.my_translate); // 初始化动画对象
+		registerBtn = (TextView)findViewById(R.id.register_btn);
+		forgetPassword = (TextView)findViewById(R.id.login_txtForgotPwd);
 		initLoginingDlg();
 	}
 
@@ -251,10 +277,9 @@ public class LoginActivity extends Activity implements OnClickListener,
 
 					} catch (Exception e) {
 						e.printStackTrace();
+						return;
 					}
-					closeLoginingDlg();// 关闭对话框
-					Toast.makeText(this, "登录成功", Toast.LENGTH_SHORT).show();
-					finish();
+					remoteCheck(mainHandlers);
 				}
 				break;
 			case R.id.login_more_user: // 当点击下拉栏
@@ -266,6 +291,13 @@ public class LoginActivity extends Activity implements OnClickListener,
 					mMoreUser.setImageResource(R.drawable.login_more_down); // 切换图标
 					mPop.showAsDropDown(mUserIdLinearLayout, 2, 1); // 显示弹出窗口
 				}
+				break;
+			case R.id.register_btn:
+				goRegister();
+				break;
+
+			case  R.id.login_txtForgotPwd:
+				Toast.makeText(LoginActivity.this, "如果你忘记了您的密码，请通过微信联系：jiaju_cao 客户处理", Toast.LENGTH_LONG).show();
 				break;
 			default:
 				break;
@@ -293,10 +325,104 @@ public class LoginActivity extends Activity implements OnClickListener,
 	public void onPause() {
 		super.onPause();
 		try {
-			Utils.saveUserList(LoginActivity.this, mUsers);
+			UserUtils.saveUserList(LoginActivity.this, mUsers);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
+
+	private void goHome(){
+		Intent i = new Intent(LoginActivity.this,MainActivity.class);
+		startActivity(i);
+		finish();
+	}
+
+	private void goRegister(){
+		Intent i = new Intent(LoginActivity.this,RegisterActivity.class);
+		startActivity(i);
+//		finish();
+	}
+
+	public void remoteCheck(Handler mainHandlers)
+	{
+		LogUtil.info("Invoke httpaccess");
+		final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.LOG_SYSTEM);
+
+		final Map<String,String> dataMap = new HashMap<>();
+		try {
+			JSONObject jsonObject = new JSONObject();
+
+			String password = mPwdEditText.getText().toString();
+			String account = mIdEditText.getText().toString();
+			account = account.trim();
+			password = password.trim();
+			password = HsUtils.Md5(String.format("%s%s%s","h",password,"s"));
+
+			jsonObject.put("Account",account);
+			jsonObject.put("Password",password);
+			jsonObject.put("Longitude","");
+			jsonObject.put("Latitude","");
+			jsonObject.put("Terminal","Android");
+
+			access.setJsonObject(jsonObject);
+		} catch (JSONException e) {
+			LogUtil.info("Invoke httpaccess prepare failed");
+			e.printStackTrace();
+		}
+		new Thread(new Runnable(){
+			public void run()
+			{
+				access.HttpPost();
+			}
+		}).start();
+
+
+	}
+
+	private void registerComminucation() {
+		//        iDCardDevice=new publicSecurityIDCardLib(this);
+		// 主线程通信事件句柄
+		mainHandlers = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+					case CommandDefine.LOG_SYSTEM:
+					{
+						String receiveData = msg.obj.toString();
+
+						JSONTokener jsonParser = new JSONTokener(receiveData);
+						try {
+							JSONObject person = (JSONObject) jsonParser.nextValue();
+
+							String errorinfo = person.getString("ErrorInfo");
+							int errorId = Integer.parseInt(person.getString("ErrorId"));
+							if (errorId == 200) {
+//								JSONObject result = person.getJSONObject("Result");
+//								JSONObject baseData =result.getJSONObject("BaseInfo");
+//								JSONObject customServiceData =result.getJSONObject("CustomService");
+
+								closeLoginingDlg();// 关闭对话框
+								Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();
+
+								// 跳转Activity
+								goHome();
+								finish();
+								break;
+							}
+							else
+							{
+								closeLoginingDlg();// 关闭对话框
+								Toast.makeText(getApplicationContext(), errorinfo, Toast.LENGTH_LONG).show();
+							}
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						break;
+					}
+				}
+			}
+		};
+	}
 }
