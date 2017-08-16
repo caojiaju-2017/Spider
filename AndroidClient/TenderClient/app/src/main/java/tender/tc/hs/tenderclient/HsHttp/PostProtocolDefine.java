@@ -43,35 +43,35 @@ public class PostProtocolDefine
 		sigString = HsBase64.getBase64(sigString);
 		if (mCommand == CommandDefine.LOG_SYSTEM)
 		{
-			metaUrl = String.format("/api/account/?Command=LOG_SYSTEM&TimeSnap=%d&Sig=%s",currentTime,sigString);
+			metaUrl = String.format("/api/account/?Command=LOG_SYSTEM&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
 		else if(mCommand == CommandDefine.REG_ACCOUNT)
 		{
-			metaUrl = String.format("/api/account/?Command=REG_ACCOUNT&TimeSnap=%d&Sig=%s",currentTime,sigString); //"/api/account/?Command=REG_ACCOUNT&TimeSnap=mmm&Sig=20151023";
+			metaUrl = String.format("/api/account/?Command=REG_ACCOUNT&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
 		else if(mCommand == CommandDefine.GET_BOOK)
 		{
-			metaUrl = String.format("/api/account/?Command=GET_BOOK&TimeSnap=%d&Sig=%s",currentTime,sigString);  //"/api/account/?Command=GET_BOOK&TimeSnap=mmm&Sig=20151023";
+			metaUrl = String.format("/api/account/?Command=GET_BOOK&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
 		else if(mCommand == CommandDefine.SET_BOOK)
 		{
-			metaUrl = String.format("/api/account/?Command=SET_BOOK&TimeSnap=%d&Sig=%s",currentTime,sigString); //"/api/account/?Command=SET_BOOK&TimeSnap=mmm&Sig=20151023";
+			metaUrl = String.format("/api/account/?Command=SET_BOOK&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
 		else if(mCommand == CommandDefine.GET_NORMAL_REPORT)
 		{
-			metaUrl = String.format("/api/account/?Command=GET_NORMAL_REPORT&TimeSnap=%d&Sig=%s",currentTime,sigString);  //"/api/account/?Command=GET_NORMAL_REPORT&TimeSnap=mmm&Sig=20151023";
+			metaUrl = String.format("/api/account/?Command=GET_NORMAL_REPORT&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
 		else if(mCommand == CommandDefine.GET_USERINFO)
 		{
-			metaUrl = String.format("/api/account/?Command=GET_USERINFO&TimeSnap=%d&Sig=%s",currentTime,sigString); //"/api/account/?Command=GET_USERINFO&TimeSnap=mmm&Sig=20151023";
+			metaUrl = String.format("/api/account/?Command=GET_USERINFO&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
 		else if(mCommand == CommandDefine.SET_USERINFO)
 		{
-			metaUrl = String.format("/api/account/?Command=SET_USERINFO&TimeSnap=%d&Sig=%s",currentTime,sigString); ///"/api/account/?Command=SET_USERINFO&TimeSnap=mmm&Sig=20151023";
+			metaUrl = String.format("/api/account/?Command=SET_USERINFO&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
 		else if(mCommand == CommandDefine.QUERY_DATA)
 		{
-			metaUrl = String.format("/api/account/?Command=QUERY_DATA&TimeSnap=%d&Sig=%s",currentTime,sigString);  //"/api/account/?Command=QUERY_DATA&TimeSnap=mmm&Sig=20151023";
+			metaUrl = String.format("/api/account/?Command=QUERY_DATA&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
 
 
@@ -83,7 +83,7 @@ public class PostProtocolDefine
 		String metaUrl = null;
 		if (cmd == "VIEW_MEDIA")
 		{
-			metaUrl = "/api/attach/?Command=VIEW_MEDIA&TimeSnap=mmm&Sig=20151023";
+			metaUrl = "/api/attach/?Command=VIEW_MEDIA&ServiceCode=TS_001&TimeSnap=mmm&Sig=20151023";
 		}
 
 		Iterator iter=datas.keySet().iterator();

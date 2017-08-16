@@ -122,9 +122,9 @@ from django.db import models
 #
 class SpsUser(models.Model):
     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
-    account = models.CharField(db_column='Account', max_length=20)  # Field name made lowercase.
-    password = models.CharField(db_column='Password', max_length=64)  # Field name made lowercase.
-    email = models.CharField(db_column='EMail', max_length=64)  # Field name made lowercase.
+    account = models.CharField(db_column='Account', max_length=20, blank=True, null=True)  # Field name made lowercase.
+    password = models.CharField(db_column='Password', max_length=64, blank=True, null=True)  # Field name made lowercase.
+    email = models.CharField(db_column='EMail', max_length=64, blank=True, null=True)  # Field name made lowercase.
     alias = models.CharField(db_column='Alias', max_length=12, blank=True, null=True)  # Field name made lowercase.
     address = models.CharField(db_column='Address', max_length=128, blank=True, null=True)  # Field name made lowercase.
     orgname = models.CharField(db_column='OrgName', max_length=128, blank=True, null=True)  # Field name made lowercase.
@@ -176,7 +176,7 @@ class SpsUserOrder(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'sp_control'
+        db_table = 'sps_user_order'
 
 
 # class SpCustom(models.Model):

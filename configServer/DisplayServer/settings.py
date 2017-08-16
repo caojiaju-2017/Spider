@@ -30,7 +30,7 @@ DEBUG = True
 
 APPEND_SLASH=False
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','192.168.1.104','192.168.1.103','115.159.224.102']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','192.168.1.105','192.168.1.103','115.159.224.102']
 
 
 # Application definition
