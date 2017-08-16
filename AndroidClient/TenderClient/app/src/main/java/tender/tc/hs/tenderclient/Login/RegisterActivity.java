@@ -1,15 +1,18 @@
 package tender.tc.hs.tenderclient.Login;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
+import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,11 +21,17 @@ import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import java.util.Random;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import org.json.JSONTokener;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
+import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
 import tender.tc.hs.tenderclient.R;
+import tender.tc.hs.tenderclient.Util.HsUtils;
+import tender.tc.hs.tenderclient.Util.LogUtil;
 import tender.tc.hs.tenderclient.Util.Utils;
 
 //注册
@@ -33,10 +42,16 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	private EditText et_usertel, et_password, et_code;
 	private MyCount mc;
 
+
+	Handler mainHandlers = null;
+	private Dialog mRegisterHandle;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		setContentView(R.layout.activity_register);
 		super.onCreate(savedInstanceState);
+		registerComminucation();
+		initLoginingDlg();
+
 		btn_register = (Button)findViewById(R.id.btn_register);
 		btn_send = (Button)findViewById(R.id.btn_send);
 		txt_title = (EditText)findViewById(R.id.et_usertel);
@@ -46,6 +61,49 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		setListener();
 	}
 
+	/* 显示正在登录对话框 */
+	private void showLoginingDlg() {
+		if (mRegisterHandle != null)
+			mRegisterHandle.show();
+	}
+
+	/* 关闭正在登录对话框 */
+	private void closeLoginingDlg() {
+		if (mRegisterHandle != null && mRegisterHandle.isShowing())
+			mRegisterHandle.dismiss();
+	}
+	/* 初始化正在登录对话框 */
+	private void initLoginingDlg() {
+
+		mRegisterHandle = new Dialog(this, R.style.loginingDlg);
+		mRegisterHandle.setContentView(R.layout.logining_dlg);
+
+		Window window = mRegisterHandle.getWindow();
+		WindowManager.LayoutParams params = window.getAttributes();
+		// 获取和mLoginingDlg关联的当前窗口的属性，从而设置它在屏幕中显示的位置
+
+		// 获取屏幕的高宽
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		int cxScreen = dm.widthPixels;
+		int cyScreen = dm.heightPixels;
+
+		int height = (int) getResources().getDimension(
+				R.dimen.loginingdlg_height);// 高42dp
+		int lrMargin = (int) getResources().getDimension(
+				R.dimen.loginingdlg_lr_margin); // 左右边沿10dp
+		int topMargin = (int) getResources().getDimension(
+				R.dimen.loginingdlg_top_margin); // 上沿20dp
+
+		params.y = (-(cyScreen - height) / 2) + topMargin; // -199
+		/* 对话框默认位置在屏幕中心,所以x,y表示此控件到"屏幕中心"的偏移量 */
+
+		params.width = cxScreen;
+		params.height = height;
+		// width,height表示mLoginingDlg的实际大小
+
+		mRegisterHandle.setCanceledOnTouchOutside(true); // 设置点击Dialog外部任意区域关闭Dialog
+	}
 	protected void setListener() {
 		btn_register.setOnClickListener(this);
 		btn_send.setOnClickListener(this);
@@ -138,11 +196,47 @@ public class RegisterActivity extends Activity implements OnClickListener {
 				break;
 			case R.id.btn_register:
 //				getRegister();
-				Toast.makeText(RegisterActivity.this, "sendRegister command", Toast.LENGTH_LONG).show();
+				showLoginingDlg();
+
+				beginRegister();
 				break;
 			default:
 				break;
 		}
+	}
+
+	private void beginRegister() {
+		LogUtil.info("Invoke httpaccess");
+		final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.REG_ACCOUNT);
+
+		final Map<String,String> dataMap = new HashMap<>();
+		try {
+			JSONObject jsonObject = new JSONObject();
+
+			String password = et_password.getText().toString();
+			String account = et_usertel.getText().toString();
+			account = account.trim();
+			password = password.trim();
+			password = HsUtils.Md5(String.format("%s%s%s","h",password,"s"));
+
+			jsonObject.put("Account",account);
+			jsonObject.put("Password",password);
+//			jsonObject.put("Longitude","");
+//			jsonObject.put("Latitude","");
+//			jsonObject.put("Terminal","Android");
+
+			access.setJsonObject(jsonObject);
+		} catch (JSONException e) {
+			LogUtil.info("Invoke httpaccess prepare failed");
+			e.printStackTrace();
+		}
+		new Thread(new Runnable(){
+			public void run()
+			{
+				access.HttpPost();
+			}
+		}).start();
+
 	}
 
 	/* 定义一个倒计时的内部类 */
@@ -169,5 +263,51 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	{
 		int s = new Random().nextInt(9999)%(9999-1000+1) + 1000;
 		return String.format("%d",s);
+	}
+
+	private void registerComminucation() {
+		//        iDCardDevice=new publicSecurityIDCardLib(this);
+		// 主线程通信事件句柄
+		mainHandlers = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				switch (msg.what) {
+					case CommandDefine.REG_ACCOUNT:
+					{
+						String receiveData = msg.obj.toString();
+
+						JSONTokener jsonParser = new JSONTokener(receiveData);
+						try {
+							JSONObject person = (JSONObject) jsonParser.nextValue();
+
+							String errorinfo = person.getString("ErrorInfo");
+							int errorId = Integer.parseInt(person.getString("ErrorId"));
+							if (errorId == 200) {
+//								JSONObject result = person.getJSONObject("Result");
+//								JSONObject baseData =result.getJSONObject("BaseInfo");
+//								JSONObject customServiceData =result.getJSONObject("CustomService");
+
+								closeLoginingDlg();// 关闭对话框
+								Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+
+								// 跳转Activity
+
+								finish();
+								break;
+							}
+							else
+							{
+								closeLoginingDlg();// 关闭对话框
+								Toast.makeText(getApplicationContext(), errorinfo, Toast.LENGTH_LONG).show();
+							}
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						break;
+					}
+				}
+			}
+		};
 	}
 }

@@ -1,10 +1,13 @@
 package tender.tc.hs.tenderclient.HsHttp;
 import java.security.KeyPair;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Dictionary;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import tender.tc.hs.tenderclient.Util.HsBase64;
 
 public class PostProtocolDefine
 {
@@ -35,10 +38,42 @@ public class PostProtocolDefine
 		// TODO Auto-generated method stub
 		String metaUrl = null;
 
+		long currentTime = new Date().getTime();
+		String sigString = String.format("%d",currentTime);
+		sigString = HsBase64.getBase64(sigString);
 		if (mCommand == CommandDefine.LOG_SYSTEM)
 		{
-			metaUrl = "/api/account/?Command=LOG_SYSTEM&TimeSnap=mmm&Sig=20151023";
+			metaUrl = String.format("/api/account/?Command=LOG_SYSTEM&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
+		else if(mCommand == CommandDefine.REG_ACCOUNT)
+		{
+			metaUrl = String.format("/api/account/?Command=REG_ACCOUNT&TimeSnap=%d&Sig=%s",currentTime,sigString); //"/api/account/?Command=REG_ACCOUNT&TimeSnap=mmm&Sig=20151023";
+		}
+		else if(mCommand == CommandDefine.GET_BOOK)
+		{
+			metaUrl = String.format("/api/account/?Command=GET_BOOK&TimeSnap=%d&Sig=%s",currentTime,sigString);  //"/api/account/?Command=GET_BOOK&TimeSnap=mmm&Sig=20151023";
+		}
+		else if(mCommand == CommandDefine.SET_BOOK)
+		{
+			metaUrl = String.format("/api/account/?Command=SET_BOOK&TimeSnap=%d&Sig=%s",currentTime,sigString); //"/api/account/?Command=SET_BOOK&TimeSnap=mmm&Sig=20151023";
+		}
+		else if(mCommand == CommandDefine.GET_NORMAL_REPORT)
+		{
+			metaUrl = String.format("/api/account/?Command=GET_NORMAL_REPORT&TimeSnap=%d&Sig=%s",currentTime,sigString);  //"/api/account/?Command=GET_NORMAL_REPORT&TimeSnap=mmm&Sig=20151023";
+		}
+		else if(mCommand == CommandDefine.GET_USERINFO)
+		{
+			metaUrl = String.format("/api/account/?Command=GET_USERINFO&TimeSnap=%d&Sig=%s",currentTime,sigString); //"/api/account/?Command=GET_USERINFO&TimeSnap=mmm&Sig=20151023";
+		}
+		else if(mCommand == CommandDefine.SET_USERINFO)
+		{
+			metaUrl = String.format("/api/account/?Command=SET_USERINFO&TimeSnap=%d&Sig=%s",currentTime,sigString); ///"/api/account/?Command=SET_USERINFO&TimeSnap=mmm&Sig=20151023";
+		}
+		else if(mCommand == CommandDefine.QUERY_DATA)
+		{
+			metaUrl = String.format("/api/account/?Command=QUERY_DATA&TimeSnap=%d&Sig=%s",currentTime,sigString);  //"/api/account/?Command=QUERY_DATA&TimeSnap=mmm&Sig=20151023";
+		}
+
 
 		return metaUrl;
 	}

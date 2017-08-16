@@ -2,47 +2,75 @@
 # -*- coding: utf-8 -*-
 
 # 数据库模型导入
-
+from time import strftime, localtime
+from datetime import timedelta, date
+from django.db import transaction
 # 公共处理函数
 from publicFunction import *
 
 # 公共配置缓存
 from HsShareData import *
 
+def getPostData(request):
+    postDataList = None
+    if request.method == 'POST':
+        for key in request.POST:
+            postDataList[key] = request.POST.getlist(key)[0]
+
+    import json
+    if not postDataList or len(postDataList) == 0:
+        try:
+            bodyTxt = request.body
+            postDataList = json.loads(bodyTxt)
+        except Exception,ex:
+            pass
+
+    return  postDataList
+
+def get_day_of_day(n=0):
+    '''''
+    if n>=0,date is larger than today
+    if n<0,date is less than today
+    date format = "YYYY-MM-DD"
+    '''
+    if(n<0):
+        n = abs(n)
+        return date.today()-timedelta(days=n)
+    else:
+        return date.today()+timedelta(days=n)
+
+def commitCustomDataByTranslate(objHandles):
+    with transaction.atomic():
+        for oneObject in objHandles:
+            if not oneObject.dbHandle:
+                continue
+
+            try:
+                if oneObject.operatorType == 0:
+                    oneObject.dbHandle.save()
+                elif oneObject.operatorType == 1:
+                    oneObject.dbHandle.delete()
+            except Exception,ex:
+                return  False
+
+    return True
 
 class PublicService(object):
     #添加用户业务
     @staticmethod
-    def validUrl(urlParams):
-        return  True
-        ab= urlParams.keys()
-        ab.sort()
+    def validUrl(timesnap,sig):
 
-        Value = ""
+        result = base64.decodestring(sig)
 
-        for oneKey in ab:
-            if oneKey == "Sig":
-                continue
+        try:
+            intResult = int(result)
 
-            Value = "%s|%s"%(Value,urlParams[oneKey])
-
-        Value = "%s|%s"%(Value,HsShareData.SigCode)
-
-        sigCode = urlParams["Sig"]
-
-        hash_md5 = hashlib.md5(Value)
-        paramSig = hash_md5.hexdigest()
-        # paramSig = hashlib.sha1(Value).hexdigest()
-
-        if paramSig == sigCode:
-            return True
+            if intResult == int(timesnap):
+                return True
+        except:
+            return False
 
 
-        print u"加密字符串    = %s" % Value
-        print u"计算得到的Sig = %s" % paramSig
-
-
-        print u"传入：%s， 当前计算：%s" % (sigCode,paramSig)
 
         return False
 

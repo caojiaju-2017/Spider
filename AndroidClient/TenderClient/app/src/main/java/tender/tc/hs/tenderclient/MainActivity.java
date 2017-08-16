@@ -5,26 +5,38 @@ import java.util.List;
 
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONTokener;
+
+import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
 import tender.tc.hs.tenderclient.HsListView.XListView;
+import tender.tc.hs.tenderclient.Login.RegisterActivity;
 
 public class MainActivity extends Activity implements OnClickListener ,
         AdapterView.OnItemClickListener,
-        XListView.IXListViewListener {
+        XListView.IXListViewListener
+{
     LinearLayout layout_book;
     LinearLayout layout_home;
     LinearLayout layout_report;
@@ -45,7 +57,10 @@ public class MainActivity extends Activity implements OnClickListener ,
     XListView customListView;
     private ArrayAdapter<String> mAdapterTest;
     private ArrayList<String> items = new ArrayList<String>();
+    private Handler mainHandlers;
+
     private Handler mHandler;
+    private Dialog mRegisterHandle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +69,7 @@ public class MainActivity extends Activity implements OnClickListener ,
 
         setContentView(R.layout.main_activity);
 
+        registerComminucation();
         mHandler = new Handler();
 
         geneItems();
@@ -135,7 +151,7 @@ public class MainActivity extends Activity implements OnClickListener ,
             img_add_cfg.setOnClickListener(this);
         }
 
-        //////////////////////////////////////
+        /////////////////订阅数据列表/////////////////////
         customListView = (XListView) tab02.findViewById(R.id.xListView);
         customListView.setPullLoadEnable(true);
         mAdapterTest = new ArrayAdapter<String>(this, R.layout.list_item, items);
@@ -273,5 +289,84 @@ private void geneItems() {
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
+    }
+
+    private void registerComminucation() {
+        //        iDCardDevice=new publicSecurityIDCardLib(this);
+        // 主线程通信事件句柄
+        mainHandlers = new Handler() {
+            @Override
+            public void handleMessage(Message msg) {
+                switch (msg.what) {
+                    case CommandDefine.SET_BOOK: {
+                        break;
+                    }
+                    case CommandDefine.GET_BOOK: {
+                        break;
+                    }
+                    case CommandDefine.PAY_FOR_SERVICE: {
+                        break;
+                    }
+                    case CommandDefine.QUERY_DATA: {
+                        break;
+                    }
+                    case CommandDefine.GET_NORMAL_REPORT: {
+                        break;
+                    }
+
+                    case CommandDefine.SET_USERINFO: {
+                        break;
+                    }
+                    case CommandDefine.GET_USERINFO: {
+                        break;
+                    }
+                }
+            }
+        };
+    }
+
+
+    /* 显示正在登录对话框 */
+    private void showLoginingDlg() {
+        if (mRegisterHandle != null)
+            mRegisterHandle.show();
+    }
+
+    /* 关闭正在登录对话框 */
+    private void closeLoginingDlg() {
+        if (mRegisterHandle != null && mRegisterHandle.isShowing())
+            mRegisterHandle.dismiss();
+    }
+    /* 初始化正在登录对话框 */
+    private void initLoginingDlg() {
+
+        mRegisterHandle = new Dialog(this, R.style.loginingDlg);
+        mRegisterHandle.setContentView(R.layout.logining_dlg);
+
+        Window window = mRegisterHandle.getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        // 获取和mLoginingDlg关联的当前窗口的属性，从而设置它在屏幕中显示的位置
+
+        // 获取屏幕的高宽
+        DisplayMetrics dm = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int cxScreen = dm.widthPixels;
+        int cyScreen = dm.heightPixels;
+
+        int height = (int) getResources().getDimension(
+                R.dimen.loginingdlg_height);// 高42dp
+        int lrMargin = (int) getResources().getDimension(
+                R.dimen.loginingdlg_lr_margin); // 左右边沿10dp
+        int topMargin = (int) getResources().getDimension(
+                R.dimen.loginingdlg_top_margin); // 上沿20dp
+
+        params.y = (-(cyScreen - height) / 2) + topMargin; // -199
+		/* 对话框默认位置在屏幕中心,所以x,y表示此控件到"屏幕中心"的偏移量 */
+
+        params.width = cxScreen;
+        params.height = height;
+        // width,height表示mLoginingDlg的实际大小
+
+        mRegisterHandle.setCanceledOnTouchOutside(true); // 设置点击Dialog外部任意区域关闭Dialog
     }
 }

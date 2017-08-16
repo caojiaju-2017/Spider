@@ -140,40 +140,45 @@ class SpsUserService(models.Model):
     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
     account = models.CharField(db_column='Account', max_length=20)  # Field name made lowercase.
     scode = models.CharField(db_column='SCode', max_length=20)  # Field name made lowercase.
-    startdate = models.CharField(db_column='StartDate', max_length=10)  # Field name made lowercase.
-    stopdate = models.CharField(db_column='StopDate', max_length=10)  # Field name made lowercase.
+    overdate = models.CharField(db_column='OverDate', max_length=10)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'sps_user_service'
-#
-#
-# class SpConfig(models.Model):
-#     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
-#     ccode = models.CharField(db_column='CCode', max_length=20)  # Field name made lowercase.
-#     url = models.CharField(db_column='Url', max_length=400)  # Field name made lowercase.
-#     spiderfile = models.CharField(db_column='SpiderFile', max_length=200)  # Field name made lowercase.
-#     filever = models.CharField(db_column='FileVer', max_length=20)  # Field name made lowercase.
-#     starttime = models.CharField(db_column='StartTime', max_length=20)  # Field name made lowercase.
-#     stoptime = models.CharField(db_column='StopTime', max_length=20)  # Field name made lowercase.
-#     mongocode = models.CharField(db_column='MongoCode', max_length=20, blank=True, null=True)  # Field name made lowercase.
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'sp_config'
-#
-#
-# class SpControl(models.Model):
-#     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
-#     scode = models.CharField(db_column='SCode', max_length=20)  # Field name made lowercase.
-#     state = models.IntegerField(db_column='State')  # Field name made lowercase.
-#     releasetime = models.CharField(db_column='ReleaseTime', max_length=20)  # Field name made lowercase.
-#
-#     class Meta:
-#         managed = False
-#         db_table = 'sp_control'
-#
-#
+
+
+class SpsService(models.Model):
+    id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    code = models.CharField(db_column='Code', max_length=20)  # Field name made lowercase.
+    name = models.CharField(db_column='Name', max_length=32)  # Field name made lowercase.
+    info = models.CharField(db_column='Info', max_length=2000)  # Field name made lowercase.
+    price = models.FloatField(db_column='Price', blank=True, null=True)
+    feerate = models.CharField(db_column='FeeRate', max_length=20)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'sps_service'
+
+
+class SpsUserOrder(models.Model):
+    id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    account = models.CharField(db_column='Account', max_length=20)  # Field name made lowercase.
+    startdate = models.CharField(db_column='StartDate', max_length=10)  # Field name made lowercase.
+    stopdate = models.CharField(db_column='StopDate', max_length=10)  # Field name made lowercase.
+    scode = models.CharField(db_column='SCode', max_length=20)  # Field name made lowercase.
+    notifytype = models.IntegerField(db_column='NotifyType', blank=True, null=True)
+    email = models.CharField(db_column='EMail', max_length=64)  # Field name made lowercase.
+    phone = models.CharField(db_column='Phone', max_length=20)  # Field name made lowercase.
+    enable = models.IntegerField(db_column='Enable', blank=True, null=True)
+    fliter1 = models.CharField(db_column='Fliter1', max_length=64)  # Field name made lowercase.
+    fliter2 = models.CharField(db_column='Fliter2', max_length=64)  # Field name made lowercase.
+    fliter3 = models.CharField(db_column='Fliter3', max_length=64)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'sp_control'
+
+
 # class SpCustom(models.Model):
 #     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
 #     account = models.CharField(db_column='Account', max_length=20)  # Field name made lowercase.

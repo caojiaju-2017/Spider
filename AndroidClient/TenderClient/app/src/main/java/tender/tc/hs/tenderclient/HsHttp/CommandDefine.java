@@ -26,4 +26,10 @@ public class CommandDefine
 //    public  static  final  int QUERY_DATA = 9000;
 
     public  static  final  int INNER_ERROR = 1007;
+
+    public  static  final  int GET_NORMAL_REPORT = 1008;
+
+    public  static  final  int SET_USERINFO = 1009;
+
+    public  static  final  int GET_USERINFO = 1010;
 }
