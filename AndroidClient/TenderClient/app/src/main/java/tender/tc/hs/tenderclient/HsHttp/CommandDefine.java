@@ -32,4 +32,7 @@ public class CommandDefine
     public  static  final  int SET_USERINFO = 1009;
 
     public  static  final  int GET_USERINFO = 1010;
+
+    public  static  final  int APPLY_SMSCODE = 1011;
+
 }

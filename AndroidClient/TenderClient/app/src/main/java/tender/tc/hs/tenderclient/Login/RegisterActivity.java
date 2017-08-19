@@ -189,10 +189,12 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		switch (view.getId()) {
 			case R.id.btn_send:
 				if (mc == null) {
-					mc = new MyCount(10000, 1000); // 第一参数是总的时间，第二个是间隔时间
+					mc = new MyCount(60000, 1000); // 第一参数是总的时间，第二个是间隔时间
 				}
 				mc.start();
-//				getCode();
+
+				showLoginingDlg();
+				getCode();
 				break;
 			case R.id.btn_register:
 //				getRegister();
@@ -205,6 +207,32 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	private void getCode() {
+		LogUtil.info("Invoke httpaccess");
+		final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.APPLY_SMSCODE);
+
+		final Map<String,String> dataMap = new HashMap<>();
+		try {
+			JSONObject jsonObject = new JSONObject();
+
+			String account = et_usertel.getText().toString();
+			account = account.trim();
+
+			jsonObject.put("Phone",account);
+
+			access.setJsonObject(jsonObject);
+		} catch (JSONException e) {
+			LogUtil.info("Invoke httpaccess prepare failed");
+			e.printStackTrace();
+		}
+		new Thread(new Runnable(){
+			public void run()
+			{
+				access.HttpPost();
+			}
+		}).start();
+	}
+
 	private void beginRegister() {
 		LogUtil.info("Invoke httpaccess");
 		final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.REG_ACCOUNT);
@@ -215,12 +243,17 @@ public class RegisterActivity extends Activity implements OnClickListener {
 
 			String password = et_password.getText().toString();
 			String account = et_usertel.getText().toString();
+			String smscode = et_code.getText().toString();
+
+
 			account = account.trim();
 			password = password.trim();
 			password = HsUtils.Md5(String.format("%s%s%s","h",password,"s"));
 
 			jsonObject.put("Account",account);
 			jsonObject.put("Password",password);
+			jsonObject.put("SmsCode",smscode);
+
 //			jsonObject.put("Longitude","");
 //			jsonObject.put("Latitude","");
 //			jsonObject.put("Terminal","Android");
@@ -249,7 +282,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		public void onFinish() {
 			btn_send.setEnabled(true);
 			btn_send.setText("发送验证码");
-			et_code.setText(gernalCode(et_usertel.getText().toString()));
+//			et_code.setText(gernalCode(et_usertel.getText().toString()));
 		}
 
 		@Override
@@ -283,16 +316,38 @@ public class RegisterActivity extends Activity implements OnClickListener {
 							String errorinfo = person.getString("ErrorInfo");
 							int errorId = Integer.parseInt(person.getString("ErrorId"));
 							if (errorId == 200) {
-//								JSONObject result = person.getJSONObject("Result");
-//								JSONObject baseData =result.getJSONObject("BaseInfo");
-//								JSONObject customServiceData =result.getJSONObject("CustomService");
-
 								closeLoginingDlg();// 关闭对话框
 								Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
 
 								// 跳转Activity
 
 								finish();
+								break;
+							}
+							else
+							{
+								closeLoginingDlg();// 关闭对话框
+								Toast.makeText(getApplicationContext(), errorinfo, Toast.LENGTH_LONG).show();
+							}
+
+						} catch (JSONException e) {
+							e.printStackTrace();
+						}
+						break;
+					}
+					case CommandDefine.APPLY_SMSCODE:
+					{
+						String receiveData = msg.obj.toString();
+
+						JSONTokener jsonParser = new JSONTokener(receiveData);
+						try {
+							JSONObject person = (JSONObject) jsonParser.nextValue();
+
+							String errorinfo = person.getString("ErrorInfo");
+							int errorId = Integer.parseInt(person.getString("ErrorId"));
+							if (errorId == 200) {
+								closeLoginingDlg();// 关闭对话框
+								Toast.makeText(RegisterActivity.this, "验证码请求成功", Toast.LENGTH_SHORT).show();
 								break;
 							}
 							else

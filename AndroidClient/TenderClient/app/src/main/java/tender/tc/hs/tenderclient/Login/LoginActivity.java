@@ -40,6 +40,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import tender.tc.hs.tenderclient.Data.UserInfo;
 import tender.tc.hs.tenderclient.HsApplication;
 import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
 import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
@@ -112,7 +113,7 @@ public class LoginActivity extends Activity implements OnClickListener,
 							ViewGroup parent) {
 			if (convertView == null) {
 				convertView = getLayoutInflater().inflate(
-						R.layout.listview_item, null);
+						R.layout.history_item, null);
 			}
 
 			TextView userIdText = (TextView) convertView
@@ -398,9 +399,25 @@ public class LoginActivity extends Activity implements OnClickListener,
 							String errorinfo = person.getString("ErrorInfo");
 							int errorId = Integer.parseInt(person.getString("ErrorId"));
 							if (errorId == 200) {
-//								JSONObject result = person.getJSONObject("Result");
-//								JSONObject baseData =result.getJSONObject("BaseInfo");
-//								JSONObject customServiceData =result.getJSONObject("CustomService");
+                                JSONObject result = person.getJSONObject("Result");
+
+								JSONObject userInfo =result.getJSONObject("UserInfo");
+								HsApplication.Global_App._myUserInfo = new UserInfo(userInfo);
+                                try
+                                {
+                                    JSONObject bookSetting =result.getJSONObject("OrderInfo");
+									HsApplication.Global_App._myUserInfo.setBookData(bookSetting);
+                                }
+                                catch (Exception ex)
+                                {
+                                }
+								String feeRate = result.getString("FeeInfo");
+								HsApplication.Global_App._myUserInfo._serviceFeeRate = feeRate;
+
+								Boolean baseData =result.getBoolean("OverTime");
+								HsApplication.Global_App._myUserInfo._serviceOverTime = baseData;
+								HsApplication.Global_App._myUserInfo._serviceOverDate = result.getString("OverDate");
+
 
 								closeLoginingDlg();// 关闭对话框
 								Toast.makeText(LoginActivity.this, "登录成功", Toast.LENGTH_SHORT).show();

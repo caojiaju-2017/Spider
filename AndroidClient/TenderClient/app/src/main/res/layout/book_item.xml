@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:background="@null"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_gravity="center"
+            android:src="@drawable/info"
+            android:layout_marginLeft="10dp"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:background="@null"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@null"
+                android:orientation="horizontal" >
+                <TextView
+                    android:id="@+id/location_tender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="bottom|left"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:text="四川省"
+                    android:textColor="#545454"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:gravity="bottom|left"
+                    android:background="@null"
+                    android:layout_marginLeft="20dp"
+                    android:text="招标类别:"
+                    android:textColor="#545454"
+                    android:textSize="12sp"  />
+
+                <TextView
+                    android:id="@+id/type_tender"
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:text="单一来源"
+                    android:textColor="#a5a5a5"
+                    android:textSize="12sp"  />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@null"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:text="项目代码:"
+                    android:textColor="#545454"
+                    android:textSize="12sp"  />
+
+                <TextView
+                    android:id="@+id/projectno_tender"
+                    android:layout_width="100dp"
+                    android:layout_height="20dp"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:text="3029323201212"
+                    android:textColor="#a5a5a5"
+                    android:textSize="12sp"  />
+
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:text="发布时间:"
+                    android:textColor="#545454"
+                    android:textSize="12sp"  />
+
+                <TextView
+                    android:id="@+id/rtime_tender"
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:gravity="center_vertical"
+                    android:background="@null"
+                    android:text="2017-08-15"
+                    android:textColor="#a5a5a5"
+                    android:textSize="12sp"  />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:background="@null"
+                android:orientation="horizontal" >
+                <TextView
+                    android:layout_width="60dp"
+                    android:layout_height="20dp"
+                    android:gravity="top|left"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textColor="#545454"
+                    android:text="项目名称:"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/prjname_tender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:gravity="top|left"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:textColor="#a5a5a5"
+                    android:text="四川省省级单位计算机(2017年1-6月)批 ..."
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@null"
+        android:orientation="vertical" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="#f0f0f0" />
+    </LinearLayout>
+
+</LinearLayout>

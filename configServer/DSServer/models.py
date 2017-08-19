@@ -174,9 +174,11 @@ class SpsUserOrder(models.Model):
     fliter2 = models.CharField(db_column='Fliter2', max_length=64)  # Field name made lowercase.
     fliter3 = models.CharField(db_column='Fliter3', max_length=64)  # Field name made lowercase.
 
+
     class Meta:
         managed = False
         db_table = 'sps_user_order'
+
 
 
 # class SpCustom(models.Model):

@@ -34,7 +34,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:text="镖局"
-                android:textColor="#45c01a"
+                android:textColor="#0096DC"
                 android:textSize="16sp" />
 
             <View
@@ -112,7 +112,8 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:textColor="@color/white"
-                android:background="@drawable/btn_enable_green"
+
+                android:background="@drawable/login_button_style"
                 android:textSize="12sp" />
         </RelativeLayout>
         <RelativeLayout
@@ -150,7 +151,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:layout_marginTop="40dp"
-            android:background="@drawable/btn_enable_green"
+            android:background="@drawable/login_button_style"
             android:enabled="false"
             android:paddingBottom="7dp"
             android:paddingTop="7dp"

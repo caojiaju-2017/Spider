@@ -7,11 +7,13 @@ from django.views.decorators.csrf import csrf_exempt
 
 from PIL import *
 from DSServer.Api.PublicService import *
-
+from SmsDataBuffer import *
 from DSServer.models import *
 
 # python标准库导入
-import json
+import json,re,pymongo
+from pymongo import MongoClient
+
 from CLSms import *
 
 class AppServiceApi(object):
@@ -32,7 +34,7 @@ class AppServiceApi(object):
             return AppServiceApi.SetBook(req)
         elif command  == "QUERY_DATA":
             return AppServiceApi.QueryData(req)
-        elif command  == "QUERY_REPORT":
+        elif command  == "GET_NORMAL_REPORT":
             return AppServiceApi.QueryReport(req)
         elif command  == "PAY_FOR_SERVICE":
             return AppServiceApi.PayForService(req)
@@ -40,6 +42,8 @@ class AppServiceApi(object):
             return AppServiceApi.GetUserInfo(req)
         elif command  == "SET_USERINFO":
             return AppServiceApi.SetUserInfo(req)
+        elif command  == "APPLY_SMSCODE":
+            return AppServiceApi.ApplySmscode(req)
         return
 
     @staticmethod
@@ -82,7 +86,7 @@ class AppServiceApi(object):
 
         # 获取用户业务绑定信息
         serviceBind = SpsUserService.objects.get(account=postDataList["Account"],scode=servicecode)
-        overDate = False
+        overDate = True
         if not serviceBind:
             overDate = False
 
@@ -95,6 +99,7 @@ class AppServiceApi(object):
 
         rtnDictionary = {}
         rtnDictionary["OverTime"] = overDate
+        rtnDictionary["OverDate"] = serviceBind.overdate
 
         if not serviceHandle:
             rtnDictionary["FeeInfo"] = None
@@ -139,6 +144,12 @@ class AppServiceApi(object):
         postDataList = {}
         postDataList = getPostData(request)
 
+        # 检测短信验证
+        result = SmsDataBuffer.validSms(postDataList["Account"],postDataList["SmsCode"],HsShareData.SmsListData)
+        if not result:
+            loginResut = json.dumps({"ErrorInfo": "短信验证信息不正确，请重新输入", "ErrorId": 10004, "Result": ""})
+            return HttpResponse(loginResut)
+
         users = SpsUser.objects.filter(account=postDataList["Account"])
 
         if len(users) != 0:
@@ -153,6 +164,8 @@ class AppServiceApi(object):
         newUser = SpsUser()
         newUser.account = postDataList["Account"]
         newUser.password = postDataList["Password"]
+        newUser.longdite = 36.20394
+        newUser.lantudite = 108.20394
 
         newUserSrv = SpsUserService()
         newUserSrv.account = newUser.account
@@ -271,7 +284,12 @@ class AppServiceApi(object):
         postDataList = {}
         postDataList = getPostData(request)
 
-        book = SpsUserOrder.objects.get(account=postDataList["Account"],scode=servicecode)
+        book = SpsUserOrder.objects.filter(account=postDataList["Account"],scode=servicecode)
+
+        if len(book) != 1:
+            book = None
+        else:
+            book = book[0]
 
         if not book:
             book = SpsUserOrder()
@@ -282,7 +300,11 @@ class AppServiceApi(object):
         book.fliter3 = postDataList["Fliter3"]
         book.email = postDataList["EMail"]
         book.phone = postDataList["Phone"]
-
+        book.startdate = postDataList["StartDate"]
+        book.stopdate = postDataList["StopDate"]
+        book.enable = int(postDataList["Enable"])
+        book.scode = servicecode
+        book.notifytype = 1
         try:
             book.save()
         except:
@@ -319,23 +341,105 @@ class AppServiceApi(object):
         postDataList = {}
         postDataList = getPostData(request)
 
-        user = SpsUser.objects.get(account=postDataList["Account"])
+        # 确保唯一性
+        user = SpsUser.objects.filter(account=postDataList["Account"])
+        if len(user) != 1:
+            user = None
+        else:
+            user = user[0]
 
-        if user:
-            loginResut = json.dumps({"ErrorInfo": "账户已注册，如果您忘记密码", "ErrorId": 10002, "Result": ""})
+        if not user:
+            loginResut = json.dumps({"ErrorInfo": "账户信息异常", "ErrorId": 10002, "Result": ""})
             return HttpResponse(loginResut)
 
-        newUser = SpsUser()
-        newUser.account = postDataList["Account"]
-        newUser.password = postDataList["Password"]
+        # 检查账户服务是否到期
+        userServiceHandle = SpsUserService.objects.filter(account= postDataList["Account"],scode=servicecode)
+        if len(userServiceHandle) != 1:
+            userServiceHandle = None
+        else:
+            userServiceHandle = userServiceHandle[0]
 
+        if not userServiceHandle:
+            loginResut = json.dumps({"ErrorInfo": "您选择的业务已下线或在升级维护，请稍后重试", "ErrorId": 10003, "Result": ""})
+            return HttpResponse(loginResut)
+
+        if userServiceHandle.overdate < time.strftime("%Y-%m-%d", time.localtime()):
+            loginResut = json.dumps({"ErrorInfo": "您的服务期限已到，请购买后继续", "ErrorId": 10003, "Result": ""})
+            return HttpResponse(loginResut)
+
+        Fliters = []
+        # 处理用户指定过滤字符串
         try:
-            newUser.save()
+            fliter = postDataList["Fliter"]
+            fliter = fliter.strip()
+            if not fliter and len(fliter) > 0:
+                Fliters.append(fliter)
         except:
-            loginResut = json.dumps({"ErrorInfo": "注册失败", "ErrorId": 10002, "Result": ""})
-            return HttpResponse(loginResut)
+            pass
 
-        loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": ""})
+        # 如果用户未指定过滤，则使用订阅配置数据
+        if len(Fliters) == 0:
+            # 开始查询数据
+            bookHandles = SpsUserOrder.objects.filter(account=postDataList["Account"], scode=servicecode)
+            bookHandle = None
+            if len(bookHandles) != 1:
+                loginResut = json.dumps({"ErrorInfo": "订阅配置数据异常或未配置，请检查配置", "ErrorId": 10003, "Result": ""})
+                return HttpResponse(loginResut)
+            else:
+                bookHandle = bookHandles[0]
+
+            # 没配置订阅项
+            if (bookHandle.fliter1 and len(bookHandle.fliter1) <= 0) or \
+                    (bookHandle.fliter2 and len(bookHandle.fliter2) <= 0) or\
+                    (bookHandle.fliter3 and len(bookHandle.fliter3) <= 0) or \
+                            bookHandle.enable == 0:
+                loginResut = json.dumps({"ErrorInfo": "订阅配置数据异常或未配置，请检查配置", "ErrorId": 10003, "Result": ""})
+                return HttpResponse(loginResut)
+
+            if bookHandle.fliter1 and len(bookHandle.fliter1) > 0:
+                Fliters.append(bookHandle.fliter1)
+            if bookHandle.fliter2 and len(bookHandle.fliter2) > 0:
+                Fliters.append(bookHandle.fliter2)
+            if bookHandle.fliter3 and len(bookHandle.fliter3) > 0:
+                Fliters.append(bookHandle.fliter3)
+
+        # 开始查询
+        PageIndex = int(postDataList["PageIndex"])
+        PageSize = int(postDataList["PageSize"])
+        RCode = postDataList["RCode"]
+        UFlag = int(postDataList["UFlag"])
+
+
+        client = MongoClient('www.h-sen.com', 27017)
+
+        db = client['TenderDb']
+        tenderDatas = db["ZhaoBiao"]
+
+        rtnList = []
+        if UFlag == 0:
+            queryResult = None
+            # for oneFliter in Fliters:
+            #     if not queryResult:
+            #         queryResult = tenderDatas.find({'ProjectName': re.compile(oneFliter)})
+            #     else:
+            #         queryResult.queryResult.
+            for item in tenderDatas.find({'ProjectName': re.compile(Fliters[0])}).sort('RecordTime', pymongo.DESCENDING). \
+                    limit((PageIndex + 1) * PageSize). \
+                    skip(PageIndex * PageSize):
+                itemDict = {}
+                itemDict["Classfic"] = item["Classfic"]
+                itemDict["Unique"] = item["Unique"]
+                itemDict["RecordTime"] = item["RecordTime"]
+                itemDict["Title"] = item["Title"]
+                itemDict["Url"] = item["Url"]
+                itemDict["ProjectName"] = item["ProjectName"]
+                itemDict["ProjectNo"] = item["ProjectNo"]
+                itemDict["Time"] = item["Time"]
+                itemDict["Way"] = item["Way"]
+                rtnList.append(itemDict)
+
+        client.close()
+        loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": rtnList})
         return HttpResponse(loginResut)
 
     @staticmethod
@@ -366,23 +470,29 @@ class AppServiceApi(object):
         postDataList = {}
         postDataList = getPostData(request)
 
-        user = SpsUser.objects.get(account=postDataList["Account"])
+        rtnResult = []
+        oneConfig = {}
+        oneConfig["Title"] = "报表测试"
+        oneConfig["Type"] = 0
 
-        if user:
-            loginResut = json.dumps({"ErrorInfo": "账户已注册，如果您忘记密码", "ErrorId": 10002, "Result": ""})
-            return HttpResponse(loginResut)
+        innerData = {}
+        innerData["A"] = 10
+        innerData["B"] = 53
+        innerData["C"] = 34
+        oneConfig["Values"] = innerData
 
-        newUser = SpsUser()
-        newUser.account = postDataList["Account"]
-        newUser.password = postDataList["Password"]
+        oneConfig2 = {}
+        oneConfig2["Title"] = "报表测试"
+        oneConfig2["Type"] = 0
+        innerData2= {}
+        innerData2["A"] = 10
+        innerData2["B"] = 53
+        innerData2["C"] = 34
+        oneConfig2["Values"] = innerData
 
-        try:
-            newUser.save()
-        except:
-            loginResut = json.dumps({"ErrorInfo": "注册失败", "ErrorId": 10002, "Result": ""})
-            return HttpResponse(loginResut)
-
-        loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": ""})
+        rtnResult.append(oneConfig)
+        rtnResult.append(oneConfig2)
+        loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": rtnResult})
         return HttpResponse(loginResut)
 
     # 支付后触发
@@ -509,18 +619,23 @@ class AppServiceApi(object):
         postDataList = getPostData(request)
 
         # 获取业务代码
-        userHandle= SpsUser.objects.get(account=account)
+        userHandle= SpsUser.objects.filter(account=postDataList["Account"])
 
-        if not userHandle:
+        if len(userHandle) != 1:
             loginResut = json.dumps({"ErrorInfo": "用户数据异常", "ErrorId": 10003, "Result": ""})
             return HttpResponse(loginResut)
+        else:
+            userHandle = userHandle[0]
 
         userHandle.email = postDataList["EMail"]
         userHandle.alias = postDataList["Alias"]
         userHandle.address = postDataList["Address"]
         userHandle.orgname = postDataList["OrgName"]
-        userHandle.lantudite = postDataList["Lantudite"]
-        userHandle.longdite = postDataList["Longdite"]
+        try:
+            userHandle.lantudite = postDataList["Lantudite"]
+            userHandle.longdite = postDataList["Longdite"]
+        except:
+            pass
 
         try:
             userHandle.save()
@@ -542,7 +657,7 @@ class AppServiceApi(object):
         rtnDict["StopDate"] = info.stopdate
         rtnDict["SCode"] = info.scode
         rtnDict["NotifyType"] = info.notifytype
-        rtnDict["Emal"] = info.email
+        rtnDict["EMail"] = info.email
         rtnDict["Phone"] = info.phone
         rtnDict["Enable"] = info.enable
         rtnDict["Fliter1"] = info.fliter1
@@ -566,3 +681,48 @@ class AppServiceApi(object):
         rtnDict["Lantudite"] = info.lantudite
         rtnDict["Longdite"] = info.longdite
         return  rtnDict
+
+    @staticmethod
+    def ApplySmscode(request):
+        print "PayForService"
+        # url中的参数提取
+        command = request.GET.get('Command')
+        timesnap = request.GET.get('TimeSnap')
+        sig = request.GET.get('Sig')
+        servicecode = request.GET.get('ServiceCode')
+
+        # 检查请求合法性
+        dict = {}
+        dict["COMMAND"] = command
+        dict["TIMESNAP"] = timesnap
+        dict["SIG"] = sig
+        dict["ServiceCode"] = servicecode
+
+        # 检查url合法性
+        result = PublicService.validUrl(timesnap,sig)
+        if not result:
+            loginResut = json.dumps({"ErrorInfo": "非法URL", "ErrorId": 10001, "Result": None})
+            return HttpResponse(loginResut)
+
+        # 提取post数据
+        postDataList = {}
+        postDataList = getPostData(request)
+
+        users = SpsUser.objects.filter(account=postDataList["Phone"])
+        if len(users) != 0:
+            loginResut = json.dumps({"ErrorInfo": "账户已注册，如果您忘记密码请联系客服", "ErrorId": 10002, "Result": ""})
+            return HttpResponse(loginResut)
+
+
+        smsHandle = SmsDataBuffer.createSmsObj(postDataList["Phone"])
+
+        for one in HsShareData.SmsListData:
+            if one.phone == smsHandle.phone:
+                HsShareData.SmsListData.remove(one)
+                break
+        HsShareData.SmsListData.append(smsHandle)
+
+        smsHandle.sendMessage()
+
+        loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": None})
+        return HttpResponse(loginResut)

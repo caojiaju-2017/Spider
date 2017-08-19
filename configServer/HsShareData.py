@@ -19,7 +19,7 @@ class HsShareData:
     GuestAccessDict = {}
     GuestMaxAccessCount = 50
 
-
+    SmsListData = []
 
     @staticmethod
     def getDocumentDir():
@@ -66,17 +66,17 @@ class HsShareData:
         return "/static/ReportImage/%s" % name
 
 
-class SmsInfo:
-    SMS_SEP = 60
-    def __init__(self):
-        self.Code = None
-        self.Time = None
-
-    def checkTimeOut(self):
-        starttime = datetime.datetime.strptime(self.Time, "%Y-%m-%d %H:%M:%S")
-        endtime = datetime.datetime.now()
-        sep = (endtime - starttime).seconds
-
-        if sep >= SmsInfo.SMS_SEP:
-            return  True
-        return False
+# class SmsInfo:
+#     SMS_SEP = 60
+#     def __init__(self):
+#         self.Code = None
+#         self.Time = None
+#
+#     def checkTimeOut(self):
+#         starttime = datetime.datetime.strptime(self.Time, "%Y-%m-%d %H:%M:%S")
+#         endtime = datetime.datetime.now()
+#         sep = (endtime - starttime).seconds
+#
+#         if sep >= SmsInfo.SMS_SEP:
+#             return  True
+#         return False

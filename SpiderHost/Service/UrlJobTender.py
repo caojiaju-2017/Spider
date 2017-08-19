@@ -157,6 +157,7 @@ class UrlJobTender(object):
 
             # 提取记录唯一性编码
             data["Unique"] = SUrlAttribute.getUniqueKey(data)
+            data["RecordTime"] = time.strftime( '%Y-%m-%d %X', time.localtime() )
             # data["Nation"] = NationDefine.getNation(data["Name"])
             data["Classfic"] = oneUrl.Classfic
             rowIndex = rowIndex+ 1

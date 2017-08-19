@@ -18,6 +18,8 @@
 
         <activity
             android:name=".MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
             android:label="@string/app_name" >
         </activity>
         <activity
@@ -31,9 +33,34 @@
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".Guide" >
+        <activity
+            android:name=".UserInfoActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".WelcomeAct" >
+
+        <activity
+            android:name=".BookDetailViewActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".HelpActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".Guide"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".WelcomeAct"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

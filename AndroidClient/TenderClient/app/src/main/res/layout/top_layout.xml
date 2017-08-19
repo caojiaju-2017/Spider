@@ -1,17 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/top_lay"
     android:layout_height="40dp"
     android:background="#444444"
     android:gravity="center"
     android:orientation="horizontal" >
 
     <ImageView
+        android:id="@+id/person_btn"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginLeft="10dp"
         android:layout_alignParentLeft="true"
-        android:src="@drawable/report_normal" />
+        android:src="@drawable/person" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,10 +24,11 @@
         android:textSize="20dp" />
 
     <ImageView
+        android:id="@+id/help_btn"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginRight="10dp"
         android:layout_alignParentRight="true"
-        android:src="@drawable/report_normal" />
+        android:src="@drawable/help" />
 
 </RelativeLayout>

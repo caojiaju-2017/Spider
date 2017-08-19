@@ -5,6 +5,7 @@
 # Desc: 短信http接口的python代码调用示例
 import httplib
 import urllib
+import random
 
 host  = "106.ihuyi.com"
 sms_send_uri = "/webservice/sms.php?method=Submit"
@@ -24,6 +25,9 @@ def send_sms(text, mobile):
     conn.close()
     return response_str
 
+def getSmsCode():
+    rd = random.randint(1000, 9999)
+    return "%d"%rd
 if __name__ == '__main__':
     mobile = "17828061593"
     text = "您的验证码是：121254。请不要把验证码泄露给其他人。"

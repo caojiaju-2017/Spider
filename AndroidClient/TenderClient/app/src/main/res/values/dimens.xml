@@ -14,4 +14,6 @@
     <dimen name="list_foot_padding">10dp</dimen>
     <dimen name="list_head_height">10dp</dimen>
 
+    <dimen name="pie_chart_text1_size">20sp</dimen>
+    <dimen name="pie_chart_text2_size">16dp</dimen>
 </resources>
