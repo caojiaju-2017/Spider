@@ -237,13 +237,11 @@ class WebCenterApi(object):
         client = MongoClient('www.h-sen.com', 27017)
 
         db = client['ZhuBaJie']
-        AdFliter = db["AdFliter"]
-        FaceRecognize = db["FaceRecognize"]
-        PyDev = db["PyDev"]
+        AdFliter = db["BaJieDb"]
 
         abc = {}
         datas = []
-        for item in db.FaceRecognize.find():
+        for item in AdFliter.find().limit(20):
             oneData = {}
             title = item["Title"]
 
@@ -257,21 +255,21 @@ class WebCenterApi(object):
 
             if len(datas) >= 20:
                 break
-
-        for item in db.AdFliter.find():
-            oneData = {}
-
-            if len(datas) >= 20:
-                break
-            title = item["Title"]
-            if len(title) > 10:
-                title = title[0:7] + "..."
-
-            oneData["Title"] = title
-            oneData["State"] = 1
-            oneData["Price"] = item["Price"]
-            oneData["ReceiveCode"] = "h-sen@qq.com"
-            datas.append(oneData)
+        #
+        # for item in db.AdFliter.find():
+        #     oneData = {}
+        #
+        #     if len(datas) >= 20:
+        #         break
+        #     title = item["Title"]
+        #     if len(title) > 10:
+        #         title = title[0:7] + "..."
+        #
+        #     oneData["Title"] = title
+        #     oneData["State"] = 1
+        #     oneData["Price"] = item["Price"]
+        #     oneData["ReceiveCode"] = "h-sen@qq.com"
+        #     datas.append(oneData)
 
         abc["Datas"] = datas
         abc["Count"] = len(datas)

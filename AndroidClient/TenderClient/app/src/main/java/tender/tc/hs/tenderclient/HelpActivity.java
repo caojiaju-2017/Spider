@@ -1,15 +1,28 @@
 package tender.tc.hs.tenderclient;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.tencent.mm.sdk.openapi.BaseReq;
+import com.tencent.mm.sdk.openapi.BaseResp;
+import com.tencent.mm.sdk.openapi.IWXAPI;
+import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.sdk.openapi.SendMessageToWX;
+import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.WXWebpageObject;
+import com.tencent.mm.sdk.platformtools.Util;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,11 +36,13 @@ import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
 import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
 import tender.tc.hs.tenderclient.Util.LogUtil;
 
-public class HelpActivity extends Activity implements OnClickListener
+public class HelpActivity extends Activity implements OnClickListener,IWXAPIEventHandler
 {
+    private IWXAPI api;
     Handler mainHandlers;
     ImageView img_go_back;
-    ImageView img_save_change;
+    ImageView wx_account1;
+    ImageView wx_account2;
 
     UserInfo _updateUserInfo;
     @Override
@@ -36,35 +51,22 @@ public class HelpActivity extends Activity implements OnClickListener
         requestWindowFeature(Window.FEATURE_NO_TITLE);// 去除title
 
         setContentView(R.layout.help_info);
+        api = WXAPIFactory.createWXAPI(this,"");
+        api.handleIntent(getIntent(),this);
 
         initView();
 
-//        // 注册主线程通信句柄
-//        registerComminucation();
-//
-//        // 加载当前用户数据
-//        loadUserInfo();
-    }
-
-    private void loadUserInfo() {
-        EditText et_account = (EditText)this.findViewById(R.id.et_account);
-        EditText et_email = (EditText)this.findViewById(R.id.et_email);
-        EditText china_name = (EditText)this.findViewById(R.id.china_name);
-        EditText custom_address = (EditText)this.findViewById(R.id.custom_address);
-        EditText org_name = (EditText)this.findViewById(R.id.org_name);
-        EditText service_t_date = (EditText)this.findViewById(R.id.service_t_date);
-
-        et_account.setText(HsApplication.Global_App._myUserInfo._account);
-        et_email.setText(HsApplication.Global_App._myUserInfo._email);
-        china_name.setText(HsApplication.Global_App._myUserInfo._Alias);
-        custom_address.setText(HsApplication.Global_App._myUserInfo._Address);
-        org_name.setText(HsApplication.Global_App._myUserInfo._orgName);
-        service_t_date.setText(HsApplication.Global_App._myUserInfo._serviceOverDate);
     }
 
     private void initView() {
         img_go_back = (ImageView)this.findViewById(R.id.go_back);
         img_go_back.setOnClickListener(this);
+
+        wx_account1 = (ImageView)this.findViewById(R.id.wx_account1);
+        wx_account2 = (ImageView)this.findViewById(R.id.wx_account2);
+
+        wx_account1.setOnClickListener(this);
+        wx_account2.setOnClickListener(this);
     }
 
     private void saveChange()
@@ -141,7 +143,67 @@ public class HelpActivity extends Activity implements OnClickListener
             case R.id.go_back:
                 this.finish();
                 break;
+            case R.id.wx_account1:
+                send(true);
+                break;
+            case R.id.wx_account2:
+                send(true);
+                break;
+        }
+    }
 
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+    //值为true，表示发送到朋友圈,反之发送给群或者好友
+    private void send(boolean sendType) {
+        Log.i("test","执行");
+
+        WXWebpageObject webpage = new WXWebpageObject();
+        webpage.webpageUrl = "www.h-sen.com";
+        WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.title = "客服二维码";
+        msg.description = "";
+        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.kf_erweima);
+        msg.thumbData = Util.bmpToByteArray(thumb, true);
+
+        SendMessageToWX.Req req = new SendMessageToWX.Req();
+        req.transaction = buildTransaction("webpage");
+        req.message = msg;
+        req.scene = sendType ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+
+        Toast.makeText(getApplicationContext(), "等待分配APPID,请稍后", Toast.LENGTH_LONG).show();
+        api.sendReq(req);
+    }
+
+    private String buildTransaction(final String type) {
+        return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
+    }
+
+    @Override
+    public void onReq(BaseReq baseReq) {
+    }
+
+    @Override
+    public void onResp(BaseResp baseResp) {
+        String result = null;
+        switch (baseResp.errCode) {
+            case BaseResp.ErrCode.ERR_OK:
+                result = "分享成功";
+                Log.i("test","分享成功");
+                break;
+            case BaseResp.ErrCode.ERR_USER_CANCEL:
+                result = "分享取消";
+                Log.i("test",""+result);
+                break;
+            case BaseResp.ErrCode.ERR_AUTH_DENIED:
+                result = "分享被拒绝";
+                Log.i("test",""+result);
+                break;
+            default:
+                result = "分享返回";
+                Log.i("test",""+result);
+                break;
         }
     }
 }

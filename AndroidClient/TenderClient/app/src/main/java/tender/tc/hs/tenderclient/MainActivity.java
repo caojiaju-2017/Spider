@@ -42,9 +42,9 @@ import org.json.JSONTokener;
 
 import lecho.lib.hellocharts.listener.LineChartOnValueSelectListener;
 import lecho.lib.hellocharts.listener.PieChartOnValueSelectListener;
-import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.SliceValue;
+import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
 import lecho.lib.hellocharts.view.PieChartView;
 import tender.tc.hs.tenderclient.Data.BookData;
@@ -55,6 +55,8 @@ import tender.tc.hs.tenderclient.HsListView.BookItemAdapter;
 import tender.tc.hs.tenderclient.HsListView.DisplayUtils;
 import tender.tc.hs.tenderclient.HsListView.QueryInfo;
 import tender.tc.hs.tenderclient.HsListView.XListView;
+import tender.tc.hs.tenderclient.Report.ColumnReportService;
+import tender.tc.hs.tenderclient.Report.PieReportService;
 import tender.tc.hs.tenderclient.Report.ReportObject;
 import tender.tc.hs.tenderclient.Report.LineReportService;
 import tender.tc.hs.tenderclient.Util.LogUtil;
@@ -137,7 +139,12 @@ public class MainActivity extends Activity implements OnClickListener ,
 
         _queryInfo = new QueryInfo(mainHandlers);
 
-        _queryInfo.queryNextBathc();
+        if (setHomeTips())
+        {
+            HsProgressDialog.newProgressDlg().show(MainActivity.this);
+            _queryInfo.queryNextBathc();
+        }
+
 //        showHomeWay(false);
     }
 
@@ -267,7 +274,7 @@ public class MainActivity extends Activity implements OnClickListener ,
                 if (on) {
                     Toast.makeText(MainActivity.this, "打开", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(MainActivity.this, "默认关闭", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "关闭", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -349,7 +356,15 @@ public class MainActivity extends Activity implements OnClickListener ,
                 layView.setVisibility(View.GONE);
                 img_report.setImageResource(R.drawable.report_pressed);
 
-                loadReportData();
+                if (setHomeTips())
+                {
+                    HsProgressDialog.newProgressDlg().show(MainActivity.this);
+                    loadReportData();
+                }
+                else
+                {
+                    Toast.makeText(MainActivity.this, "您的服务已过期或未设置任何可用订阅项，你可通过个人资料查看服务到期日", Toast.LENGTH_SHORT).show();
+                }
 
                 break;
             case R.id.img_add_cfg:
@@ -369,7 +384,7 @@ public class MainActivity extends Activity implements OnClickListener ,
                 break;
 
             case R.id.save_book_btn:
-                showLoginingDlg();
+                HsProgressDialog.newProgressDlg().show(MainActivity.this);
                 saveBookSetting();
                 break;
 
@@ -410,7 +425,7 @@ public class MainActivity extends Activity implements OnClickListener ,
         }).start();
     }
 
-    private void setHomeTips()
+    private boolean setHomeTips()
     {
 
         LinearLayout no_config_lay = mViews.get(1).findViewById(R.id.no_config_lay);
@@ -423,7 +438,7 @@ public class MainActivity extends Activity implements OnClickListener ,
             no_config_lay.setVisibility(View.VISIBLE);
             have_config_lay.setVisibility(View.GONE);
 
-            return;
+            return false;
         }
 
         if (HsApplication.Global_App._myUserInfo._myBookInfo == null ||
@@ -436,11 +451,13 @@ public class MainActivity extends Activity implements OnClickListener ,
             no_config_lay.setVisibility(View.VISIBLE);
             have_config_lay.setVisibility(View.GONE);
 
-            return;
+            return false;
         }
 
         have_config_lay.setVisibility(View.VISIBLE);
         no_config_lay.setVisibility(View.GONE);
+
+        return true;
     }
 
     /**
@@ -629,6 +646,12 @@ public class MainActivity extends Activity implements OnClickListener ,
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case CommandDefine.SET_BOOK: {
+                        try {
+                            HsProgressDialog.getProgressDlg().Close();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
                         String receiveData = msg.obj.toString();
 
                         JSONTokener jsonParser = new JSONTokener(receiveData);
@@ -661,6 +684,11 @@ public class MainActivity extends Activity implements OnClickListener ,
                         break;
                     }
                     case CommandDefine.QUERY_DATA: {
+                        try {
+                            HsProgressDialog.getProgressDlg().Close();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
                         String receiveData = msg.obj.toString();
 
                         JSONTokener jsonParser = new JSONTokener(receiveData);
@@ -712,13 +740,15 @@ public class MainActivity extends Activity implements OnClickListener ,
                         break;
                     }
                     case CommandDefine.GET_NORMAL_REPORT: {
+                        try {
+                            HsProgressDialog.getProgressDlg().Close();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
                         showReportData(msg);
                         break;
                     }
 
-                    case CommandDefine.SET_USERINFO: {
-                        break;
-                    }
                     case CommandDefine.GET_USERINFO: {
                         break;
                     }
@@ -767,6 +797,7 @@ public class MainActivity extends Activity implements OnClickListener ,
             return;
         }
 
+        report_container.removeAllViews();
         for (int index  = 0 ; index < HsApplication.Global_App._currentReportData.size(); index ++)
         {
             ReportObject oneReport = HsApplication.Global_App._currentReportData.get(index);
@@ -782,36 +813,59 @@ public class MainActivity extends Activity implements OnClickListener ,
 
                 //设置报表名称
                 TextView report_name = (TextView)dynmacReportView.findViewById(R.id.report_name);
-                report_name.setText(oneReport.reportName);
+                report_name.setText(oneReport.reportTitle);
 
                 // 按星期查看客户销售习惯分布
-                int dotCount = oneReport.collectionDatas.size();
                 LineChartView line_chart = (LineChartView) dynmacReportView.findViewById(R.id.line_chart);
                 line_chart.setOnValueTouchListener(new LineValueTouchListener());
 
                 LineReportService rs = new LineReportService(line_chart);
                 rs.getAxisXLables(oneReport);//获取x轴的标注
                 rs.getAxisPoints(oneReport);//获取坐标点
-                rs.initLineChart();//初始化
+                rs.initLineChart(oneReport);//初始化
 
             }
             else if(oneReport.type == 1) // 饼图
             {
-//                LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(
-//                        Context.LAYOUT_INFLATER_SERVICE);
-//                LinearLayout dynmacReportView = (LinearLayout) inflater.inflate(
-//                        R.layout.report_pie, null);
-//                report_container.addView(dynmacReportView);
-//                LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtils.dip2px(this,270));
-//                dynmacReportView.setLayoutParams(mLayoutParams);
-//                //设置报表名称
-//                TextView report_name = (TextView)dynmacReportView.findViewById(R.id.report_name);
-//                report_name.setText(oneReport.reportName);
-//
-//                PieChartView pie_chart = (PieChartView) this.findViewById(R.id.pie_chart);
-//                pie_chart.setOnValueTouchListener(new ValueTouchListener());
-//                PieChartData pie_chart_data = LineReportService.generatePieData(oneReport);
-//                pie_chart.setPieChartData(pie_chart_data);
+                LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE);
+                LinearLayout dynmacReportView = (LinearLayout) inflater.inflate(
+                        R.layout.report_pie, null);
+                report_container.addView(dynmacReportView);
+                LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtils.dip2px(this,270));
+                dynmacReportView.setLayoutParams(mLayoutParams);
+                //设置报表名称
+                TextView report_name = (TextView)dynmacReportView.findViewById(R.id.report_name);
+                report_name.setText(oneReport.reportTitle);
+
+                PieChartView pie_chart = (PieChartView) this.findViewById(R.id.pie_chart);
+                pie_chart.setOnValueTouchListener(new ValueTouchListener());
+
+                PieReportService pieReportService = new PieReportService(pie_chart);
+                pieReportService.setPieChartData(oneReport);
+                pieReportService.initPieChart(oneReport);
+            }
+            else if (oneReport.type == 2)
+            {
+                LayoutInflater inflater = (LayoutInflater) MainActivity.this.getSystemService(
+                        Context.LAYOUT_INFLATER_SERVICE);
+                LinearLayout dynmacReportView = (LinearLayout) inflater.inflate(
+                        R.layout.report_column, null);
+                report_container.addView(dynmacReportView);
+                LinearLayout.LayoutParams mLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtils.dip2px(this,270));
+                dynmacReportView.setLayoutParams(mLayoutParams);
+                //设置报表名称
+                TextView report_name = (TextView)dynmacReportView.findViewById(R.id.report_name);
+                report_name.setText(oneReport.reportTitle);
+
+                ColumnChartView column_chart = (ColumnChartView) this.findViewById(R.id.column_chart);
+//                column_chart.setOnValueTouchListener(new ValueTouchListener());
+                column_chart.setZoomEnabled(false);//禁止手势缩放
+
+                ColumnReportService columnReportService = new ColumnReportService(column_chart);
+
+                columnReportService.setData(oneReport);
+                columnReportService.initChart(oneReport);
             }
         }
 

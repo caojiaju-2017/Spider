@@ -156,8 +156,8 @@ class UrlJobBaJie(object):
 
             # 提取记录唯一性编码
             data["Unique"] = SUrlAttribute.getUniqueKey(data)
-            # data["Nation"] = NationDefine.getNation(data["Name"])
-            # data["Classfic"] = "人脸识别"
+            data["RecordTime"] = time.strftime('%Y-%m-%d %X', time.localtime())
+            data["Classfic"] = oneUrl.Classfic
             rowIndex = rowIndex+ 1
 
             # 处理关联属性============================================

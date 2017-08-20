@@ -6,104 +6,86 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
-import lecho.lib.hellocharts.gesture.ContainerScrollType;
-import lecho.lib.hellocharts.gesture.ZoomType;
-import lecho.lib.hellocharts.model.Axis;
-import lecho.lib.hellocharts.model.AxisValue;
-import lecho.lib.hellocharts.model.Line;
-import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PieChartData;
 import lecho.lib.hellocharts.model.PointValue;
-import lecho.lib.hellocharts.model.ValueShape;
-import lecho.lib.hellocharts.model.Viewport;
-import lecho.lib.hellocharts.view.LineChartView;
+import lecho.lib.hellocharts.model.SliceValue;
+import lecho.lib.hellocharts.util.ChartUtils;
+import lecho.lib.hellocharts.view.PieChartView;
 
 /**
  * Created by caojiaju on 2016/8/19.
  */
 public class PieReportService {
 
-    private LineChartView lineChart;
+    private PieChartView pieChart;
+    private PieChartData pieChardata;
+    List<SliceValue> values = new ArrayList<SliceValue>();
+//    private int[] data = {21,20,9,2,8,33,14,12};
 
-//    String[] date = {"10-22","11-22","12-22","1-22","6-22","5-23","5-22","6-22","5-23","5-22"};//X轴的标注
-//    int[] score= {50,42,90,33,10,74,22,18,79,20};//图表的数据点
-    private List<PointValue> mPointValues = new ArrayList<PointValue>();
-    private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
-
-    public PieReportService(LineChartView lcv)
+    public  PieReportService(PieChartView pcv)
     {
-        lineChart = lcv;
+        pieChart = pcv;
     }
     /**
-     * 设置X 轴的显示
+     * 获取数据
      */
-    public void getAxisXLables(ReportObject rp){
-//        for (int i = 0; i < date.length; i++) {
-//            mAxisXValues.add(new AxisValue(i).setLabel(date[i]));
+    public void setPieChartData(ReportObject ro){
+
+//        int index = 0;
+//        for (int i = 0; i < ro.collectionDatas.size(); ++i) {
+//            SliceValue sliceValue = new SliceValue((float) data[i], Color.parseColor(getRandColorCode()));//这里的颜色是我写了一个工具类 是随机选择颜色的
+//            values.add(sliceValue);
 //        }
-        int index = 0;
-        for (Map.Entry<String, Object> entry : rp.collectionDatas.entrySet()) {
-            mAxisXValues.add(new AxisValue(index).setLabel(entry.getKey()));
+
+        for (int index = 0 ; index < ro._valueLists.size(); index ++) {
+            SliceValue sliceValue = new SliceValue((float) ro._valueLists.get(index), ChartUtils.pickColor());
+            values.add(sliceValue);
         }
     }
+
+
     /**
-     * 图表的每个点的显示
+     * 初始化
      */
-    public void getAxisPoints(ReportObject rp) {
-        int index = 0;
-        for (Map.Entry<String, Object> entry : rp.collectionDatas.entrySet()) {
-            mPointValues.add(new PointValue(index++, Integer.parseInt(entry.getValue().toString())));
-        }
+    public void initPieChart(ReportObject ro) {
+        pieChardata = new PieChartData();
+        pieChardata.setHasLabels(true);//显示表情
+        pieChardata.setHasLabelsOnlyForSelected(false);//不用点击显示占的百分比
+        pieChardata.setHasLabelsOutside(false);//占的百分比是否显示在饼图外面
+        pieChardata.setHasCenterCircle(true);//是否是环形显示
+        pieChardata.setValues(values);//填充数据
+        pieChardata.setCenterCircleColor(Color.WHITE);//设置环形中间的颜色
+        pieChardata.setCenterCircleScale(0.5f);//设置环形的大小级别
+        pieChardata.setCenterText1(ro.innerLabelName);//环形中间的文字1
+        pieChardata.setCenterText1Color(Color.BLACK);//文字颜色
+        pieChardata.setCenterText1FontSize(14);//文字大小
+
+//        pieChardata.setCenterText2("饼图测试");
+        pieChardata.setCenterText2Color(Color.BLACK);
+        pieChardata.setCenterText2FontSize(18);
+        /**这里也可以自定义你的字体   Roboto-Italic.ttf这个就是你的字体库*/
+//      Typeface tf = Typeface.createFromAsset(this.getAssets(), "Roboto-Italic.ttf");
+//      data.setCenterText1Typeface(tf);
+
+        pieChart.setPieChartData(pieChardata);
+        pieChart.setValueSelectionEnabled(true);//选择饼图某一块变大
+        pieChart.setAlpha(0.9f);//设置透明度
+        pieChart.setCircleFillRatio(1f);//设置饼图大小
+
     }
+    public static String getRandColorCode(){
+        String r,g,b;
+        Random random = new Random();
+        r = Integer.toHexString(random.nextInt(256)).toUpperCase();
+        g = Integer.toHexString(random.nextInt(256)).toUpperCase();
+        b = Integer.toHexString(random.nextInt(256)).toUpperCase();
 
-    public void initLineChart(){
-            Line line = new Line(mPointValues).setColor(Color.parseColor("#FFCD41"));  //折线的颜色（橙色）
-            List<Line> lines = new ArrayList<Line>();
-            line.setShape(ValueShape.CIRCLE);//折线图上每个数据点的形状  这里是圆形 （有三种 ：ValueShape.SQUARE  ValueShape.CIRCLE  ValueShape.DIAMOND）
-            line.setCubic(false);//曲线是否平滑，即是曲线还是折线
-            line.setFilled(false);//是否填充曲线的面积
-            line.setHasLabels(true);//曲线的数据坐标是否加上备注
-//      line.setHasLabelsOnlyForSelected(true);//点击数据坐标提示数据（设置了这个line.setHasLabels(true);就无效）
-            line.setHasLines(true);//是否用线显示。如果为false 则没有曲线只有点显示
-            line.setHasPoints(true);//是否显示圆点 如果为false 则没有原点只有点显示（每个数据点都是个大的圆点）
-            lines.add(line);
-            LineChartData data = new LineChartData();
-            data.setLines(lines);
+        r = r.length()==1 ? "0" + r : r ;
+        g = g.length()==1 ? "0" + g : g ;
+        b = b.length()==1 ? "0" + b : b ;
 
-            //坐标轴
-            Axis axisX = new Axis(); //X轴
-            axisX.setHasTiltedLabels(true);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
-            axisX.setTextColor(Color.WHITE);  //设置字体颜色
-            //axisX.setName("date");  //表格名称
-            axisX.setTextSize(10);//设置字体大小
-            axisX.setMaxLabelChars(8); //最多几个X轴坐标，意思就是你的缩放让X轴上数据的个数7<=x<=mAxisXValues.length
-            axisX.setValues(mAxisXValues);  //填充X轴的坐标名称
-            data.setAxisXBottom(axisX); //x 轴在底部
-            //data.setAxisXTop(axisX);  //x 轴在顶部
-            axisX.setHasLines(true); //x 轴分割线
-
-            // Y轴是根据数据的大小自动设置Y轴上限(在下面我会给出固定Y轴数据个数的解决方案)
-            Axis axisY = new Axis();  //Y轴
-            axisY.setName("");//y轴标注
-            axisY.setTextSize(10);//设置字体大小
-            data.setAxisYLeft(axisY);  //Y轴设置在左边
-            //data.setAxisYRight(axisY);  //y轴设置在右边
-
-
-            //设置行为属性，支持缩放、滑动以及平移
-            lineChart.setInteractive(true);
-            lineChart.setZoomType(ZoomType.HORIZONTAL);
-            lineChart.setMaxZoom((float) 2);//最大方法比例
-            lineChart.setContainerScrollEnabled(true, ContainerScrollType.HORIZONTAL);
-            lineChart.setLineChartData(data);
-            lineChart.setVisibility(View.VISIBLE);
-            /**注：下面的7，10只是代表一个数字去类比而已
-             * 当时是为了解决X轴固定数据个数。见（http://forum.xda-developers.com/tools/programming/library-hellocharts-charting-library-t2904456/page2）;
-             */
-            Viewport v = new Viewport(lineChart.getMaximumViewport());
-            v.left = 0;
-            v.right= 7;
-            lineChart.setCurrentViewport(v);
-        }
-
+        return "#" + r+g+b;
+    }
 }

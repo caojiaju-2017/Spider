@@ -16,6 +16,7 @@ public class HsApplication extends Application {
 //	public String url_HeadString = "http://115.159.224.102:7001";
 
 	public String SrvCode = "CHINA_ZF_ZB_0000"; // 政府招标信息
+	public String wxAppid = "";
 
 	public UserInfo _myUserInfo;
 

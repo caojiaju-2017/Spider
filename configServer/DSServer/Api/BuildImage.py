@@ -110,11 +110,11 @@ class BuildImage(object):
 
         del rects1
 
-        plt.close()
+        # plt.close()
 
         del index
 
-        gc.collect()
+        # gc.collect()
         # plt.show()
         return "/static/ReportImage/%s" % name
 class ImageType(object):

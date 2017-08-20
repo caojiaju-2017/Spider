@@ -166,7 +166,7 @@
 					android:layout_toEndOf="@+id/service_t_lab" />
 
 				<Button
-					android:id="@+id/but_showDate2"
+					android:id="@+id/pay_btn"
 					android:layout_width="60dip"
 					android:layout_height="wrap_content"
 					android:text="续费"

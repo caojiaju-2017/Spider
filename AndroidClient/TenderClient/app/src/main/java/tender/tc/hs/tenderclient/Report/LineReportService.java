@@ -41,9 +41,6 @@ import tender.tc.hs.tenderclient.R;
 public class LineReportService {
 
     private LineChartView lineChart;
-
-//    String[] date = {"10-22","11-22","12-22","1-22","6-22","5-23","5-22","6-22","5-23","5-22"};//X轴的标注
-//    int[] score= {50,42,90,33,10,74,22,18,79,20};//图表的数据点
     private List<PointValue> mPointValues = new ArrayList<PointValue>();
     private List<AxisValue> mAxisXValues = new ArrayList<AxisValue>();
 
@@ -55,22 +52,31 @@ public class LineReportService {
      * 设置X 轴的显示
      */
     public void getAxisXLables(ReportObject rp){
-        int index = 0;
-        for (Map.Entry<String, Object> entry : rp.collectionDatas.entrySet()) {
-            mAxisXValues.add(new AxisValue(index).setLabel(entry.getKey()));
+//        int index = 0;
+//        for (Map.Entry<String, Object> entry : rp.collectionDatas.entrySet()) {
+//            mAxisXValues.add(new AxisValue(index++).setLabel(entry.getKey()));
+//        }
+
+        for (int index = 0 ; index < rp._keyLists.size(); index++) {
+            mAxisXValues.add(new AxisValue(index++).setLabel(rp._keyLists.get(index)));
         }
     }
     /**
      * 图表的每个点的显示
      */
     public void getAxisPoints(ReportObject rp) {
-        int index = 0;
-        for (Map.Entry<String, Object> entry : rp.collectionDatas.entrySet()) {
-            mPointValues.add(new PointValue(index++, Integer.parseInt(entry.getValue().toString())));
+
+//        int index = 0;
+//        for (Map.Entry<String, Object> entry : rp.collectionDatas.entrySet()) {
+//            mPointValues.add(new PointValue(index++, Integer.parseInt(entry.getValue().toString())));
+//        }
+
+        for (int index = 0 ; index < rp._valueLists.size(); index ++) {
+            mPointValues.add(new PointValue(index++, rp._valueLists.get(index)));
         }
     }
 
-    public void initLineChart(){
+    public void initLineChart(ReportObject rb){
             Line line = new Line(mPointValues).setColor(Color.parseColor("#FFCD41"));  //折线的颜色（橙色）
             List<Line> lines = new ArrayList<Line>();
             line.setShape(ValueShape.CIRCLE);//折线图上每个数据点的形状  这里是圆形 （有三种 ：ValueShape.SQUARE  ValueShape.CIRCLE  ValueShape.DIAMOND）
@@ -87,9 +93,9 @@ public class LineReportService {
             //坐标轴
             Axis axisX = new Axis(); //X轴
             axisX.setHasTiltedLabels(true);  //X坐标轴字体是斜的显示还是直的，true是斜的显示
-            axisX.setTextColor(Color.WHITE);  //设置字体颜色
-            //axisX.setName("date");  //表格名称
-            axisX.setTextSize(10);//设置字体大小
+            axisX.setTextColor(Color.parseColor("#666666"));  //设置字体颜色
+            axisX.setName(rb.xLabelName);  //表格名称
+            axisX.setTextSize(11);//设置字体大小
             axisX.setMaxLabelChars(8); //最多几个X轴坐标，意思就是你的缩放让X轴上数据的个数7<=x<=mAxisXValues.length
             axisX.setValues(mAxisXValues);  //填充X轴的坐标名称
             data.setAxisXBottom(axisX); //x 轴在底部
@@ -98,8 +104,9 @@ public class LineReportService {
 
             // Y轴是根据数据的大小自动设置Y轴上限(在下面我会给出固定Y轴数据个数的解决方案)
             Axis axisY = new Axis();  //Y轴
-            axisY.setName("");//y轴标注
-            axisY.setTextSize(10);//设置字体大小
+            axisY.setName(rb.yLabelName);//y轴标注
+            axisY.setTextColor(Color.parseColor("#666666"));  //设置字体颜色
+            axisY.setTextSize(11);//设置字体大小
             data.setAxisYLeft(axisY);  //Y轴设置在左边
             //data.setAxisYRight(axisY);  //y轴设置在右边
 

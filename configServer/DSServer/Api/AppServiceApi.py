@@ -10,6 +10,8 @@ from DSServer.Api.PublicService import *
 from SmsDataBuffer import *
 from DSServer.models import *
 
+from DSServer.Api.ReportServiceTender import *
+
 # python标准库导入
 import json,re,pymongo
 from pymongo import MongoClient
@@ -388,7 +390,7 @@ class AppServiceApi(object):
             else:
                 bookHandle = bookHandles[0]
 
-            # 没配置订阅项
+            # 没配置订阅项---缺少时间过滤
             if (bookHandle.fliter1 and len(bookHandle.fliter1) <= 0) or \
                     (bookHandle.fliter2 and len(bookHandle.fliter2) <= 0) or\
                     (bookHandle.fliter3 and len(bookHandle.fliter3) <= 0) or \
@@ -470,31 +472,86 @@ class AppServiceApi(object):
         postDataList = {}
         postDataList = getPostData(request)
 
+        bookHandles = SpsUserOrder.objects.filter(account=postDataList["Account"], scode=servicecode)
+        bookHandle = None
+        if len(bookHandles) != 1:
+            bookHandle = None
+        else:
+            bookHandle = bookHandles[0]
+
+        rtnDict = []
+
+        if bookHandle:
+            resultDict = ReportServiceTender.buildKeyPieReport(bookHandle)
+            rtnDict.append(resultDict)
+
+        rtnDict.append(ReportServiceTender.buildHistoryLineReport(30))
+        rtnDict.append(ReportServiceTender.buildWeekColumnReport(7))
+
+        # rtnDict = AppServiceApi.buildTestReportData()
+        loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": rtnDict})
+        return HttpResponse(loginResut)
+
+    @staticmethod
+    def buildTestReportData():
         rtnResult = []
         oneConfig = {}
-        oneConfig["Title"] = "报表测试"
+        oneConfig["Title"] = "线图"
+        oneConfig["YLabel"] = "发标量(个)"
+        oneConfig["XLabel"] = "按日期"
+        oneConfig["InnerLabel"] = "按关键字分布"
         oneConfig["Type"] = 0
 
         innerData = {}
-        innerData["A"] = 10
-        innerData["B"] = 53
-        innerData["C"] = 34
+        innerData["A"] = random.randint(10, 100)
+        innerData["B"] = random.randint(10, 100)
+        innerData["C"] = random.randint(10, 100)
+        innerData["D"] = random.randint(10, 100)
+        innerData["E"] = random.randint(10, 100)
+        innerData["F"] = random.randint(10, 100)
+        innerData["G"] = random.randint(10, 100)
+        innerData["H"] = random.randint(10, 100)
+        innerData["I"] = random.randint(10, 100)
+        innerData["J"] = random.randint(10, 100)
+        innerData["K"] = random.randint(10, 100)
+        innerData["L"] = random.randint(10, 100)
         oneConfig["Values"] = innerData
 
         oneConfig2 = {}
-        oneConfig2["Title"] = "报表测试"
-        oneConfig2["Type"] = 0
-        innerData2= {}
-        innerData2["A"] = 10
-        innerData2["B"] = 53
-        innerData2["C"] = 34
-        oneConfig2["Values"] = innerData
+        oneConfig2["Title"] = "饼图"
+        oneConfig2["YLabel"] = "发标量(个)"
+        oneConfig2["XLabel"] = "按日期"
+        oneConfig2["InnerLabel"] = "按关键字分布"
+        oneConfig2["Type"] = 1
+        innerData2 = {}
+        innerData2["A"] = random.randint(10, 100)
+        innerData2["B"] = random.randint(10, 100)
+        innerData2["C"] = random.randint(10, 100)
+        innerData2["D"] = random.randint(10, 100)
+        innerData2["E"] = random.randint(10, 100)
+        innerData2["F"] = random.randint(10, 100)
+        oneConfig2["Values"] = innerData2
+
+        oneConfig3 = {}
+        oneConfig3["Title"] = "柱状图"
+        oneConfig3["YLabel"] = "发标量(个)"
+        oneConfig3["XLabel"] = "按日期"
+        oneConfig3["InnerLabel"] = "按关键字分布"
+        oneConfig3["Type"] = 2
+        innerData3 = {}
+        innerData3["A"] = random.randint(10, 100)
+        innerData3["B"] = random.randint(10, 100)
+        innerData3["C"] = random.randint(10, 100)
+        innerData3["D"] = random.randint(10, 100)
+        innerData3["E"] = random.randint(10, 100)
+        innerData3["F"] = random.randint(10, 100)
+        oneConfig3["Values"] = innerData2
 
         rtnResult.append(oneConfig)
         rtnResult.append(oneConfig2)
-        loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": rtnResult})
-        return HttpResponse(loginResut)
+        rtnResult.append(oneConfig3)
 
+        return rtnResult
     # 支付后触发
     @staticmethod
     def PayForService(request):

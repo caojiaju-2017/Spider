@@ -48,7 +48,7 @@ public class UserInfoActivity extends Activity implements OnClickListener
     Handler mainHandlers;
     ImageView img_go_back;
     ImageView img_save_change;
-
+    Button pay_btn;
     UserInfo _updateUserInfo;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +85,11 @@ public class UserInfoActivity extends Activity implements OnClickListener
     private void initView() {
         img_go_back = (ImageView)this.findViewById(R.id.go_back);
         img_save_change = (ImageView)this.findViewById(R.id.save_change);
+        pay_btn = (Button)this.findViewById(R.id.pay_btn);
 
         img_go_back.setOnClickListener(this);
         img_save_change.setOnClickListener(this);
+        pay_btn.setOnClickListener(this);
     }
 
     private void saveChange()
@@ -147,6 +149,12 @@ public class UserInfoActivity extends Activity implements OnClickListener
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case CommandDefine.SET_USERINFO: {
+                        try {
+                            HsProgressDialog.getProgressDlg().Close();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
                         String receiveData = msg.obj.toString();
 
                         JSONTokener jsonParser = new JSONTokener(receiveData);
@@ -201,7 +209,12 @@ public class UserInfoActivity extends Activity implements OnClickListener
                 break;
 
             case R.id.save_change:
+                HsProgressDialog.newProgressDlg().show(UserInfoActivity.this);
                 saveChange();
+                break;
+
+            case R.id.pay_btn:
+                Toast.makeText(getApplicationContext(), "暂未开发在线续费(后续升级会提供)，请联系管理员续费，管理员微信号：han_sen2017", Toast.LENGTH_LONG).show();
                 break;
         }
     }

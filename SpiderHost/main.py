@@ -74,6 +74,12 @@ def startWorkThread(config):
 
     return
 
+def startDbBackThread():
+    from MongoDb.backupMongoDb import *
+    t = threading.Thread(target=backupMongoDb.BackDb)
+    t.daemon = True
+    t.start()
+
 if __name__ == "__main__":
     while True:
         str = raw_input(u"请选择操作内容：\n    输入r, 运行爬虫 \n    输入q,退出程序\n你的输入：")
@@ -82,7 +88,7 @@ if __name__ == "__main__":
         elif str.lower() == "q":
             exit()
 
-
+    startDbBackThread()
     startMain()
     while True:
         str = raw_input(u"请选择操作内容：\n    输入q,退出程序\n你的输入：")
