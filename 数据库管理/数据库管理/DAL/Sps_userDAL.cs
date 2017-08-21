@@ -37,12 +37,44 @@ namespace 数据库管理.DAL
             Sps_user op = new Sps_user();
             op.Id = Convert.ToInt32(row["Id"]);
             op.Account = (string)row["Account"];
-            op.EMail = (string)row["EMail"];
-            op.Alias = (string)row["Alias"];
-            op.Address = (string)row["Address"];
-            op.OrgName = (string)row["OrgName"];
-            op.Lantudite = (float)row["Lantudite"];
-            op.Longdite = (float)row["Longdite"];
+            try
+            {
+                op.EMail = (string)row["EMail"];
+            }
+            catch
+            {
+                op.EMail = "";
+            }
+            
+            try
+            {
+                op.Alias = (string)row["Alias"];
+            }
+            catch
+            {
+                op.Alias = "";
+            }
+
+            try
+            {
+                op.Address = (string)row["Address"];
+            }
+            catch
+            {
+                op.Address = "";
+            }
+
+            try
+            {
+                op.OrgName = (string)row["OrgName"];
+            }
+            catch
+            {
+                op.OrgName = "";
+            }
+
+            //op.Lantudite = (float)row["Lantudite"];
+            //op.Longdite = (float)row["Longdite"];
            
             return op;
         }

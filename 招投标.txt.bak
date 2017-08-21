@@ -2,13 +2,13 @@
 	发布时间   ok
 	招投标标题  ok
 	采购项目编号  OK  #table_main > tbody > tr:nth-of-type(2) > td.bordertt.confont   
-	采购项目名称  ok
+	采购项目名称  ok  #table_main > tbody > tr:nth-of-type(1) > td.bordertt.confont   
 	采购方式    ok  #table_main > tbody > tr:nth-of-type(3) > td.bordertt.confont   
 	行政区划
 	采 购 人  #table_main > tbody > tr:nth-of-type(7) > td.bordertt.confont
 	详细链接   ok
 	
-四川采购网：http://www.sczfcg.com/view/srplatform/portal/index.html
+四川采购网：http://www.sczfcg.com/view/srplatform/portal/index.html   																			ok
 	省级采购
 	http://www.sczfcg.com/CmsNewsController.do?method=recommendBulletinList&rp=25&page=1&moreType=provincebuyBulletinMore&channelCode=cggg
 	市采购公告
@@ -25,7 +25,7 @@
 	http://www.ccgp-hubei.gov.cn/pages/html/szbnotice.html   省
 	http://www.ccgp-hubei.gov.cn/pages/html/xzbnotice.html   --市
 	
-山东省政府采购网---http://www.ccgp-shandong.gov.cn/sdgp2014/site/index.jsp
+山东省政府采购网---http://www.ccgp-shandong.gov.cn/sdgp2014/site/index.jsp ----------------------------		ok
 	http://www.ccgp-shandong.gov.cn/sdgp2014/site/channelall.jsp?curpage=1&colcode=0301&subject=&pdate=   省
 	http://www.ccgp-shandong.gov.cn/sdgp2014/site/channelall.jsp?curpage=1&colcode=0303&subject=&pdate=   市县
 
@@ -34,15 +34,15 @@
 
 	翻页功能需要 在抓取后执行js代码：<a href="javascript:__doPostBack('MoreInfoList1$Pager','3')"  实现翻页
 
-福建省政府采购网http://cz.fjzfcg.gov.cn/
+福建省政府采购网http://cz.fjzfcg.gov.cn/                         -----------------------------------------
 	http://cz.fjzfcg.gov.cn/notice/noticelist/?page=1
 
-陕西省政府采购网 http://www.ccgp-shaanxi.gov.cn/
+陕西省政府采购网 http://www.ccgp-shaanxi.gov.cn/                    ok
 	http://www.ccgp-shaanxi.gov.cn/cggg.jsp
 
-山西省政府采购网  http://www.ccgp-shanxi.gov.cn/default.html
+山西省政府采购网  http://www.ccgp-shanxi.gov.cn/default.html         ok
 
-广东省政府采购网 http://www.gdgpo.gov.cn/
+广东省政府采购网 http://www.gdgpo.gov.cn/                   ok 50
 	http://www.gdgpo.gov.cn/queryMoreInfoList.do
 	http://www.gdgpo.gov.cn/queryPrjReqList.html
 

@@ -191,6 +191,10 @@ namespace 数据库管理
                     {
                         dgvShowUrl_Attr.Rows[d].Cells["结果计算方式"].Value = "后缀";
                     }
+                    if (spUrl[i].CalcWay == "12")
+                    {
+                        dgvShowUrl_Attr.Rows[d].Cells["结果计算方式"].Value = "静态字符(通过子属性绑定)";
+                    }
                     if (spUrl[i].CalcWay == "99")
                     {
                         dgvShowUrl_Attr.Rows[d].Cells["结果计算方式"].Value = "原字符";
@@ -302,6 +306,10 @@ namespace 数据库管理
             if (cBoxCalcWay.Text == "原字符")
             {
                 spUrl.CalcWay = "99";
+            }
+            if (cBoxCalcWay.Text == "静态字符(通过子属性绑定)")
+            {
+                spUrl.CalcWay = "12";
             }
             if (cBoxIsUrl.Text == "是")
             {

@@ -87,10 +87,13 @@ class SUrlAttribute(object):
     @staticmethod
     def getValue(url, item, rawData):
         rtnValue = None
-        if not item.SubAttr or len(item.SubAttr.lstrip()) == 0:
-            rtnValue = rawData.get_text()
-        else:
-            rtnValue = rawData.get(item.SubAttr.strip())
+        try:
+            if not item.SubAttr or len(item.SubAttr.lstrip()) == 0:
+                rtnValue = rawData.get_text()
+            else:
+                rtnValue = rawData.get(item.SubAttr.strip())
+        except:
+            pass
 
         if item.CalcWay == "00":
             rtnValue = rtnValue.replace(item.ExternStr, "")
@@ -98,6 +101,8 @@ class SUrlAttribute(object):
             rtnValue = SUrlAttribute.getExternedValue(url, item, item.ExternStr) + rtnValue
         elif item.CalcWay == "11":
             rtnValue = rtnValue + SUrlAttribute.getExternedValue(url, item, item.ExternStr)
+        elif item.CalcWay == "12":
+            rtnValue = item.SubAttr
         elif item.CalcWay == "99":
             pass
         return rtnValue

@@ -31,6 +31,8 @@ if __name__ == "__main__":
     #     'http://www.sczfcg.com/CmsNewsController.do?method=recommendBulletinList&rp=25&page=1&moreType=provincebuyBulletinMore&channelCode=cggg',
     #     'div.colsList > ul > li > a')
     # print testAttribute('http://www.qianlima.com/zbgg/', 'div.sevenday_list > dl > dt > a')
-    print testAttribute('http://202.61.88.152:9002/view/staticpags/xjcggg/2017-08-03/731bca7b6169457d870226b1393e4454.html', 'table > tr:nth-of-type(2) > td.bordertt.confont')
+    attr = 'div.list_list > ul > li'
+    url = 'http://www.ccgp-jiangsu.gov.cn/cgxx/cggg/index_1.html'
+    testAttribute(url, attr)
 
     # testAttribute("","")  HTTP Error 403: Forbidden

@@ -97,6 +97,7 @@
             this.克隆ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.克隆含属性ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.btnTestAttribute = new System.Windows.Forms.Button();
             this.btnCopyUrl = new System.Windows.Forms.Button();
             this.txtAttachAttr = new System.Windows.Forms.TextBox();
             this.btnAddUrl_Attr = new System.Windows.Forms.Button();
@@ -118,7 +119,6 @@
             this.IdUrl_Attr = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.cMstripUrl_Attr = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.删除 = new System.Windows.Forms.ToolStripMenuItem();
-            this.btnTestAttribute = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvShowUrl)).BeginInit();
@@ -564,7 +564,8 @@
             "替换",
             "前缀",
             "后缀",
-            "原字符"});
+            "原字符",
+            "静态字符(通过子属性绑定)"});
             this.cBoxCalcWay.Location = new System.Drawing.Point(677, 283);
             this.cBoxCalcWay.Margin = new System.Windows.Forms.Padding(2);
             this.cBoxCalcWay.Name = "cBoxCalcWay";
@@ -851,6 +852,19 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Url属性";
             // 
+            // btnTestAttribute
+            // 
+            this.btnTestAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.btnTestAttribute.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.btnTestAttribute.Location = new System.Drawing.Point(1260, 277);
+            this.btnTestAttribute.Margin = new System.Windows.Forms.Padding(2);
+            this.btnTestAttribute.Name = "btnTestAttribute";
+            this.btnTestAttribute.Size = new System.Drawing.Size(109, 34);
+            this.btnTestAttribute.TabIndex = 78;
+            this.btnTestAttribute.Text = "测试该属性";
+            this.btnTestAttribute.UseVisualStyleBackColor = true;
+            this.btnTestAttribute.Click += new System.EventHandler(this.btnTestAttribute_Click);
+            // 
             // btnCopyUrl
             // 
             this.btnCopyUrl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -1046,19 +1060,6 @@
             this.删除.Size = new System.Drawing.Size(108, 24);
             this.删除.Text = "删除";
             this.删除.Click += new System.EventHandler(this.删除_Click);
-            // 
-            // btnTestAttribute
-            // 
-            this.btnTestAttribute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.btnTestAttribute.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.btnTestAttribute.Location = new System.Drawing.Point(1260, 277);
-            this.btnTestAttribute.Margin = new System.Windows.Forms.Padding(2);
-            this.btnTestAttribute.Name = "btnTestAttribute";
-            this.btnTestAttribute.Size = new System.Drawing.Size(109, 34);
-            this.btnTestAttribute.TabIndex = 78;
-            this.btnTestAttribute.Text = "测试该属性";
-            this.btnTestAttribute.UseVisualStyleBackColor = true;
-            this.btnTestAttribute.Click += new System.EventHandler(this.btnTestAttribute_Click);
             // 
             // frmInfo
             // 
