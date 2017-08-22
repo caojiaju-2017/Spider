@@ -23,6 +23,7 @@
     <string name="header_last_time">加载</string>
 
     <string name="countries_and_areas">用户注册</string>
+    <string name="forget_password">密码重置</string>
     <string name="password">密码</string>
 
     <string name="xlistview_header_hint_normal">下拉刷新</string>

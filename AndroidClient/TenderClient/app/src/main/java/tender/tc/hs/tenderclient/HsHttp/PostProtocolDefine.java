@@ -49,6 +49,10 @@ public class PostProtocolDefine
 		{
 			metaUrl = String.format("/api/account/?Command=REG_ACCOUNT&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
+		else if (mCommand == CommandDefine.RESET_PASSWORD)
+		{
+			metaUrl = String.format("/api/account/?Command=RESET_PASSWORD&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
+		}
 		else if(mCommand == CommandDefine.GET_BOOK)
 		{
 			metaUrl = String.format("/api/account/?Command=GET_BOOK&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);

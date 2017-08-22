@@ -35,4 +35,6 @@ public class CommandDefine
 
     public  static  final  int APPLY_SMSCODE = 1011;
 
+    public  static  final  int RESET_PASSWORD = 1012;
+
 }

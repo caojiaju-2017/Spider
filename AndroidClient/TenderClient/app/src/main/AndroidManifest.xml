@@ -6,6 +6,12 @@
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET"></uses-permission>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".HsApplication"
         android:allowBackup="true"
@@ -34,6 +40,12 @@
         </activity>
 
         <activity
+            android:name=".Login.ResetPasswordActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
             android:name=".UserInfoActivity"
             android:launchMode="singleTask"
             android:windowSoftInputMode="stateHidden"
@@ -41,10 +53,14 @@
         </activity>
 
         <activity
-            android:name=".BookDetailViewActivity"
+            android:name=".wxapi.WXEntryActivity"
             android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
             android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait">
+
         </activity>
 
         <activity
@@ -68,13 +84,6 @@
         </activity>
 
 
-        <receiver
-            android:name=".AppRegister"
-            android:permission="com.tencent.mm.plugin.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.tencent.mm.plugin.openapi.Intent.ACTION_REFRESH_WXAPP" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

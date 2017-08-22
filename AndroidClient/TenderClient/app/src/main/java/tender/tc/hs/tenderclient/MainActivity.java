@@ -19,19 +19,25 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,6 +55,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 import lecho.lib.hellocharts.view.PieChartView;
 import tender.tc.hs.tenderclient.Data.BookData;
 import tender.tc.hs.tenderclient.Data.MyBook;
+import tender.tc.hs.tenderclient.Data.UserInfo;
 import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
 import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
 import tender.tc.hs.tenderclient.HsListView.BookItemAdapter;
@@ -60,6 +67,7 @@ import tender.tc.hs.tenderclient.Report.PieReportService;
 import tender.tc.hs.tenderclient.Report.ReportObject;
 import tender.tc.hs.tenderclient.Report.LineReportService;
 import tender.tc.hs.tenderclient.Util.LogUtil;
+import tender.tc.hs.tenderclient.wxapi.WXEntryActivity;
 
 public class MainActivity extends Activity implements OnClickListener ,
         AdapterView.OnItemClickListener,
@@ -75,6 +83,8 @@ public class MainActivity extends Activity implements OnClickListener ,
     LinearLayout layout_book;
     LinearLayout layout_home;
     LinearLayout layout_report;
+    LinearLayout layout_user;
+
     ViewPager pager;
     PagerAdapter mAdapter;
     private List<View> mViews = new ArrayList<View>();
@@ -83,10 +93,10 @@ public class MainActivity extends Activity implements OnClickListener ,
     private ImageView img_home;
     private ImageView img_report;
 
-    private ImageView img_person;
+//    private ImageView img_person;
     private ImageView img_help;
 
-    private  ImageView img_book_save;
+    private  Button img_book_save;
 
 
     LinearLayout no_config_lay;
@@ -111,6 +121,13 @@ public class MainActivity extends Activity implements OnClickListener ,
 
     QueryInfo _queryInfo ;
 
+    Button saveUserInfo ;
+
+    private GridView gview;
+    private FrameLayout framView;
+    private String[] iconName = { "通讯录", "照相机","浏览器", "视频频",
+            "通讯录", "照相机","浏览器", "视频频" };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,8 +141,6 @@ public class MainActivity extends Activity implements OnClickListener ,
         mYear = c.get(Calendar.YEAR);
         mMonth = c.get(Calendar.MONTH);
         mDay = c.get(Calendar.DAY_OF_MONTH);
-
-
 
         //
         mHandler = new Handler();
@@ -145,8 +160,133 @@ public class MainActivity extends Activity implements OnClickListener ,
             _queryInfo.queryNextBathc();
         }
 
-//        showHomeWay(false);
+        framView = (FrameLayout)findViewById(R.id.fragmentView);
+//        data_list = new ArrayList<Map<String, Object>>();
+//        // 测试
+        gview = (GridView) findViewById(R.id.gview);
+
+        List<String> abc = new ArrayList<>();
+        for (int index = 0 ; index < iconName.length; index++)
+        {
+            abc.add(iconName[index]);
+        }
+        GridViewAdapter gridViewAdapter = new GridViewAdapter();
+        gview.setAdapter(gridViewAdapter);
+        // 为GridView设定监听器
+        gview.setOnItemClickListener(new gridViewListener());
+
+
+
+//        //获取数据
+//        getData();
+//        //新建适配器
+//        String [] from ={"image","text"};
+//        int [] to = {R.id.image,R.id.text};
+//        SimpleAdapter sim_adapter = new SimpleAdapter(this, data_list, R.layout.item, from, to);
+//        //配置适配器
+//        gview.setAdapter(sim_adapter);
     }
+    class gridViewListener implements AdapterView.OnItemClickListener {
+
+        @Override
+        public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
+                                long arg3) {
+            // TODO Auto-generated method stub
+            System.out.println("arg2 = " + arg2); // 打印出点击的位置
+        }
+    }
+
+    class GridViewAdapter extends BaseAdapter {
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+
+            LayoutInflater mInflater = LayoutInflater.from(MainActivity.this);
+            ItemViewTag viewTag;
+
+            if (convertView == null)
+            {
+                convertView = mInflater.inflate(R.layout.province_item, null);
+
+                // construct an item tag
+                viewTag = new ItemViewTag((TextView) convertView.findViewById(R.id.prov_name));
+                convertView.setTag(viewTag);
+            } else
+            {
+                viewTag = (ItemViewTag) convertView.getTag();
+            }
+
+            // set name
+            viewTag.mName.setText(iconName[position]);
+
+            // set icon
+//            viewTag.mIcon.setBackgroundDrawable(mDrawableList.get(position));
+//            viewTag.mIcon.setLayoutParams(params);
+            return convertView;
+
+
+
+
+//            View tab01 = inflater.inflate(R.layout.province_item, null);
+//
+//            TextView txtview ;
+//            if (convertView == null) {
+//                txtview = (TextView)tab01.findViewById(R.id.prov_name);
+//                //imageview.setScaleType(ImageView.ScaleType.CENTER_INSIDE); // 设置缩放方式
+////                txtview.setPadding(5, 0, 5, 0); // 设置ImageView的内边距
+//            } else {
+//                txtview = (TextView) convertView;
+//            }
+//
+//            txtview.setText(iconName[position]); // 为ImageView设置要显示的图片
+//            return tab01; // 返回ImageView
+        }
+
+        /*
+         * 功能：获得当前选项的ID
+         *
+         * @see android.widget.Adapter#getItemId(int)
+         */
+        @Override
+        public long getItemId(int position) {
+            //System.out.println("getItemId = " + position);
+            return position;
+        }
+
+        /*
+         * 功能：获得当前选项
+         *
+         * @see android.widget.Adapter#getItem(int)
+         */
+        @Override
+        public Object getItem(int position) {
+            return position;
+        }
+
+        /*
+         * 获得数量
+         *
+         * @see android.widget.Adapter#getCount()
+         */
+        @Override
+        public int getCount() {
+            return iconName.length;
+        }
+
+        class ItemViewTag
+        {
+
+            protected TextView mName;
+
+
+            public ItemViewTag(TextView name)
+            {
+                this.mName = name;
+
+            }
+        }
+    }
+
 
     private void loadBookConfig() {
         if (HsApplication.Global_App._myUserInfo._myBookInfo == null)
@@ -185,9 +325,10 @@ public class MainActivity extends Activity implements OnClickListener ,
         layout_book.setOnClickListener(this);
         layout_home.setOnClickListener(this);
         layout_report.setOnClickListener(this);
+        layout_user.setOnClickListener(this);
 
         img_help.setOnClickListener(this);
-        img_person.setOnClickListener(this);
+//        img_person.setOnClickListener(this);
 
         img_book_save.setOnClickListener(this);
 
@@ -232,11 +373,13 @@ public class MainActivity extends Activity implements OnClickListener ,
         layout_book = (LinearLayout) findViewById(R.id.layout_book);
         layout_home = (LinearLayout) findViewById(R.id.layout_home);
         layout_report = (LinearLayout) findViewById(R.id.layout_report);
+        layout_user = (LinearLayout) findViewById(R.id.layout_my);
+
         img_book = (ImageView) findViewById(R.id.img_book);
         img_home = (ImageView) findViewById(R.id.img_home);
         img_report = (ImageView) findViewById(R.id.img_report);
 
-        img_person = (ImageView)findViewById(R.id.person_btn);
+//        img_person = (ImageView)findViewById(R.id.person_btn);
         img_help = (ImageView)findViewById(R.id.help_btn);
 
 
@@ -246,17 +389,20 @@ public class MainActivity extends Activity implements OnClickListener ,
         View tab01 = inflater.inflate(R.layout.book_lay, null);
         View tab02 = inflater.inflate(R.layout.home_lay, null);
         View tab03 = inflater.inflate(R.layout.report_lay, null);
+        View tab04 = inflater.inflate(R.layout.user_info, null);
         mViews.add(tab01);
         mViews.add(tab02);
         mViews.add(tab03);
+        mViews.add(tab04);
 
+        saveUserInfo = tab04.findViewById(R.id.save_change);
         report_container = (LinearLayout)tab03.findViewById(R.id.report_container);
 
         no_config_lay = (LinearLayout)tab02.findViewById(R.id.no_config_lay);
         have_config_lay = (LinearLayout)tab02.findViewById(R.id.have_config_lay);
         except_tips = (TextView) tab02.findViewById(R.id.except_tips);
 
-        img_book_save = (ImageView)tab01.findViewById(R.id.save_book_btn);
+        img_book_save = (Button)tab01.findViewById(R.id.save_book_btn);
         book_startdate = (EditText)tab01.findViewById(R.id.book_startdate);
         book_stopdate = (EditText)tab01.findViewById(R.id.book_stopdate);
 
@@ -293,6 +439,7 @@ public class MainActivity extends Activity implements OnClickListener ,
         customListView.setAdapter(mAdapterTest);
         customListView.setXListViewListener(this);
         customListView.setOnItemClickListener(this);
+        saveUserInfo.setOnClickListener(this);
 
 
         mAdapter = new PagerAdapter() {
@@ -336,7 +483,7 @@ public class MainActivity extends Activity implements OnClickListener ,
             case R.id.layout_book:
                 pager.setCurrentItem(0);
 
-                layView.setVisibility(View.GONE);
+                layView.setVisibility(View.VISIBLE);
                 img_book.setImageResource(R.drawable.book_pressed);
 
                 // 加载订阅配置
@@ -353,7 +500,7 @@ public class MainActivity extends Activity implements OnClickListener ,
             case R.id.layout_report:
                 pager.setCurrentItem(2);
 
-                layView.setVisibility(View.GONE);
+                layView.setVisibility(View.VISIBLE);
                 img_report.setImageResource(R.drawable.report_pressed);
 
                 if (setHomeTips())
@@ -367,20 +514,37 @@ public class MainActivity extends Activity implements OnClickListener ,
                 }
 
                 break;
+            case R.id.layout_my:
+                pager.setCurrentItem(3);
+                layView.setVisibility(View.VISIBLE);
+
+                loadUserInfo();
+                break;
+
             case R.id.img_add_cfg:
                 pager.setCurrentItem(0);
                 img_book.setImageResource(R.drawable.book_pressed);
 //                showHomeWay(true);
 
                 break;
-            case R.id.person_btn:
-                Intent iUserInfo = new Intent(MainActivity.this,UserInfoActivity.class);
-                startActivity(iUserInfo);
-                break;
+//            case R.id.person_btn:
+//                Intent iUserInfo = new Intent(MainActivity.this,UserInfoActivity.class);
+//                startActivity(iUserInfo);
+//                break;
 
             case  R.id.help_btn:
-                Intent iHelp = new Intent(MainActivity.this,HelpActivity.class);
-                startActivity(iHelp);
+//                Intent iHelp = new Intent(MainActivity.this,HelpActivity.class);
+//                startActivity(iHelp);
+                if (framView.getVisibility() == View.VISIBLE)
+                {
+                    framView.setVisibility(View.GONE);
+                }
+                else
+                {
+                    framView.setVisibility(View.VISIBLE);
+                }
+
+
                 break;
 
             case R.id.save_book_btn:
@@ -397,6 +561,11 @@ public class MainActivity extends Activity implements OnClickListener ,
             case R.id.but_showDate2:
                 SELECTID = 1;
                 showDialog(DATE_DIALOG_ID);
+                break;
+
+            case R.id.save_change:
+                HsProgressDialog.newProgressDlg().show(MainActivity.this);
+                saveChange();
                 break;
         }
     }
@@ -635,7 +804,7 @@ public class MainActivity extends Activity implements OnClickListener ,
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
     {
         HsApplication.Global_App._currentBookInfo = (BookData)view.getTag();
-        Intent iInfo = new Intent(MainActivity.this,BookDetailViewActivity.class);
+        Intent iInfo = new Intent(MainActivity.this,WXEntryActivity.class);
         startActivity(iInfo);
     }
 
@@ -750,6 +919,42 @@ public class MainActivity extends Activity implements OnClickListener ,
                     }
 
                     case CommandDefine.GET_USERINFO: {
+                        break;
+                    }
+
+                    case CommandDefine.SET_USERINFO:
+                    {
+                        try {
+                            HsProgressDialog.getProgressDlg().Close();
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                        }
+
+                        String receiveData = msg.obj.toString();
+
+                        JSONTokener jsonParser = new JSONTokener(receiveData);
+                        try {
+                            JSONObject person = (JSONObject) jsonParser.nextValue();
+
+                            String errorinfo = person.getString("ErrorInfo");
+                            int errorId = Integer.parseInt(person.getString("ErrorId"));
+                            if (errorId == 200) {
+
+                                Toast.makeText(MainActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+                                updateUserInfo();
+
+//                                finish();
+                                break;
+                            }
+                            else
+                            {
+//                                closeLoginingDlg();// 关闭对话框
+                                Toast.makeText(getApplicationContext(), errorinfo, Toast.LENGTH_LONG).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                         break;
                     }
                 }
@@ -954,6 +1159,84 @@ public class MainActivity extends Activity implements OnClickListener ,
         @Override
         public void onValueDeselected() {
         }
+
+    }
+
+    private void loadUserInfo() {
+        EditText et_account = (EditText)this.findViewById(R.id.et_account);
+        EditText et_email = (EditText)this.findViewById(R.id.et_email);
+        EditText china_name = (EditText)this.findViewById(R.id.china_name);
+        EditText custom_address = (EditText)this.findViewById(R.id.custom_address);
+        EditText org_name = (EditText)this.findViewById(R.id.org_name);
+        EditText service_t_date = (EditText)this.findViewById(R.id.service_t_date);
+
+        et_account.setText(HsApplication.Global_App._myUserInfo._account);
+        et_email.setText(HsApplication.Global_App._myUserInfo._email);
+        china_name.setText(HsApplication.Global_App._myUserInfo._Alias);
+        custom_address.setText(HsApplication.Global_App._myUserInfo._Address);
+        org_name.setText(HsApplication.Global_App._myUserInfo._orgName);
+        service_t_date.setText(HsApplication.Global_App._myUserInfo._serviceOverDate);
+    }
+    UserInfo _updateUserInfo = new UserInfo();
+    private void saveChange()
+    {
+        LogUtil.info("Invoke saveBookSetting");
+        final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.SET_USERINFO);
+        final Map<String,String> dataMap = new HashMap<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+
+            EditText et_account = (EditText)this.findViewById(R.id.et_account);
+            EditText et_email = (EditText)this.findViewById(R.id.et_email);
+            EditText china_name = (EditText)this.findViewById(R.id.china_name);
+            EditText custom_address = (EditText)this.findViewById(R.id.custom_address);
+            EditText org_name = (EditText)this.findViewById(R.id.org_name);
+            EditText service_t_date = (EditText)this.findViewById(R.id.service_t_date);
+
+            String email = et_email.getText().toString();
+            String phone = et_account.getText().toString();
+            String alias = china_name.getText().toString();
+            String address = custom_address.getText().toString();
+            String orgname = org_name.getText().toString();
+
+
+            jsonObject.put("Account",HsApplication.Global_App._myUserInfo._account);
+            jsonObject.put("EMail",email);
+            jsonObject.put("Alias",alias);
+            jsonObject.put("Address",address);
+            jsonObject.put("OrgName",orgname);
+
+
+            _updateUserInfo = new UserInfo();
+            _updateUserInfo._email = email;
+            _updateUserInfo._Address = address;
+            _updateUserInfo._Alias = alias;
+            _updateUserInfo._orgName = orgname;
+
+
+            access.setJsonObject(jsonObject);
+        } catch (JSONException e) {
+            LogUtil.info("Invoke httpaccess prepare failed");
+            e.printStackTrace();
+        }
+        new Thread(new Runnable(){
+            public void run()
+            {
+                access.HttpPost();
+            }
+        }).start();
+    }
+
+    private void updateUserInfo() {
+        if (_updateUserInfo == null)
+        {
+
+        }
+        HsApplication.Global_App._myUserInfo._email = _updateUserInfo._email;
+        HsApplication.Global_App._myUserInfo._Address = _updateUserInfo._Address;
+        HsApplication.Global_App._myUserInfo._orgName = _updateUserInfo._orgName;
+        HsApplication.Global_App._myUserInfo._Alias = _updateUserInfo._Alias;
 
     }
 }

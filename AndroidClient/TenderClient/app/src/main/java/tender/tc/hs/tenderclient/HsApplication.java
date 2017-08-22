@@ -12,11 +12,11 @@ import tender.tc.hs.tenderclient.Report.ReportObject;
 public class HsApplication extends Application {
 	public static HsApplication Global_App;
 
-	public String url_HeadString = "http://192.168.1.209:7001";
-//	public String url_HeadString = "http://115.159.224.102:7001";
+//	public String url_HeadString = "http://192.168.1.209:7001";
+	public String url_HeadString = "http://115.159.224.102:7001";
 
 	public String SrvCode = "CHINA_ZF_ZB_0000"; // 政府招标信息
-	public String wxAppid = "";
+	public String wxAppid = "wx5cf4976ee8ae65c5";
 
 	public UserInfo _myUserInfo;
 

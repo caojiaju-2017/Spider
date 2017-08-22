@@ -30,6 +30,8 @@ class AppServiceApi(object):
             return AppServiceApi.LogSystem(req)
         elif command  == "REG_ACCOUNT":
             return AppServiceApi.RegAccount(req)
+        elif command == "RESET_PASSWORD":
+            return AppServiceApi.ResetPassword(req)
         elif command  == "GET_BOOK":
             return AppServiceApi.GetBook(req)
         elif command  == "SET_BOOK":
@@ -184,6 +186,65 @@ class AppServiceApi(object):
         commitDataList=[]
         commitDataList.append(CommitData(newUser, 0))
         commitDataList.append(CommitData(newUserSrv, 0))
+        # 事务提交
+        try:
+            result = commitCustomDataByTranslate(commitDataList)
+
+            if not result:
+                loginResut = json.dumps({"ErrorInfo": "数据库操作失败", "ErrorId": 99999, "Result": None})
+                return HttpResponse(loginResut)
+        except Exception,ex:
+            loginResut = json.dumps({"ErrorInfo":"数据库操作失败","ErrorId":99999,"Result":None})
+            return HttpResponse(loginResut)
+
+        loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": ""})
+        return HttpResponse(loginResut)
+
+    @staticmethod
+    def ResetPassword(request):
+        print "User Register"
+        # url中的参数提取
+        command = request.GET.get('Command')
+        timesnap = request.GET.get('TimeSnap')
+        sig = request.GET.get('Sig')
+        servicecode = request.GET.get('ServiceCode')
+
+        # 检查请求合法性
+        dict = {}
+        dict["COMMAND"] = command
+        dict["TIMESNAP"] = timesnap
+        dict["SIG"] = sig
+        dict["ServiceCode"] = servicecode
+
+        # 检查url合法性
+        result = PublicService.validUrl(timesnap,sig)
+        if not result:
+            loginResut = json.dumps({"ErrorInfo": "非法URL", "ErrorId": 10001, "Result": None})
+            return HttpResponse(loginResut)
+
+        # 提取post数据
+        postDataList = {}
+        postDataList = getPostData(request)
+
+        # 检测短信验证
+        result = SmsDataBuffer.validSms(postDataList["Account"],postDataList["SmsCode"],HsShareData.SmsListData)
+        if not result:
+            loginResut = json.dumps({"ErrorInfo": "短信验证信息不正确，请重新输入", "ErrorId": 10004, "Result": ""})
+            return HttpResponse(loginResut)
+
+        users = SpsUser.objects.filter(account=postDataList["Account"])
+        userHandle =None
+        if len(users) != 1:
+            loginResut = json.dumps({"ErrorInfo": "账户已注册，如果您忘记密码", "ErrorId": 10002, "Result": ""})
+            return HttpResponse(loginResut)
+        else:
+            userHandle = users[0]
+
+        userHandle.password = postDataList["Password"]
+
+        commitDataList=[]
+        commitDataList.append(CommitData(userHandle, 0))
+
         # 事务提交
         try:
             result = commitCustomDataByTranslate(commitDataList)
@@ -765,11 +826,17 @@ class AppServiceApi(object):
         postDataList = {}
         postDataList = getPostData(request)
 
+        flag = int(postDataList["Flag"])
+
+
         users = SpsUser.objects.filter(account=postDataList["Phone"])
-        if len(users) != 0:
+        if len(users) != 0 and flag == 1:
             loginResut = json.dumps({"ErrorInfo": "账户已注册，如果您忘记密码请联系客服", "ErrorId": 10002, "Result": ""})
             return HttpResponse(loginResut)
 
+        if len(users) == 0 and flag == 0:
+            loginResut = json.dumps({"ErrorInfo": "账户不存在，请确认后提交请求", "ErrorId": 10002, "Result": ""})
+            return HttpResponse(loginResut)
 
         smsHandle = SmsDataBuffer.createSmsObj(postDataList["Phone"])
 

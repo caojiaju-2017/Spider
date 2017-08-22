@@ -298,7 +298,8 @@ public class LoginActivity extends Activity implements OnClickListener,
 				break;
 
 			case  R.id.login_txtForgotPwd:
-				Toast.makeText(LoginActivity.this, "如果你忘记了您的密码，请通过微信联系：jiaju_cao 客户处理", Toast.LENGTH_LONG).show();
+//				Toast.makeText(LoginActivity.this, "如果您忘记密码，请通过微信联系：han_sen2017 客服处理", Toast.LENGTH_LONG).show();
+				goResetPassword();
 				break;
 			default:
 				break;
@@ -344,7 +345,11 @@ public class LoginActivity extends Activity implements OnClickListener,
 		startActivity(i);
 //		finish();
 	}
-
+	private void goResetPassword(){
+		Intent i = new Intent(LoginActivity.this,ResetPasswordActivity.class);
+		startActivity(i);
+//		finish();
+	}
 	public void remoteCheck(Handler mainHandlers)
 	{
 		LogUtil.info("Invoke httpaccess");

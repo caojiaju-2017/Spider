@@ -1,4 +1,4 @@
-package tender.tc.hs.tenderclient;
+package tender.tc.hs.tenderclient.wxapi;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
@@ -23,8 +23,11 @@ import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
+import com.tencent.mm.sdk.openapi.WXTextObject;
 import com.tencent.mm.sdk.openapi.WXWebpageObject;
 import com.tencent.mm.sdk.platformtools.Util;
+
+//import com.tencent.mm.opensdk.openapi.IWXAPI
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,11 +37,13 @@ import java.util.Map;
 
 import tender.tc.hs.tenderclient.Data.BookData;
 import tender.tc.hs.tenderclient.Data.UserInfo;
+import tender.tc.hs.tenderclient.HsApplication;
 import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
 import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
+import tender.tc.hs.tenderclient.R;
 import tender.tc.hs.tenderclient.Util.LogUtil;
 
-public class BookDetailViewActivity extends Activity implements OnClickListener,IWXAPIEventHandler
+public class WXEntryActivity extends Activity implements OnClickListener,IWXAPIEventHandler
 {
     private IWXAPI api;
 
@@ -55,13 +60,13 @@ public class BookDetailViewActivity extends Activity implements OnClickListener,
 
         setContentView(R.layout.book_detail_view);
 
-        api = WXAPIFactory.createWXAPI(this,"");
+        api = WXAPIFactory.createWXAPI(this, HsApplication.Global_App.wxAppid, true);
+        api.registerApp(HsApplication.Global_App.wxAppid);
         api.handleIntent(getIntent(),this);
 
         initView();
 
         BookData bookData = HsApplication.Global_App._currentBookInfo;
-
         String urlString = bookData._url;
         WebView detail_webview = this.findViewById(R.id.detail_webview);
         //支持javascript
@@ -75,7 +80,6 @@ public class BookDetailViewActivity extends Activity implements OnClickListener,
         //自适应屏幕
         detail_webview.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
         detail_webview.getSettings().setLoadWithOverviewMode(true);
-
         detail_webview.loadUrl(urlString);
     }
 
@@ -119,20 +123,23 @@ public class BookDetailViewActivity extends Activity implements OnClickListener,
     //值为true，表示发送到朋友圈,反之发送给群或者好友
     private void send(boolean sendType) {
         Log.i("test","执行");
-        Toast.makeText(getApplicationContext(), "等待分配APPID,请稍后", Toast.LENGTH_LONG).show();
+//        Toast.makeText(getApplicationContext(), "等待分配APPID,请稍后3", Toast.LENGTH_LONG).show();
 
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = HsApplication.Global_App._currentBookInfo._url;
+
+
         WXMediaMessage msg = new WXMediaMessage(webpage);
+        msg.mediaObject = webpage;
         msg.title = HsApplication.Global_App._currentBookInfo._title;
         msg.description = HsApplication.Global_App._currentBookInfo._projectName;
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.tender);
-        msg.thumbData = Util.bmpToByteArray(thumb, true);
+//        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.tender);
+//        msg.thumbData = Util.bmpToByteArray(thumb, true);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction("webpage");
         req.message = msg;
-        req.scene = sendType ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+//        req.scene = sendType ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
         Log.i("test","send!");
         api.sendReq(req);
     }

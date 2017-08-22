@@ -1,20 +1,40 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-     >
+    android:orientation="vertical">
+
     <include 
         layout="@layout/top_layout"
-        />
-    <android.support.v4.view.ViewPager
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:id="@+id/pager"
-        android:layout_weight="1"
-        />
-    <include 
-        layout="@layout/buttom_layout"
+        android:id="@+id/top_lay"
         />
 
-</LinearLayout>
+    <android.support.v4.view.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="1000dp"
+        android:id="@+id/pager"
+        android:layout_below="@+id/top_lay"
+        android:layout_above="@+id/bottom_lay"
+        android:layout_weight="1"
+        />
+
+    <include
+        layout="@layout/buttom_layout"
+        android:id="@+id/bottom_lay"
+        />
+
+    <FrameLayout
+        android:id="@+id/fragmentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:background="#e8ffffff"
+        android:layout_below="@+id/top_lay">
+        <GridView
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:numColumns="4"
+            android:id="@+id/gview">
+        </GridView>
+    </FrameLayout>
+</RelativeLayout>

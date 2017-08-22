@@ -35,7 +35,7 @@ import tender.tc.hs.tenderclient.Util.LogUtil;
 import tender.tc.hs.tenderclient.Util.Utils;
 
 //注册
-public class RegisterActivity extends Activity implements OnClickListener {
+public class ResetPasswordActivity extends Activity implements OnClickListener {
 	private TextView txt_title;
 	private ImageView img_back;
 	private Button btn_register, btn_send;
@@ -47,7 +47,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 	private Dialog mRegisterHandle;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		setContentView(R.layout.activity_register);
+		setContentView(R.layout.activity_forgetpassword);
 		super.onCreate(savedInstanceState);
 		registerComminucation();
 		initLoginingDlg();
@@ -200,7 +200,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 //				getRegister();
 				showLoginingDlg();
 
-				beginRegister();
+				resetPassword();
 				break;
 			default:
 				break;
@@ -219,7 +219,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 			account = account.trim();
 
 			jsonObject.put("Phone",account);
-			jsonObject.put("Flag",1);
+			jsonObject.put("Flag",0);
 
 			access.setJsonObject(jsonObject);
 		} catch (JSONException e) {
@@ -234,9 +234,9 @@ public class RegisterActivity extends Activity implements OnClickListener {
 		}).start();
 	}
 
-	private void beginRegister() {
+	private void resetPassword() {
 		LogUtil.info("Invoke httpaccess");
-		final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.REG_ACCOUNT);
+		final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.RESET_PASSWORD);
 
 		final Map<String,String> dataMap = new HashMap<>();
 		try {
@@ -306,7 +306,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 			@Override
 			public void handleMessage(Message msg) {
 				switch (msg.what) {
-					case CommandDefine.REG_ACCOUNT:
+					case CommandDefine.RESET_PASSWORD:
 					{
 						String receiveData = msg.obj.toString();
 
@@ -318,7 +318,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 							int errorId = Integer.parseInt(person.getString("ErrorId"));
 							if (errorId == 200) {
 								closeLoginingDlg();// 关闭对话框
-								Toast.makeText(RegisterActivity.this, "注册成功", Toast.LENGTH_SHORT).show();
+								Toast.makeText(ResetPasswordActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
 
 								// 跳转Activity
 
@@ -348,7 +348,7 @@ public class RegisterActivity extends Activity implements OnClickListener {
 							int errorId = Integer.parseInt(person.getString("ErrorId"));
 							if (errorId == 200) {
 								closeLoginingDlg();// 关闭对话框
-								Toast.makeText(RegisterActivity.this, "验证码请求成功", Toast.LENGTH_SHORT).show();
+								Toast.makeText(ResetPasswordActivity.this, "验证码请求成功", Toast.LENGTH_SHORT).show();
 								break;
 							}
 							else
