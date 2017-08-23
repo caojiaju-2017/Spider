@@ -16,17 +16,24 @@
 			android:id="@+id/except_tips"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="您未配置任何订阅信息"
+			android:text="未配置任何订阅信息"
 			android:textSize="20sp"
 			/>
 
-		<ImageView
-			android:layout_width="80dp"
-			android:layout_height="80dp"
+		<LinearLayout
+			android:layout_width="120dp"
+			android:layout_height="60dp"
 			android:layout_marginTop="20dp"
-			android:id="@+id/img_add_cfg"
-			android:src="@drawable/add_config"
-			/>
+			android:gravity="center"
+			android:background="@drawable/border_setting">
+
+			<ImageView
+				android:layout_width="80dp"
+				android:layout_height="40dp"
+				android:id="@+id/img_add_cfg"
+				android:src="@drawable/add_config"
+				/>
+		</LinearLayout>
 	</LinearLayout>
 
 	<LinearLayout

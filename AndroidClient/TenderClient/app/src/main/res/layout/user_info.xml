@@ -4,31 +4,6 @@
     android:layout_height="match_parent"
     android:gravity="top"
     android:orientation="vertical" >
-	<requestFocus></requestFocus>
-	<!--<RelativeLayout-->
-		<!--android:layout_width="match_parent"-->
-		<!--android:layout_height="40dp"-->
-		<!--android:background="#505050"-->
-		<!--android:gravity="center_vertical">-->
-
-		<!--<ImageView-->
-			<!--android:id="@+id/go_back"-->
-			<!--android:layout_width="30dp"-->
-			<!--android:layout_height="20dp"-->
-			<!--android:layout_marginTop="5dp"-->
-			<!--android:src="@drawable/icon_back"-->
-			<!--android:layout_alignParentLeft="true"-->
-			<!--android:layout_marginLeft="10dp"/>-->
-
-		<!--<ImageView-->
-			<!--android:id="@+id/save_change"-->
-			<!--android:layout_width="30dp"-->
-			<!--android:layout_height="30dp"-->
-			<!--android:src="@drawable/save"-->
-			<!--android:layout_alignParentRight="true"-->
-			<!--android:layout_marginRight="20dp"/>-->
-
-	<!--</RelativeLayout>-->
 
 	<ScrollView
 		android:layout_width="match_parent"
@@ -39,6 +14,23 @@
 			android:layout_height="match_parent"
 			android:gravity="center"
 			android:orientation="vertical">
+			<RelativeLayout
+				android:layout_width="match_parent"
+				android:layout_height="40dp"
+				android:background="#505050"
+				android:gravity="center_vertical">
+
+				<ImageView
+					android:id="@+id/go_back"
+					android:layout_width="30dp"
+					android:layout_height="20dp"
+					android:layout_marginTop="5dp"
+					android:src="@drawable/icon_back"
+					android:layout_alignParentLeft="true"
+					android:layout_marginLeft="10dp"/>
+
+			</RelativeLayout>
+
 			<!--订阅邮箱-->
 			<RelativeLayout style="@style/FindBottomStyle">
 
@@ -135,46 +127,46 @@
 			</RelativeLayout>
 
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="1dp"
-				android:layout_marginTop="30dp"
-				android:background="#707070">
-			</LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="30dp"
+                android:background="#707070">
+            </LinearLayout>
 
-			<!--服务到期日-->
-			<RelativeLayout style="@style/FindBottomStyle">
+			<!--&lt;!&ndash;服务到期日&ndash;&gt;-->
+			<!--<RelativeLayout style="@style/FindBottomStyle">-->
 
-				<TextView
-					android:id="@+id/service_t_lab"
-					android:layout_width="80dp"
-					android:layout_height="40dp"
-					android:gravity="right"
-					android:layout_marginTop="10dp"
-					android:layout_alignParentLeft="true"
-					android:text="服务到期日" />
+				<!--<TextView-->
+					<!--android:id="@+id/service_t_lab"-->
+					<!--android:layout_width="80dp"-->
+					<!--android:layout_height="40dp"-->
+					<!--android:gravity="right"-->
+					<!--android:layout_marginTop="10dp"-->
+					<!--android:layout_alignParentLeft="true"-->
+					<!--android:text="服务到期日" />-->
 
-				<EditText
-					android:id="@+id/service_t_date"
-					android:layout_width="200dip"
-					android:layout_height="wrap_content"
-					android:layout_alignParentTop="true"
-					android:layout_marginLeft="10dp"
-					android:textSize="26px"
-					android:enabled="false"
-					android:layout_toRightOf="@+id/service_t_lab"
-					android:layout_toEndOf="@+id/service_t_lab" />
+				<!--<EditText-->
+					<!--android:id="@+id/service_t_date"-->
+					<!--android:layout_width="200dip"-->
+					<!--android:layout_height="wrap_content"-->
+					<!--android:layout_alignParentTop="true"-->
+					<!--android:layout_marginLeft="10dp"-->
+					<!--android:textSize="26px"-->
+					<!--android:enabled="false"-->
+					<!--android:layout_toRightOf="@+id/service_t_lab"-->
+					<!--android:layout_toEndOf="@+id/service_t_lab" />-->
 
-				<Button
-					android:id="@+id/pay_btn"
-					android:layout_width="60dip"
-					android:layout_height="wrap_content"
-					android:text="续费"
-					android:layout_alignParentTop="true"
-					android:layout_alignParentRight="true"
-					android:layout_alignParentEnd="true" />
+				<!--<Button-->
+					<!--android:id="@+id/pay_btn"-->
+					<!--android:layout_width="60dip"-->
+					<!--android:layout_height="wrap_content"-->
+					<!--android:text="续费"-->
+					<!--android:layout_alignParentTop="true"-->
+					<!--android:layout_alignParentRight="true"-->
+					<!--android:layout_alignParentEnd="true" />-->
 
-			</RelativeLayout>
+			<!--</RelativeLayout>-->
 			<Button
 				android:id="@+id/save_change"
 				android:layout_width="300dp"

@@ -1,14 +1,12 @@
 package tender.tc.hs.tenderclient;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -19,25 +17,20 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,8 +47,6 @@ import lecho.lib.hellocharts.view.ColumnChartView;
 import lecho.lib.hellocharts.view.LineChartView;
 import lecho.lib.hellocharts.view.PieChartView;
 import tender.tc.hs.tenderclient.Data.BookData;
-import tender.tc.hs.tenderclient.Data.MyBook;
-import tender.tc.hs.tenderclient.Data.UserInfo;
 import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
 import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
 import tender.tc.hs.tenderclient.HsListView.BookItemAdapter;
@@ -73,30 +64,24 @@ public class MainActivity extends Activity implements OnClickListener ,
         AdapterView.OnItemClickListener,
         XListView.IXListViewListener
 {
-    private static final int DATE_DIALOG_ID = 1;
-    private int SELECTID = 0;
-//    private static final int SHOW_DATAPICK = 0;
-    private int mYear;
-    private int mMonth;
-    private int mDay;
-
-    LinearLayout layout_book;
     LinearLayout layout_home;
     LinearLayout layout_report;
     LinearLayout layout_user;
+
+    RelativeLayout layout_book_view;
+    RelativeLayout layout_userinfo_view;
 
     ViewPager pager;
     PagerAdapter mAdapter;
     private List<View> mViews = new ArrayList<View>();
 
-    private ImageView img_book;
+    private ImageView img_set;
     private ImageView img_home;
     private ImageView img_report;
 
-//    private ImageView img_person;
     private ImageView img_help;
 
-    private  Button img_book_save;
+//    private  Button img_book_save;
 
 
     LinearLayout no_config_lay;
@@ -115,14 +100,16 @@ public class MainActivity extends Activity implements OnClickListener ,
 
     private EditText book_stopdate;
     private EditText book_startdate;
-    ToggleButton mToggleButton01;
+//    ToggleButton mToggleButton01;
 
     TextView except_tips;
 
     QueryInfo _queryInfo ;
 
-    Button saveUserInfo ;
+    RelativeLayout help_infoview ;
+//    Button saveUserInfo ;
 
+    ImageView img_add_cfg;
     private GridView gview;
     private FrameLayout framView;
     private String[] iconName = { "通讯录", "照相机","浏览器", "视频频",
@@ -137,10 +124,7 @@ public class MainActivity extends Activity implements OnClickListener ,
 
         // 注册主线程通信句柄
         registerComminucation();
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
+
 
         //
         mHandler = new Handler();
@@ -288,41 +272,41 @@ public class MainActivity extends Activity implements OnClickListener ,
     }
 
 
-    private void loadBookConfig() {
-        if (HsApplication.Global_App._myUserInfo._myBookInfo == null)
-        {
-            return;
-        }
-
-        EditText emailTxt = (EditText)findViewById(R.id.book_email);
-        EditText phoneTxt = (EditText)findViewById(R.id.book_phone);
-        EditText startDateTxt = (EditText)findViewById(R.id.book_startdate);
-        EditText stopDateTxt = (EditText)findViewById(R.id.book_stopdate);
-        EditText bookKey1Txt = (EditText)findViewById(R.id.book_key1);
-        EditText bookKey2Txt = (EditText)findViewById(R.id.book_key2);
-        EditText bookKey3Txt = (EditText)findViewById(R.id.book_key3);
-
-        emailTxt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._email);
-        phoneTxt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._phone);
-        startDateTxt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._startDate);
-        stopDateTxt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._stopDate);
-        bookKey1Txt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._key1);
-        bookKey2Txt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._key2);
-        bookKey3Txt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._key3);
-
-        if (HsApplication.Global_App._myUserInfo._myBookInfo._enable == 0)
-        {
-            mToggleButton01.setToggleOff(true);
-        }
-        else
-        {
-            mToggleButton01.setToggleOn(true);
-        }
-    }
+//    private void loadBookConfig() {
+//        if (HsApplication.Global_App._myUserInfo._myBookInfo == null)
+//        {
+//            return;
+//        }
+//
+//        EditText emailTxt = (EditText)findViewById(R.id.book_email);
+//        EditText phoneTxt = (EditText)findViewById(R.id.book_phone);
+//        EditText startDateTxt = (EditText)findViewById(R.id.book_startdate);
+//        EditText stopDateTxt = (EditText)findViewById(R.id.book_stopdate);
+//        EditText bookKey1Txt = (EditText)findViewById(R.id.book_key1);
+//        EditText bookKey2Txt = (EditText)findViewById(R.id.book_key2);
+//        EditText bookKey3Txt = (EditText)findViewById(R.id.book_key3);
+//
+//        emailTxt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._email);
+//        phoneTxt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._phone);
+//        startDateTxt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._startDate);
+//        stopDateTxt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._stopDate);
+//        bookKey1Txt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._key1);
+//        bookKey2Txt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._key2);
+//        bookKey3Txt.setText(HsApplication.Global_App._myUserInfo._myBookInfo._key3);
+//
+////        if (HsApplication.Global_App._myUserInfo._myBookInfo._enable == 0)
+////        {
+////            mToggleButton01.setToggleOff(true);
+////        }
+////        else
+////        {
+////            mToggleButton01.setToggleOn(true);
+////        }
+//    }
 
     // 事件初始化
     private void initEvent() {
-        layout_book.setOnClickListener(this);
+//        layout_book.setOnClickListener(this);
         layout_home.setOnClickListener(this);
         layout_report.setOnClickListener(this);
         layout_user.setOnClickListener(this);
@@ -330,7 +314,7 @@ public class MainActivity extends Activity implements OnClickListener ,
         img_help.setOnClickListener(this);
 //        img_person.setOnClickListener(this);
 
-        img_book_save.setOnClickListener(this);
+//        img_book_save.setOnClickListener(this);
 
 //        layout_my.setOnClickListener(this);
         // 最新的api setOnPageChangeListener 已更换为addOnPageChangeListener
@@ -342,14 +326,17 @@ public class MainActivity extends Activity implements OnClickListener ,
                 resetImg();
                 switch (currentItem) {
                     case 0:
-                        img_book.setImageResource(R.drawable.book_pressed);
+                        img_report.setImageResource(R.drawable.report_pressed);
+                        img_help.setVisibility(View.INVISIBLE);
                         break;
                     case 1:
                         setHomeTips();
                         img_home.setImageResource(R.drawable.home_pressed);
+                        img_help.setVisibility(View.VISIBLE);
                         break;
                     case 2:
-                        img_report.setImageResource(R.drawable.report_pressed);
+                        img_set.setImageResource(R.drawable.book_pressed);
+                        img_help.setVisibility(View.INVISIBLE);
                         break;
                 }
 
@@ -370,12 +357,12 @@ public class MainActivity extends Activity implements OnClickListener ,
     }
 
     private void initView() {
-        layout_book = (LinearLayout) findViewById(R.id.layout_book);
+//        layout_book = (LinearLayout) findViewById(R.id.layout_book);
         layout_home = (LinearLayout) findViewById(R.id.layout_home);
         layout_report = (LinearLayout) findViewById(R.id.layout_report);
         layout_user = (LinearLayout) findViewById(R.id.layout_my);
 
-        img_book = (ImageView) findViewById(R.id.img_book);
+        img_set = (ImageView) findViewById(R.id.img_my);
         img_home = (ImageView) findViewById(R.id.img_home);
         img_report = (ImageView) findViewById(R.id.img_report);
 
@@ -386,47 +373,53 @@ public class MainActivity extends Activity implements OnClickListener ,
 
         pager = (ViewPager) findViewById(R.id.pager);
         LayoutInflater inflater = LayoutInflater.from(this);
-        View tab01 = inflater.inflate(R.layout.book_lay, null);
+//        View tab01 = inflater.inflate(R.layout.book_lay, null);
         View tab02 = inflater.inflate(R.layout.home_lay, null);
         View tab03 = inflater.inflate(R.layout.report_lay, null);
-        View tab04 = inflater.inflate(R.layout.user_info, null);
-        mViews.add(tab01);
-        mViews.add(tab02);
+        View tab04 = inflater.inflate(R.layout.user_info_lay, null);
+//        mViews.add(tab01);
         mViews.add(tab03);
+        mViews.add(tab02);
         mViews.add(tab04);
 
-        saveUserInfo = tab04.findViewById(R.id.save_change);
+        TextView service_t_date = (TextView)tab04.findViewById(R.id.service_t_date);
+        service_t_date.setText(HsApplication.Global_App._myUserInfo._serviceOverDate);
+        layout_book_view = (RelativeLayout)tab04.findViewById(R.id.user_infoview);
+        layout_userinfo_view = (RelativeLayout)tab04.findViewById(R.id.book_infoview);
+        help_infoview = (RelativeLayout)tab04.findViewById(R.id.help_infoview);
+
+//        saveUserInfo = tab04.findViewById(R.id.save_change);
         report_container = (LinearLayout)tab03.findViewById(R.id.report_container);
 
         no_config_lay = (LinearLayout)tab02.findViewById(R.id.no_config_lay);
         have_config_lay = (LinearLayout)tab02.findViewById(R.id.have_config_lay);
         except_tips = (TextView) tab02.findViewById(R.id.except_tips);
 
-        img_book_save = (Button)tab01.findViewById(R.id.save_book_btn);
-        book_startdate = (EditText)tab01.findViewById(R.id.book_startdate);
-        book_stopdate = (EditText)tab01.findViewById(R.id.book_stopdate);
+//        img_book_save = (Button)tab01.findViewById(R.id.save_book_btn);
+//        book_startdate = (EditText)tab01.findViewById(R.id.book_startdate);
+//        book_stopdate = (EditText)tab01.findViewById(R.id.book_stopdate);
+//
+//        Button pickDate = (Button) tab01.findViewById(R.id.but_showDate);
+//        Button pickDate2 = (Button) tab01.findViewById(R.id.but_showDate2);
+//        pickDate.setOnClickListener(this);
+//        pickDate2.setOnClickListener(this);
 
-        Button pickDate = (Button) tab01.findViewById(R.id.but_showDate);
-        Button pickDate2 = (Button) tab01.findViewById(R.id.but_showDate2);
-        pickDate.setOnClickListener(this);
-        pickDate2.setOnClickListener(this);
 
 
-
-        mToggleButton01 = (ToggleButton)tab01.findViewById(R.id.mToggleButton01);
-        mToggleButton01.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
-            @Override
-            public void onToggle(boolean on) {
-                if (on) {
-                    Toast.makeText(MainActivity.this, "打开", Toast.LENGTH_SHORT).show();
-                }else {
-                    Toast.makeText(MainActivity.this, "关闭", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        mToggleButton01 = (ToggleButton)tab01.findViewById(R.id.mToggleButton01);
+//        mToggleButton01.setOnToggleChanged(new ToggleButton.OnToggleChanged() {
+//            @Override
+//            public void onToggle(boolean on) {
+//                if (on) {
+//                    Toast.makeText(MainActivity.this, "打开", Toast.LENGTH_SHORT).show();
+//                }else {
+//                    Toast.makeText(MainActivity.this, "关闭", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         // 注册添加配置 点击
-        ImageView img_add_cfg = (ImageView)tab02.findViewById(R.id.img_add_cfg);
+        img_add_cfg = (ImageView)tab02.findViewById(R.id.img_add_cfg);
         if (img_add_cfg != null)
         {
             img_add_cfg.setOnClickListener(this);
@@ -439,7 +432,11 @@ public class MainActivity extends Activity implements OnClickListener ,
         customListView.setAdapter(mAdapterTest);
         customListView.setXListViewListener(this);
         customListView.setOnItemClickListener(this);
-        saveUserInfo.setOnClickListener(this);
+//        saveUserInfo.setOnClickListener(this);
+
+        layout_book_view.setOnClickListener(this);
+        layout_userinfo_view.setOnClickListener(this);
+        help_infoview.setOnClickListener(this);
 
 
         mAdapter = new PagerAdapter() {
@@ -477,30 +474,35 @@ public class MainActivity extends Activity implements OnClickListener ,
 
     @Override
     public void onClick(View v) {
-        resetImg();
+
         RelativeLayout layView = (RelativeLayout)findViewById(R.id.top_lay);
         switch (v.getId()) {
-            case R.id.layout_book:
-                pager.setCurrentItem(0);
-
-                layView.setVisibility(View.VISIBLE);
-                img_book.setImageResource(R.drawable.book_pressed);
-
-                // 加载订阅配置
-                loadBookConfig();
-
-                break;
+//            case R.id.layout_book:
+//                pager.setCurrentItem(0);
+//
+//                layView.setVisibility(View.VISIBLE);
+//                img_set.setImageResource(R.drawable.book_pressed);
+//
+//                // 加载订阅配置
+//                loadBookConfig();
+//
+//                break;
             case R.id.layout_home:
+                resetImg();
                 pager.setCurrentItem(1);
                 // 设置主页文字显示
                 setHomeTips();
                 layView.setVisibility(View.VISIBLE);
+                img_help.setVisibility(View.VISIBLE);
                 img_home.setImageResource(R.drawable.home_pressed);
                 break;
             case R.id.layout_report:
-                pager.setCurrentItem(2);
+                resetImg();
+                pager.setCurrentItem(0);
 
                 layView.setVisibility(View.VISIBLE);
+                img_help.setVisibility(View.INVISIBLE);
+
                 img_report.setImageResource(R.drawable.report_pressed);
 
                 if (setHomeTips())
@@ -515,22 +517,29 @@ public class MainActivity extends Activity implements OnClickListener ,
 
                 break;
             case R.id.layout_my:
-                pager.setCurrentItem(3);
+                resetImg();
+                pager.setCurrentItem(2);
                 layView.setVisibility(View.VISIBLE);
+                img_help.setVisibility(View.INVISIBLE);
+//                loadUserInfo();
 
-                loadUserInfo();
+                img_set.setImageResource(R.drawable.book_pressed);
                 break;
 
             case R.id.img_add_cfg:
-                pager.setCurrentItem(0);
-                img_book.setImageResource(R.drawable.book_pressed);
-//                showHomeWay(true);
+                if (exceptionType == 2)
+                {
+                    Intent iUserBookInfo = new Intent(MainActivity.this,UserBookSettingActivity.class);
+                    startActivity(iUserBookInfo);
+                }
+                else if(exceptionType == 1)
+                {
+                    pager.setCurrentItem(2);
+                    img_set.setImageResource(R.drawable.book_pressed);
+                    showHomeWay(true);
+                }
 
                 break;
-//            case R.id.person_btn:
-//                Intent iUserInfo = new Intent(MainActivity.this,UserInfoActivity.class);
-//                startActivity(iUserInfo);
-//                break;
 
             case  R.id.help_btn:
 //                Intent iHelp = new Intent(MainActivity.this,HelpActivity.class);
@@ -543,29 +552,21 @@ public class MainActivity extends Activity implements OnClickListener ,
                 {
                     framView.setVisibility(View.VISIBLE);
                 }
-
-
                 break;
 
-            case R.id.save_book_btn:
-                HsProgressDialog.newProgressDlg().show(MainActivity.this);
-                saveBookSetting();
+            case R.id.user_infoview:
+                Intent iUserInfo = new Intent(MainActivity.this,UserInfoActivity.class);
+                startActivity(iUserInfo);
                 break;
 
-            // 日期相关
-            case R.id.but_showDate:
-                SELECTID = 0;
-                showDialog(DATE_DIALOG_ID);
+            case R.id.book_infoview:
+                Intent iUserBookInfo = new Intent(MainActivity.this,UserBookSettingActivity.class);
+                startActivity(iUserBookInfo);
                 break;
 
-            case R.id.but_showDate2:
-                SELECTID = 1;
-                showDialog(DATE_DIALOG_ID);
-                break;
-
-            case R.id.save_change:
-                HsProgressDialog.newProgressDlg().show(MainActivity.this);
-                saveChange();
+            case  R.id.help_infoview:
+                Intent iUserHelpInfo = new Intent(MainActivity.this,HelpActivity.class);
+                startActivity(iUserHelpInfo);
                 break;
         }
     }
@@ -594,9 +595,10 @@ public class MainActivity extends Activity implements OnClickListener ,
         }).start();
     }
 
+    int exceptionType =  0;
     private boolean setHomeTips()
     {
-
+        exceptionType = 0;
         LinearLayout no_config_lay = mViews.get(1).findViewById(R.id.no_config_lay);
         LinearLayout have_config_lay = mViews.get(1).findViewById(R.id.have_config_lay);
         TextView except_tips = (TextView)no_config_lay.findViewById(R.id.except_tips);
@@ -604,9 +606,10 @@ public class MainActivity extends Activity implements OnClickListener ,
         if (HsApplication.Global_App._myUserInfo._serviceOverTime)
         {
             except_tips.setText("您的服务已过期，请续费使用");
+            img_add_cfg.setImageResource(R.drawable.repay);
             no_config_lay.setVisibility(View.VISIBLE);
             have_config_lay.setVisibility(View.GONE);
-
+            exceptionType = 1;
             return false;
         }
 
@@ -617,9 +620,10 @@ public class MainActivity extends Activity implements OnClickListener ,
                 || HsApplication.Global_App._myUserInfo._myBookInfo._enable == 0)
         {
             except_tips.setText("您未配置任何订阅信息,或您的配置已停用");
+            img_add_cfg.setImageResource(R.drawable.add_config);
             no_config_lay.setVisibility(View.VISIBLE);
             have_config_lay.setVisibility(View.GONE);
-
+            exceptionType = 2;
             return false;
         }
 
@@ -629,122 +633,17 @@ public class MainActivity extends Activity implements OnClickListener ,
         return true;
     }
 
-    /**
-
-     * 更新日期
-
-     */
-
-    private void updateDisplay() {
-        if (SELECTID == 0)
-        {
-            book_startdate.setText(new StringBuilder().append(mYear).append("-").append(
-                    (mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-").append(
-                    (mDay < 10) ? "0" + mDay : mDay));
-        }
-        else
-        {
-            book_stopdate.setText(new StringBuilder().append(mYear).append("-").append(
-                    (mMonth + 1) < 10 ? "0" + (mMonth + 1) : (mMonth + 1)).append("-").append(
-                    (mDay < 10) ? "0" + mDay : mDay));
-        }
-    }
-    /**
-     * 日期控件的事件
-     */
-    private DatePickerDialog.OnDateSetListener mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            mYear = year;
-            mMonth = monthOfYear;
-            mDay = dayOfMonth;
-            updateDisplay();
-        }
-    };
-    @Override
-    protected Dialog onCreateDialog(int id) {
-        switch (id) {
-            case DATE_DIALOG_ID:
-                return new DatePickerDialog(this, mDateSetListener, mYear, mMonth,
-                        mDay);
-        }
-        return null;
-    }
-
-    @Override
-    protected void onPrepareDialog(int id, Dialog dialog) {
-        switch (id) {
-            case DATE_DIALOG_ID:
-                ((DatePickerDialog) dialog).updateDate(mYear, mMonth, mDay);
-                break;
-
-        }
-    }
-
-    MyBook newBookInfo;
-    private void saveBookSetting()
-    {
-        LogUtil.info("Invoke saveBookSetting");
-        final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.SET_BOOK);
-        final Map<String,String> dataMap = new HashMap<>();
-
-        try {
-            JSONObject jsonObject = new JSONObject();
-
-            EditText emailTxt = (EditText)findViewById(R.id.book_email);
-            EditText phoneTxt = (EditText)findViewById(R.id.book_phone);
-            EditText startDateTxt = (EditText)findViewById(R.id.book_startdate);
-            EditText stopDateTxt = (EditText)findViewById(R.id.book_stopdate);
-            EditText bookKey1Txt = (EditText)findViewById(R.id.book_key1);
-            EditText bookKey2Txt = (EditText)findViewById(R.id.book_key2);
-            EditText bookKey3Txt = (EditText)findViewById(R.id.book_key3);
-
-            String email = emailTxt.getText().toString();
-            String phone = phoneTxt.getText().toString();
-            String startDate = startDateTxt.getText().toString();
-            String stopDate = stopDateTxt.getText().toString();
-            String key1 = bookKey1Txt.getText().toString();
-            String key2 = bookKey2Txt.getText().toString();
-            String key3 = bookKey3Txt.getText().toString();
-
-            jsonObject.put("Account",HsApplication.Global_App._myUserInfo._account);
-            jsonObject.put("Fliter1",key1);
-            jsonObject.put("Fliter2",key2);
-            jsonObject.put("Fliter3",key3);
-            jsonObject.put("EMail",email);
-            jsonObject.put("Phone",phone);
-            jsonObject.put("StartDate",startDate);
-            jsonObject.put("StopDate",stopDate);
-            jsonObject.put("Enable",(mToggleButton01.getToggleState()? 1:0));
-
-            newBookInfo = new MyBook();
-            newBookInfo._email = email;
-            newBookInfo._startDate = startDate;
-            newBookInfo._stopDate = stopDate;
-            newBookInfo._enable = (mToggleButton01.getToggleState()? 1:0);
-            newBookInfo._notifyType = 1;
-            newBookInfo._phone = phone;
-            newBookInfo._key1 = key1;
-            newBookInfo._key2 = key2;
-            newBookInfo._key3 = key3;
 
 
-            access.setJsonObject(jsonObject);
-        } catch (JSONException e) {
-            LogUtil.info("Invoke httpaccess prepare failed");
-            e.printStackTrace();
-        }
-        new Thread(new Runnable(){
-            public void run()
-            {
-                access.HttpPost();
-            }
-        }).start();
-    }
+//
+//    private void saveBookSetting()
+//    {
+//
+//    }
 
     // 将所有图片切换为暗色
     private void resetImg() {
-        img_book.setImageResource(R.drawable.book_normal);
+        img_set.setImageResource(R.drawable.book_normal);
         img_home.setImageResource(R.drawable.home_normal);
         img_report.setImageResource(R.drawable.report_normal);
     }
@@ -814,41 +713,6 @@ public class MainActivity extends Activity implements OnClickListener ,
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case CommandDefine.SET_BOOK: {
-                        try {
-                            HsProgressDialog.getProgressDlg().Close();
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                        }
-
-                        String receiveData = msg.obj.toString();
-
-                        JSONTokener jsonParser = new JSONTokener(receiveData);
-                        try {
-                            JSONObject person = (JSONObject) jsonParser.nextValue();
-
-                            String errorinfo = person.getString("ErrorInfo");
-                            int errorId = Integer.parseInt(person.getString("ErrorId"));
-                            if (errorId == 200) {
-                                closeLoginingDlg();// 关闭对话框
-                                Toast.makeText(MainActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
-                                HsApplication.Global_App._myUserInfo._myBookInfo = newBookInfo;
-                                break;
-                            }
-                            else
-                            {
-                                closeLoginingDlg();// 关闭对话框
-                                Toast.makeText(getApplicationContext(), errorinfo, Toast.LENGTH_LONG).show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    }
-                    case CommandDefine.GET_BOOK: {
-                        break;
-                    }
                     case CommandDefine.PAY_FOR_SERVICE: {
                         break;
                     }
@@ -921,42 +785,42 @@ public class MainActivity extends Activity implements OnClickListener ,
                     case CommandDefine.GET_USERINFO: {
                         break;
                     }
-
-                    case CommandDefine.SET_USERINFO:
-                    {
-                        try {
-                            HsProgressDialog.getProgressDlg().Close();
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                        }
-
-                        String receiveData = msg.obj.toString();
-
-                        JSONTokener jsonParser = new JSONTokener(receiveData);
-                        try {
-                            JSONObject person = (JSONObject) jsonParser.nextValue();
-
-                            String errorinfo = person.getString("ErrorInfo");
-                            int errorId = Integer.parseInt(person.getString("ErrorId"));
-                            if (errorId == 200) {
-
-                                Toast.makeText(MainActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
-                                updateUserInfo();
-
-//                                finish();
-                                break;
-                            }
-                            else
-                            {
-//                                closeLoginingDlg();// 关闭对话框
-                                Toast.makeText(getApplicationContext(), errorinfo, Toast.LENGTH_LONG).show();
-                            }
-
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                    }
+//
+//                    case CommandDefine.SET_USERINFO:
+//                    {
+//                        try {
+//                            HsProgressDialog.getProgressDlg().Close();
+//                        } catch (Exception e) {
+//                            // TODO: handle exception
+//                        }
+//
+//                        String receiveData = msg.obj.toString();
+//
+//                        JSONTokener jsonParser = new JSONTokener(receiveData);
+//                        try {
+//                            JSONObject person = (JSONObject) jsonParser.nextValue();
+//
+//                            String errorinfo = person.getString("ErrorInfo");
+//                            int errorId = Integer.parseInt(person.getString("ErrorId"));
+//                            if (errorId == 200) {
+//
+//                                Toast.makeText(MainActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
+//                                updateUserInfo();
+//
+////                                finish();
+//                                break;
+//                            }
+//                            else
+//                            {
+////                                closeLoginingDlg();// 关闭对话框
+//                                Toast.makeText(getApplicationContext(), errorinfo, Toast.LENGTH_LONG).show();
+//                            }
+//
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+//                        break;
+//                    }
                 }
             }
         };
@@ -1161,82 +1025,82 @@ public class MainActivity extends Activity implements OnClickListener ,
         }
 
     }
-
-    private void loadUserInfo() {
-        EditText et_account = (EditText)this.findViewById(R.id.et_account);
-        EditText et_email = (EditText)this.findViewById(R.id.et_email);
-        EditText china_name = (EditText)this.findViewById(R.id.china_name);
-        EditText custom_address = (EditText)this.findViewById(R.id.custom_address);
-        EditText org_name = (EditText)this.findViewById(R.id.org_name);
-        EditText service_t_date = (EditText)this.findViewById(R.id.service_t_date);
-
-        et_account.setText(HsApplication.Global_App._myUserInfo._account);
-        et_email.setText(HsApplication.Global_App._myUserInfo._email);
-        china_name.setText(HsApplication.Global_App._myUserInfo._Alias);
-        custom_address.setText(HsApplication.Global_App._myUserInfo._Address);
-        org_name.setText(HsApplication.Global_App._myUserInfo._orgName);
-        service_t_date.setText(HsApplication.Global_App._myUserInfo._serviceOverDate);
-    }
-    UserInfo _updateUserInfo = new UserInfo();
-    private void saveChange()
-    {
-        LogUtil.info("Invoke saveBookSetting");
-        final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.SET_USERINFO);
-        final Map<String,String> dataMap = new HashMap<>();
-
-        try {
-            JSONObject jsonObject = new JSONObject();
-
-            EditText et_account = (EditText)this.findViewById(R.id.et_account);
-            EditText et_email = (EditText)this.findViewById(R.id.et_email);
-            EditText china_name = (EditText)this.findViewById(R.id.china_name);
-            EditText custom_address = (EditText)this.findViewById(R.id.custom_address);
-            EditText org_name = (EditText)this.findViewById(R.id.org_name);
-            EditText service_t_date = (EditText)this.findViewById(R.id.service_t_date);
-
-            String email = et_email.getText().toString();
-            String phone = et_account.getText().toString();
-            String alias = china_name.getText().toString();
-            String address = custom_address.getText().toString();
-            String orgname = org_name.getText().toString();
-
-
-            jsonObject.put("Account",HsApplication.Global_App._myUserInfo._account);
-            jsonObject.put("EMail",email);
-            jsonObject.put("Alias",alias);
-            jsonObject.put("Address",address);
-            jsonObject.put("OrgName",orgname);
-
-
-            _updateUserInfo = new UserInfo();
-            _updateUserInfo._email = email;
-            _updateUserInfo._Address = address;
-            _updateUserInfo._Alias = alias;
-            _updateUserInfo._orgName = orgname;
-
-
-            access.setJsonObject(jsonObject);
-        } catch (JSONException e) {
-            LogUtil.info("Invoke httpaccess prepare failed");
-            e.printStackTrace();
-        }
-        new Thread(new Runnable(){
-            public void run()
-            {
-                access.HttpPost();
-            }
-        }).start();
-    }
-
-    private void updateUserInfo() {
-        if (_updateUserInfo == null)
-        {
-
-        }
-        HsApplication.Global_App._myUserInfo._email = _updateUserInfo._email;
-        HsApplication.Global_App._myUserInfo._Address = _updateUserInfo._Address;
-        HsApplication.Global_App._myUserInfo._orgName = _updateUserInfo._orgName;
-        HsApplication.Global_App._myUserInfo._Alias = _updateUserInfo._Alias;
-
-    }
+//
+//    private void loadUserInfo() {
+//        EditText et_account = (EditText)this.findViewById(R.id.et_account);
+//        EditText et_email = (EditText)this.findViewById(R.id.et_email);
+//        EditText china_name = (EditText)this.findViewById(R.id.china_name);
+//        EditText custom_address = (EditText)this.findViewById(R.id.custom_address);
+//        EditText org_name = (EditText)this.findViewById(R.id.org_name);
+//        EditText service_t_date = (EditText)this.findViewById(R.id.service_t_date);
+//
+//        et_account.setText(HsApplication.Global_App._myUserInfo._account);
+//        et_email.setText(HsApplication.Global_App._myUserInfo._email);
+//        china_name.setText(HsApplication.Global_App._myUserInfo._Alias);
+//        custom_address.setText(HsApplication.Global_App._myUserInfo._Address);
+//        org_name.setText(HsApplication.Global_App._myUserInfo._orgName);
+//        service_t_date.setText(HsApplication.Global_App._myUserInfo._serviceOverDate);
+//    }
+//    UserInfo _updateUserInfo = new UserInfo();
+//    private void saveChange()
+//    {
+//        LogUtil.info("Invoke saveBookSetting");
+//        final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.SET_USERINFO);
+//        final Map<String,String> dataMap = new HashMap<>();
+//
+//        try {
+//            JSONObject jsonObject = new JSONObject();
+//
+//            EditText et_account = (EditText)this.findViewById(R.id.et_account);
+//            EditText et_email = (EditText)this.findViewById(R.id.et_email);
+//            EditText china_name = (EditText)this.findViewById(R.id.china_name);
+//            EditText custom_address = (EditText)this.findViewById(R.id.custom_address);
+//            EditText org_name = (EditText)this.findViewById(R.id.org_name);
+//            EditText service_t_date = (EditText)this.findViewById(R.id.service_t_date);
+//
+//            String email = et_email.getText().toString();
+//            String phone = et_account.getText().toString();
+//            String alias = china_name.getText().toString();
+//            String address = custom_address.getText().toString();
+//            String orgname = org_name.getText().toString();
+//
+//
+//            jsonObject.put("Account",HsApplication.Global_App._myUserInfo._account);
+//            jsonObject.put("EMail",email);
+//            jsonObject.put("Alias",alias);
+//            jsonObject.put("Address",address);
+//            jsonObject.put("OrgName",orgname);
+//
+//
+//            _updateUserInfo = new UserInfo();
+//            _updateUserInfo._email = email;
+//            _updateUserInfo._Address = address;
+//            _updateUserInfo._Alias = alias;
+//            _updateUserInfo._orgName = orgname;
+//
+//
+//            access.setJsonObject(jsonObject);
+//        } catch (JSONException e) {
+//            LogUtil.info("Invoke httpaccess prepare failed");
+//            e.printStackTrace();
+//        }
+//        new Thread(new Runnable(){
+//            public void run()
+//            {
+//                access.HttpPost();
+//            }
+//        }).start();
+//    }
+//
+//    private void updateUserInfo() {
+//        if (_updateUserInfo == null)
+//        {
+//
+//        }
+//        HsApplication.Global_App._myUserInfo._email = _updateUserInfo._email;
+//        HsApplication.Global_App._myUserInfo._Address = _updateUserInfo._Address;
+//        HsApplication.Global_App._myUserInfo._orgName = _updateUserInfo._orgName;
+//        HsApplication.Global_App._myUserInfo._Alias = _updateUserInfo._Alias;
+//
+//    }
 }

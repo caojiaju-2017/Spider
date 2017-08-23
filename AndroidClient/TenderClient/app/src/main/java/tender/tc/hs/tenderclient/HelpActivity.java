@@ -1,17 +1,23 @@
 package tender.tc.hs.tenderclient;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.tencent.mm.sdk.openapi.BaseReq;
@@ -36,106 +42,42 @@ import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
 import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
 import tender.tc.hs.tenderclient.Util.LogUtil;
 
-public class HelpActivity extends Activity implements OnClickListener,IWXAPIEventHandler
-{
+public class HelpActivity extends Activity implements OnClickListener, IWXAPIEventHandler {
     private IWXAPI api;
     Handler mainHandlers;
     ImageView img_go_back;
     ImageView wx_account1;
     ImageView wx_account2;
 
+    ImageView phone_img;
+
     UserInfo _updateUserInfo;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);// 去除title
 
         setContentView(R.layout.help_info);
-        api = WXAPIFactory.createWXAPI(this,"");
-        api.handleIntent(getIntent(),this);
+        api = WXAPIFactory.createWXAPI(this, "");
+        api.handleIntent(getIntent(), this);
 
         initView();
 
     }
 
     private void initView() {
-        img_go_back = (ImageView)this.findViewById(R.id.go_back);
+        img_go_back = (ImageView) this.findViewById(R.id.go_back);
         img_go_back.setOnClickListener(this);
 
-        wx_account1 = (ImageView)this.findViewById(R.id.wx_account1);
-        wx_account2 = (ImageView)this.findViewById(R.id.wx_account2);
+        wx_account1 = (ImageView) this.findViewById(R.id.wx_account1);
+        wx_account2 = (ImageView) this.findViewById(R.id.wx_account2);
+        phone_img = (ImageView) this.findViewById(R.id.phone_img);
 
         wx_account1.setOnClickListener(this);
         wx_account2.setOnClickListener(this);
+        phone_img.setOnClickListener(this);
     }
-
-    private void saveChange()
-    {
-        LogUtil.info("Invoke saveBookSetting");
-        final HttpAccess access = new HttpAccess(mainHandlers, CommandDefine.SET_USERINFO);
-        final Map<String,String> dataMap = new HashMap<>();
-
-        try {
-            JSONObject jsonObject = new JSONObject();
-
-            EditText et_account = (EditText)this.findViewById(R.id.et_account);
-            EditText et_email = (EditText)this.findViewById(R.id.et_email);
-            EditText china_name = (EditText)this.findViewById(R.id.china_name);
-            EditText custom_address = (EditText)this.findViewById(R.id.custom_address);
-            EditText org_name = (EditText)this.findViewById(R.id.org_name);
-            EditText service_t_date = (EditText)this.findViewById(R.id.service_t_date);
-
-            String email = et_email.getText().toString();
-            String phone = et_account.getText().toString();
-            String alias = china_name.getText().toString();
-            String address = custom_address.getText().toString();
-            String orgname = org_name.getText().toString();
-
-
-            jsonObject.put("Account",HsApplication.Global_App._myUserInfo._account);
-            jsonObject.put("EMail",email);
-            jsonObject.put("Alias",alias);
-            jsonObject.put("Address",address);
-            jsonObject.put("OrgName",orgname);
-
-
-            _updateUserInfo = new UserInfo();
-            _updateUserInfo._email = email;
-            _updateUserInfo._Address = address;
-            _updateUserInfo._Alias = alias;
-            _updateUserInfo._orgName = orgname;
-
-
-            access.setJsonObject(jsonObject);
-        } catch (JSONException e) {
-            LogUtil.info("Invoke httpaccess prepare failed");
-            e.printStackTrace();
-        }
-        new Thread(new Runnable(){
-            public void run()
-            {
-                access.HttpPost();
-            }
-        }).start();
-    }
-
-    private void registerComminucation() {
-        // 主线程通信事件句柄
-        mainHandlers = new Handler() {
-            @Override
-            public void handleMessage(Message msg) {
-                switch (msg.what) {
-                    case CommandDefine.SET_USERINFO: {
-
-                        break;
-                    }
-
-                }
-            }
-        };
-    }
-
-
 
     @Override
     public void onClick(View view) {
@@ -148,6 +90,13 @@ public class HelpActivity extends Activity implements OnClickListener,IWXAPIEven
                 break;
             case R.id.wx_account2:
                 send(true);
+                break;
+            case R.id.phone_img:
+                TextView org_phone = (TextView)findViewById(R.id.org_phone);
+
+                Intent mIntent = new Intent(Intent.ACTION_CALL);
+                mIntent.setData(Uri.parse("tel:" + org_phone.getText().toString()));
+                startActivity(mIntent);
                 break;
         }
     }

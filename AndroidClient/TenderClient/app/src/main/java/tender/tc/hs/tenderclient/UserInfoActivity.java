@@ -1,53 +1,36 @@
 package tender.tc.hs.tenderclient;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v4.view.ViewPager.OnPageChangeListener;
-import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import tender.tc.hs.tenderclient.Data.MyBook;
 import tender.tc.hs.tenderclient.Data.UserInfo;
 import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
 import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
-import tender.tc.hs.tenderclient.HsListView.XListView;
 import tender.tc.hs.tenderclient.Util.LogUtil;
 
 public class UserInfoActivity extends Activity implements OnClickListener
 {
     Handler mainHandlers;
     ImageView img_go_back;
-    ImageView img_save_change;
+    Button img_save_change;
     Button pay_btn;
     UserInfo _updateUserInfo;
     @Override
@@ -79,17 +62,17 @@ public class UserInfoActivity extends Activity implements OnClickListener
         china_name.setText(HsApplication.Global_App._myUserInfo._Alias);
         custom_address.setText(HsApplication.Global_App._myUserInfo._Address);
         org_name.setText(HsApplication.Global_App._myUserInfo._orgName);
-        service_t_date.setText(HsApplication.Global_App._myUserInfo._serviceOverDate);
+//        service_t_date.setText(HsApplication.Global_App._myUserInfo._serviceOverDate);
     }
 
     private void initView() {
         img_go_back = (ImageView)this.findViewById(R.id.go_back);
-        img_save_change = (ImageView)this.findViewById(R.id.save_change);
-        pay_btn = (Button)this.findViewById(R.id.pay_btn);
+        img_save_change = (Button)this.findViewById(R.id.save_change);
+//        pay_btn = (Button)this.findViewById(R.id.pay_btn);
 
         img_go_back.setOnClickListener(this);
         img_save_change.setOnClickListener(this);
-        pay_btn.setOnClickListener(this);
+//        pay_btn.setOnClickListener(this);
     }
 
     private void saveChange()
@@ -167,7 +150,7 @@ public class UserInfoActivity extends Activity implements OnClickListener
 
                                 Toast.makeText(UserInfoActivity.this, "操作成功", Toast.LENGTH_SHORT).show();
                                 updateUserInfo();
-
+                                hideSoftInputMethod(UserInfoActivity.this);
                                 finish();
                                 break;
                             }
@@ -205,6 +188,7 @@ public class UserInfoActivity extends Activity implements OnClickListener
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.go_back:
+                hideSoftInputMethod(UserInfoActivity.this);
                 this.finish();
                 break;
 
@@ -216,6 +200,27 @@ public class UserInfoActivity extends Activity implements OnClickListener
             case R.id.pay_btn:
                 Toast.makeText(getApplicationContext(), "暂未开发在线续费(后续升级会提供)，请联系管理员续费，管理员微信号：han_sen2017", Toast.LENGTH_LONG).show();
                 break;
+        }
+    }
+
+    /**
+     * 关闭软键盘，输入法
+     * @param context
+     */
+    public static void hideSoftInputMethod(Activity context)
+    {
+        try
+        {
+            InputMethodManager inputMethodManager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            View view = context.getCurrentFocus();
+            if (view != null)
+            {
+                inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
         }
     }
 }
