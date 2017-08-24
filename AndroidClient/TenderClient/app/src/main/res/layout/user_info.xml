@@ -126,47 +126,6 @@
 
 			</RelativeLayout>
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="30dp"
-                android:background="#707070">
-            </LinearLayout>
-
-			<!--&lt;!&ndash;服务到期日&ndash;&gt;-->
-			<!--<RelativeLayout style="@style/FindBottomStyle">-->
-
-				<!--<TextView-->
-					<!--android:id="@+id/service_t_lab"-->
-					<!--android:layout_width="80dp"-->
-					<!--android:layout_height="40dp"-->
-					<!--android:gravity="right"-->
-					<!--android:layout_marginTop="10dp"-->
-					<!--android:layout_alignParentLeft="true"-->
-					<!--android:text="服务到期日" />-->
-
-				<!--<EditText-->
-					<!--android:id="@+id/service_t_date"-->
-					<!--android:layout_width="200dip"-->
-					<!--android:layout_height="wrap_content"-->
-					<!--android:layout_alignParentTop="true"-->
-					<!--android:layout_marginLeft="10dp"-->
-					<!--android:textSize="26px"-->
-					<!--android:enabled="false"-->
-					<!--android:layout_toRightOf="@+id/service_t_lab"-->
-					<!--android:layout_toEndOf="@+id/service_t_lab" />-->
-
-				<!--<Button-->
-					<!--android:id="@+id/pay_btn"-->
-					<!--android:layout_width="60dip"-->
-					<!--android:layout_height="wrap_content"-->
-					<!--android:text="续费"-->
-					<!--android:layout_alignParentTop="true"-->
-					<!--android:layout_alignParentRight="true"-->
-					<!--android:layout_alignParentEnd="true" />-->
-
-			<!--</RelativeLayout>-->
 			<Button
 				android:id="@+id/save_change"
 				android:layout_width="300dp"

@@ -26,6 +26,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.sdk.openapi.SendMessageToWX;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.tencent.mm.sdk.openapi.WXImageObject;
 import com.tencent.mm.sdk.openapi.WXMediaMessage;
 import com.tencent.mm.sdk.openapi.WXWebpageObject;
 import com.tencent.mm.sdk.platformtools.Util;
@@ -59,8 +60,10 @@ public class HelpActivity extends Activity implements OnClickListener, IWXAPIEve
         requestWindowFeature(Window.FEATURE_NO_TITLE);// 去除title
 
         setContentView(R.layout.help_info);
-        api = WXAPIFactory.createWXAPI(this, "");
-        api.handleIntent(getIntent(), this);
+
+        api = WXAPIFactory.createWXAPI(this, HsApplication.Global_App.wxAppid, true);
+        api.registerApp(HsApplication.Global_App.wxAppid);
+        api.handleIntent(getIntent(),this);
 
         initView();
 
@@ -86,42 +89,59 @@ public class HelpActivity extends Activity implements OnClickListener, IWXAPIEve
                 this.finish();
                 break;
             case R.id.wx_account1:
-                send(true);
+//                send(true);
                 break;
             case R.id.wx_account2:
-                send(true);
+//                send(false);
                 break;
             case R.id.phone_img:
                 TextView org_phone = (TextView)findViewById(R.id.org_phone);
-
-                Intent mIntent = new Intent(Intent.ACTION_CALL);
-                mIntent.setData(Uri.parse("tel:" + org_phone.getText().toString()));
-                startActivity(mIntent);
+                call(org_phone.getText().toString());
                 break;
         }
     }
 
-
+    /**
+     * 调用拨号界面
+     * @param phone 电话号码
+     */
+    private void call(String phone) {
+        Intent intent = new Intent(Intent.ACTION_DIAL,Uri.parse("tel:"+phone));
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //值为true，表示发送到朋友圈,反之发送给群或者好友
     private void send(boolean sendType) {
-        Log.i("test","执行");
+        String title ;
+        String wcAccount ;
+        if (sendType)
+        {
+            title = "汉森客服二维码";
+            wcAccount = "微信号： han_sen2017";
+        }
+        else
+        {
+            title = "汉森公众号二维码";
+            wcAccount = "微信号： hansenjiaoyucd";
+        }
 
         WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "www.h-sen.com";
+        webpage.webpageUrl = "http://blog.csdn.net/u013626215/article/details/51679713";
+
         WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.title = "客服二维码";
-        msg.description = "";
+        msg.mediaObject = webpage;
+        msg.title = title;
+        msg.description = wcAccount;
         Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.kf_erweima);
         msg.thumbData = Util.bmpToByteArray(thumb, true);
 
         SendMessageToWX.Req req = new SendMessageToWX.Req();
         req.transaction = buildTransaction("webpage");
         req.message = msg;
-        req.scene = sendType ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
-
-        Toast.makeText(getApplicationContext(), "等待分配APPID,请稍后", Toast.LENGTH_LONG).show();
+//        req.scene = sendType ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+        Log.i("test","send!");
         api.sendReq(req);
     }
 

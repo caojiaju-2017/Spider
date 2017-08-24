@@ -8,13 +8,14 @@
         android:id="@+id/report_name"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:paddingLeft="20dp"
         android:textSize="18sp"
         android:layout_marginTop="1dp"
         android:text="昨日产品销售分布"
         android:gravity="center_vertical"
         android:textColor="@color/white"
-        android:background="#e7b32e"
+        android:background="#606060"
+        android:textAlignment="center"
+        android:layout_marginRight="60dp"
         />
 
     <lecho.lib.hellocharts.view.PieChartView

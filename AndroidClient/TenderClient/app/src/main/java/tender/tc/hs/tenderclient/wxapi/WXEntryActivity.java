@@ -123,8 +123,6 @@ public class WXEntryActivity extends Activity implements OnClickListener,IWXAPIE
     //值为true，表示发送到朋友圈,反之发送给群或者好友
     private void send(boolean sendType) {
         Log.i("test","执行");
-//        Toast.makeText(getApplicationContext(), "等待分配APPID,请稍后3", Toast.LENGTH_LONG).show();
-
         WXWebpageObject webpage = new WXWebpageObject();
         webpage.webpageUrl = HsApplication.Global_App._currentBookInfo._url;
 
