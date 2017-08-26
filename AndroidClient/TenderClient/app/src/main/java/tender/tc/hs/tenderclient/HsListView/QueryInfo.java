@@ -47,7 +47,7 @@ public class QueryInfo
         }
     }
 
-    public void queryNextBathc()
+    private void queryNextBathc()
     {
         _pageIndex = _pageIndex + 1;
         LogUtil.info("Invoke saveBookSetting");
@@ -92,6 +92,41 @@ public class QueryInfo
             jsonObject.put("RCode",recodeId);
             jsonObject.put("UFlag",1);
 
+            access.setJsonObject(jsonObject);
+        } catch (JSONException e) {
+            LogUtil.info("Invoke httpaccess prepare failed");
+            e.printStackTrace();
+        }
+        new Thread(new Runnable(){
+            public void run()
+            {
+                access.HttpPost();
+            }
+        }).start();
+    }
+
+    public void queryNextBatchByProvince(String currentProvince) {
+        if (currentProvince == null)
+        {
+            this.queryNextBathc();
+            return;
+        }
+
+        _pageIndex = _pageIndex + 1;
+        LogUtil.info("Invoke saveBookSetting");
+        final HttpAccess access = new HttpAccess(_parentHandle, CommandDefine.QUERY_DATA);
+        final Map<String,String> dataMap = new HashMap<>();
+
+        try {
+            JSONObject jsonObject = new JSONObject();
+
+            jsonObject.put("Account", HsApplication.Global_App._myUserInfo._account);
+            jsonObject.put("PageIndex",this._pageIndex);
+            jsonObject.put("PageSize",this._pageSize);
+            jsonObject.put("Fliter",this._fliter);
+            jsonObject.put("UFlag",0);
+            jsonObject.put("RCode","");
+            jsonObject.put("Province", currentProvince);
             access.setJsonObject(jsonObject);
         } catch (JSONException e) {
             LogUtil.info("Invoke httpaccess prepare failed");

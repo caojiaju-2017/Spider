@@ -159,6 +159,20 @@ class SpsService(models.Model):
         managed = False
         db_table = 'sps_service'
 
+class SpsOrders(models.Model):
+    id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.
+    account = models.CharField(db_column='Account', max_length=20)  # Field name made lowercase.
+    createtime = models.CharField(db_column='CreateTime', max_length=19)  # Field name made lowercase.
+    chagetime = models.CharField(db_column='ChageTime', max_length=19)  # Field name made lowercase.
+    state = models.IntegerField(db_column='State', blank=True, null=True)
+    scode = models.CharField(db_column='SCode', max_length=20)  # Field name made lowercase.
+    ordernum = models.CharField(db_column='OrderNum', max_length=64)  # Field name made lowercase.
+    months = models.IntegerField(db_column='Months', blank=True, null=True)
+    totalprice = models.FloatField(db_column='TotalPrice',blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'sps_orders'
 
 class SpsUserOrder(models.Model):
     id = models.IntegerField(db_column='Id', primary_key=True)  # Field name made lowercase.

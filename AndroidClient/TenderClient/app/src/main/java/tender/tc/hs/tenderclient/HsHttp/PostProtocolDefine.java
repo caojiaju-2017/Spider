@@ -81,7 +81,10 @@ public class PostProtocolDefine
 		{
 			metaUrl = String.format("/api/account/?Command=APPLY_SMSCODE&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
 		}
-
+		else if (mCommand == CommandDefine.CREATE_ORDER)
+		{
+			metaUrl = String.format("/api/account/?Command=CREATE_ORDER&ServiceCode=TS_001&TimeSnap=%d&Sig=%s",currentTime,sigString);
+		}
 		return metaUrl;
 	}
 

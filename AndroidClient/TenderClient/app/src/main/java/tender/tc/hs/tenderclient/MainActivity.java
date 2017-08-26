@@ -10,6 +10,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -17,6 +18,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -26,6 +28,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.GridView;
@@ -59,6 +62,7 @@ import tender.tc.hs.tenderclient.Report.PieReportService;
 import tender.tc.hs.tenderclient.Report.ReportObject;
 import tender.tc.hs.tenderclient.Report.LineReportService;
 import tender.tc.hs.tenderclient.Util.LogUtil;
+import tender.tc.hs.tenderclient.wxapi.WXPayEntryActivity;
 import tender.tc.hs.tenderclient.wxapi.WXEntryActivity;
 
 public class MainActivity extends Activity implements OnClickListener ,
@@ -104,11 +108,16 @@ public class MainActivity extends Activity implements OnClickListener ,
 
     RelativeLayout help_infoview ;
 
+    Button pay_btn;
+
     ImageView img_add_cfg;
     private GridView gview;
     private FrameLayout framView;
     private String[] iconName = { "山东省", "四川省","福建省", "山西省",
             "陕西省", "广东省","江苏省" };
+
+    private String currentProvince = null;
+    private ImageView currentSelectImage = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -129,17 +138,12 @@ public class MainActivity extends Activity implements OnClickListener ,
         if (setHomeTips())
         {
             HsProgressDialog.newProgressDlg().show(MainActivity.this);
-            _queryInfo.queryNextBathc();
+            _queryInfo.queryNextBatchByProvince(currentProvince);
         }
 
+        /// 配置过滤相关
         framView = (FrameLayout)findViewById(R.id.fragmentView);
         gview = (GridView) findViewById(R.id.gview);
-
-        List<String> abc = new ArrayList<>();
-        for (int index = 0 ; index < iconName.length; index++)
-        {
-            abc.add(iconName[index]);
-        }
         GridViewAdapter gridViewAdapter = new GridViewAdapter();
         gview.setAdapter(gridViewAdapter);
         // 为GridView设定监听器
@@ -164,13 +168,51 @@ public class MainActivity extends Activity implements OnClickListener ,
 
                 convertView.setOnClickListener(new OnClickListener() {
 
-                    public void onClick(View v) {
+                    public void onClick(View v)
+                    {
                         framView.setVisibility(View.GONE);
+                        // 获取当前选中的省
+                        TextView textView = v.findViewById(R.id.prov_name);
+                        ImageView imgView = v.findViewById(R.id.select_province);
+
+                        if (textView == null)
+                        {
+                            return;
+                        }
+                        String prvName = textView.getText().toString();
+
+                        // 比较与当前省是否一致，
+                        if (currentProvince != null && currentProvince.equals(prvName))
+                        {
+                            imgView.setVisibility(View.GONE);
+                            currentSelectImage.setVisibility(View.GONE);
+                            currentProvince = null;
+                            currentSelectImage = null;
+                        }
+                        else if(currentProvince == null)
+                        {
+                            currentProvince = prvName;
+                            currentSelectImage = imgView;
+                            imgView.setVisibility(View.VISIBLE);
+                            currentSelectImage.setVisibility(View.VISIBLE);
+                        }
+                        else
+                        {
+                            currentProvince = prvName;
+                            imgView.setVisibility(View.VISIBLE);
+                            currentSelectImage.setVisibility(View.GONE);
+                            currentSelectImage = imgView;
+                        }
+
+                        Message msg = new Message();
+                        msg.what = CommandDefine.REFRESH_QUERY;
+                        mainHandlers.sendMessage(msg);
                     }
                 });
-                viewTag = new ItemViewTag((TextView) convertView.findViewById(R.id.prov_name));
+                viewTag = new ItemViewTag((TextView) convertView.findViewById(R.id.prov_name), (ImageView)convertView.findViewById(R.id.select_province));
                 convertView.setTag(viewTag);
-            } else
+            }
+            else
             {
                 viewTag = (ItemViewTag) convertView.getTag();
             }
@@ -215,12 +257,37 @@ public class MainActivity extends Activity implements OnClickListener ,
         {
 
             protected TextView mName;
+            protected ImageView mImage;
 
 
-            public ItemViewTag(TextView name)
+            public ItemViewTag(TextView name, ImageView img)
             {
                 this.mName = name;
+                this.mImage = img;
+            }
 
+            public boolean checkProvinceSame(String currentProvince)
+            {
+                if (mName == null)
+                {
+                    return false;
+                }
+
+                if (mName.equals(currentProvince))
+                {
+                    return true;
+                }
+
+                return  false;
+            }
+
+            public void setImageVisible(boolean flag) {
+                if (mImage == null)
+                {
+                    return;
+                }
+
+                mImage.setVisibility(flag ? View.VISIBLE:View.GONE);
             }
         }
     }
@@ -301,6 +368,7 @@ public class MainActivity extends Activity implements OnClickListener ,
         layout_book_view = (RelativeLayout)tab04.findViewById(R.id.user_infoview);
         layout_userinfo_view = (RelativeLayout)tab04.findViewById(R.id.book_infoview);
         help_infoview = (RelativeLayout)tab04.findViewById(R.id.help_infoview);
+        pay_btn = (Button)tab04.findViewById(R.id.pay_btn);
 
         report_container = (LinearLayout)tab03.findViewById(R.id.report_container);
 
@@ -322,6 +390,7 @@ public class MainActivity extends Activity implements OnClickListener ,
         customListView.setAdapter(mAdapterTest);
         customListView.setXListViewListener(this);
         customListView.setOnItemClickListener(this);
+        pay_btn.setOnClickListener(this);
 
         // 处理滑动事件， 如果有触摸则，关闭过滤框框
         customListView.setOnTouchListener(new View.OnTouchListener() {
@@ -485,6 +554,11 @@ public class MainActivity extends Activity implements OnClickListener ,
                 Intent iUserHelpInfo = new Intent(MainActivity.this,HelpActivity.class);
                 startActivity(iUserHelpInfo);
                 break;
+
+            case  R.id.pay_btn:
+                Intent chageAct = new Intent(MainActivity.this,ChageFeeActivity.class);
+                startActivity(chageAct);
+                break;
         }
     }
 
@@ -594,7 +668,7 @@ public class MainActivity extends Activity implements OnClickListener ,
         mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                _queryInfo.queryNextBathc();
+                _queryInfo.queryNextBatchByProvince(currentProvince);
 
                 mAdapter.notifyDataSetChanged();
                 onLoad();
@@ -614,6 +688,7 @@ public class MainActivity extends Activity implements OnClickListener ,
         if (framView != null)
         {
             framView.setVisibility(View.GONE);
+
         }
 
         HsApplication.Global_App._currentBookInfo = (BookData)view.getTag();
@@ -627,9 +702,6 @@ public class MainActivity extends Activity implements OnClickListener ,
             @Override
             public void handleMessage(Message msg) {
                 switch (msg.what) {
-                    case CommandDefine.PAY_FOR_SERVICE: {
-                        break;
-                    }
                     case CommandDefine.QUERY_DATA: {
                         try {
                             HsProgressDialog.getProgressDlg().Close();
@@ -696,12 +768,28 @@ public class MainActivity extends Activity implements OnClickListener ,
                         break;
                     }
 
-                    case CommandDefine.GET_USERINFO: {
+                    case CommandDefine.REFRESH_QUERY: {
+                        refreshQuery();
                         break;
                     }
                 }
             }
         };
+    }
+
+    private void refreshQuery()
+    {
+        // 启动进度条
+        HsProgressDialog.newProgressDlg().show(MainActivity.this);
+
+        // 清空列表
+        items.clear();
+        mAdapterTest.notifyDataSetInvalidated();
+        onLoad();
+
+        _queryInfo.resetSearch(null);
+
+        _queryInfo.queryNextBatchByProvince(currentProvince);
     }
 
     private void showReportData(Message msg) {
@@ -903,4 +991,19 @@ public class MainActivity extends Activity implements OnClickListener ,
         }
 
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {//如果返回键按下
+            //此处写退向后台的处理
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            startActivity(intent);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+
 }

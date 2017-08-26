@@ -1,18 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:orientation="vertical"
-    android:gravity="center"
     android:background="@drawable/border_setting"
     android:padding="10dp"
     >
     <TextView
         android:id="@+id/prov_name"
         android:padding="1dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
         android:textColor="#000000"
-        android:text="文字字"
-        />
-</LinearLayout>
+        android:text="文字字" />
+
+    <ImageView
+        android:id="@+id/select_province"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:visibility="gone"
+        android:src="@drawable/radio_selectd"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"/>
+</RelativeLayout>

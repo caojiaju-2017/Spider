@@ -11,6 +11,7 @@ from SmsDataBuffer import *
 from DSServer.models import *
 
 from DSServer.Api.ReportServiceTender import *
+from DSServer.Api.ChageApi import *
 
 # python标准库导入
 import json,re,pymongo
@@ -48,6 +49,15 @@ class AppServiceApi(object):
             return AppServiceApi.SetUserInfo(req)
         elif command  == "APPLY_SMSCODE":
             return AppServiceApi.ApplySmscode(req)
+        elif command == "CREATE_ORDER":
+            return ChangeApi.CreateOrder(req)
+        # elif command == "GET_USERINFO":
+        #     return AppServiceApi.GetUserInfo(req)
+        # elif command == "SET_USERINFO":
+        #     return AppServiceApi.SetUserInfo(req)
+        # elif command == "APPLY_SMSCODE":
+        #     return AppServiceApi.ApplySmscode(req)
+
         return
 
     @staticmethod
@@ -459,12 +469,12 @@ class AppServiceApi(object):
                 loginResut = json.dumps({"ErrorInfo": "订阅配置数据异常或未配置，请检查配置", "ErrorId": 10003, "Result": ""})
                 return HttpResponse(loginResut)
 
-            if bookHandle.fliter1 and len(bookHandle.fliter1) > 0:
-                Fliters.append(bookHandle.fliter1)
-            if bookHandle.fliter2 and len(bookHandle.fliter2) > 0:
-                Fliters.append(bookHandle.fliter2)
-            if bookHandle.fliter3 and len(bookHandle.fliter3) > 0:
-                Fliters.append(bookHandle.fliter3)
+            # if bookHandle.fliter1 and len(bookHandle.fliter1) > 0:
+            #     Fliters.append(bookHandle.fliter1)
+            # if bookHandle.fliter2 and len(bookHandle.fliter2) > 0:
+            #     Fliters.append(bookHandle.fliter2)
+            # if bookHandle.fliter3 and len(bookHandle.fliter3) > 0:
+            #     Fliters.append(bookHandle.fliter3)
 
         # 开始查询
         PageIndex = int(postDataList["PageIndex"])
@@ -478,26 +488,53 @@ class AppServiceApi(object):
         db = client['TenderDb']
         tenderDatas = db["ZhaoBiao"]
 
+        provName = None
+        try:
+            provName = postDataList["Province"]
+        except:
+            provName = None
+
         rtnList = []
         if UFlag == 0:
             queryResult = None
-            # for oneFliter in Fliters:
-            #     if not queryResult:
-            #         queryResult = tenderDatas.find({'ProjectName': re.compile(oneFliter)})
-            #     else:
-            #         queryResult.queryResult.
-            for item in tenderDatas.find({'ProjectName': re.compile(Fliters[0])}).sort('RecordTime', pymongo.DESCENDING). \
+            # 生成模糊匹配字典
+
+            contiditionList = []
+            if bookHandle.fliter1 and len(bookHandle.fliter1) > 0:
+                queryDict1 = {}
+                queryDict1["ProjectName"] = re.compile(bookHandle.fliter1)
+                contiditionList.append(queryDict1)
+            if bookHandle.fliter2 and len(bookHandle.fliter2) > 0:
+                queryDict2 = {}
+                queryDict2["ProjectName"] = re.compile(bookHandle.fliter2)
+                contiditionList.append(queryDict2)
+            if bookHandle.fliter3 and len(bookHandle.fliter3) > 0:
+                queryDict3 = {}
+                queryDict3["ProjectName"] = re.compile(bookHandle.fliter3)
+                contiditionList.append(queryDict3)
+
+            if provName:
+                queryResult = tenderDatas.find({'$or': contiditionList, 'Classfic': provName}).sort('RecordTime',pymongo.DESCENDING). \
                     limit((PageIndex + 1) * PageSize). \
-                    skip(PageIndex * PageSize):
+                    skip(PageIndex * PageSize)
+            else:
+                queryResult = tenderDatas.find({'$or': contiditionList}).sort('RecordTime',pymongo.DESCENDING). \
+                    limit((PageIndex + 1) * PageSize).skip(PageIndex * PageSize)
+
+            for item in queryResult:
                 itemDict = {}
                 itemDict["Classfic"] = item["Classfic"]
                 itemDict["Unique"] = item["Unique"]
                 itemDict["RecordTime"] = item["RecordTime"]
                 itemDict["Title"] = item["Title"]
                 itemDict["Url"] = item["Url"]
-                itemDict["ProjectName"] = item["ProjectName"]
-                itemDict["ProjectNo"] = item["ProjectNo"]
-                itemDict["Time"] = item["Time"]
+                itemDict["ProjectName"] = item["ProjectName"].strip()
+
+                prjCode = item["ProjectNo"].strip()
+                if len(prjCode) > 12:
+                    prjCode = prjCode[0:12] + "..."
+                itemDict["ProjectNo"] = prjCode
+                itemDict["Time"] = item["Time"].replace("[","").replace("]","")[0:10]
                 itemDict["Way"] = item["Way"]
                 rtnList.append(itemDict)
 

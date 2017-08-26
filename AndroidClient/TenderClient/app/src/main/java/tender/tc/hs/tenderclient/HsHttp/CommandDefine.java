@@ -37,4 +37,8 @@ public class CommandDefine
 
     public  static  final  int RESET_PASSWORD = 1012;
 
+    public  static  final  int CREATE_ORDER = 1013;
+
+    public  static  final  int REFRESH_QUERY = 1013;
+
 }

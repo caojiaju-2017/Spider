@@ -20,31 +20,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.tencent.mm.sdk.openapi.BaseReq;
-import com.tencent.mm.sdk.openapi.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.SendMessageToWX;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.mm.sdk.openapi.WXImageObject;
-import com.tencent.mm.sdk.openapi.WXMediaMessage;
-import com.tencent.mm.sdk.openapi.WXWebpageObject;
-import com.tencent.mm.sdk.platformtools.Util;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONTokener;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import tender.tc.hs.tenderclient.Data.UserInfo;
-import tender.tc.hs.tenderclient.HsHttp.CommandDefine;
-import tender.tc.hs.tenderclient.HsHttp.HttpAccess;
-import tender.tc.hs.tenderclient.Util.LogUtil;
 
-public class HelpActivity extends Activity implements OnClickListener, IWXAPIEventHandler {
-    private IWXAPI api;
+
+public class HelpActivity extends Activity implements OnClickListener {
+//    private IWXAPI api;
     Handler mainHandlers;
     ImageView img_go_back;
     ImageView wx_account1;
@@ -61,9 +42,9 @@ public class HelpActivity extends Activity implements OnClickListener, IWXAPIEve
 
         setContentView(R.layout.help_info);
 
-        api = WXAPIFactory.createWXAPI(this, HsApplication.Global_App.wxAppid, true);
-        api.registerApp(HsApplication.Global_App.wxAppid);
-        api.handleIntent(getIntent(),this);
+//        api = WXAPIFactory.createWXAPI(this, HsApplication.Global_App.wxAppid, true);
+//        api.registerApp(HsApplication.Global_App.wxAppid);
+      //  api.handleIntent(getIntent(),this);
 
         initView();
 
@@ -113,66 +94,40 @@ public class HelpActivity extends Activity implements OnClickListener, IWXAPIEve
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     //值为true，表示发送到朋友圈,反之发送给群或者好友
-    private void send(boolean sendType) {
-        String title ;
-        String wcAccount ;
-        if (sendType)
-        {
-            title = "汉森客服二维码";
-            wcAccount = "微信号： han_sen2017";
-        }
-        else
-        {
-            title = "汉森公众号二维码";
-            wcAccount = "微信号： hansenjiaoyucd";
-        }
-
-        WXWebpageObject webpage = new WXWebpageObject();
-        webpage.webpageUrl = "http://blog.csdn.net/u013626215/article/details/51679713";
-
-        WXMediaMessage msg = new WXMediaMessage(webpage);
-        msg.mediaObject = webpage;
-        msg.title = title;
-        msg.description = wcAccount;
-        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.kf_erweima);
-        msg.thumbData = Util.bmpToByteArray(thumb, true);
-
-        SendMessageToWX.Req req = new SendMessageToWX.Req();
-        req.transaction = buildTransaction("webpage");
-        req.message = msg;
-//        req.scene = sendType ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
-        Log.i("test","send!");
-        api.sendReq(req);
-    }
+//    private void send(boolean sendType) {
+//        String title ;
+//        String wcAccount ;
+//        if (sendType)
+//        {
+//            title = "汉森客服二维码";
+//            wcAccount = "微信号： han_sen2017";
+//        }
+//        else
+//        {
+//            title = "汉森公众号二维码";
+//            wcAccount = "微信号： hansenjiaoyucd";
+//        }
+//
+//        WXWebpageObject webpage = new WXWebpageObject();
+//        webpage.webpageUrl = "http://blog.csdn.net/u013626215/article/details/51679713";
+//
+//        WXMediaMessage msg = new WXMediaMessage(webpage);
+//        msg.mediaObject = webpage;
+//        msg.title = title;
+//        msg.description = wcAccount;
+//        Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.kf_erweima);
+//        msg.thumbData = Util.bmpToByteArray(thumb, true);
+//
+//        SendMessageToWX.Req req = new SendMessageToWX.Req();
+//        req.transaction = buildTransaction("webpage");
+//        req.message = msg;
+////        req.scene = sendType ? SendMessageToWX.Req.WXSceneTimeline : SendMessageToWX.Req.WXSceneSession;
+//        Log.i("test","send!");
+//        api.sendReq(req);
+//    }
 
     private String buildTransaction(final String type) {
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 
-    @Override
-    public void onReq(BaseReq baseReq) {
-    }
-
-    @Override
-    public void onResp(BaseResp baseResp) {
-        String result = null;
-        switch (baseResp.errCode) {
-            case BaseResp.ErrCode.ERR_OK:
-                result = "分享成功";
-                Log.i("test","分享成功");
-                break;
-            case BaseResp.ErrCode.ERR_USER_CANCEL:
-                result = "分享取消";
-                Log.i("test",""+result);
-                break;
-            case BaseResp.ErrCode.ERR_AUTH_DENIED:
-                result = "分享被拒绝";
-                Log.i("test",""+result);
-                break;
-            default:
-                result = "分享返回";
-                Log.i("test",""+result);
-                break;
-        }
-    }
 }

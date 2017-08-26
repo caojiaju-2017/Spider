@@ -24,10 +24,19 @@
 					android:id="@+id/go_back"
 					android:layout_width="30dp"
 					android:layout_height="20dp"
-					android:layout_marginTop="5dp"
+					android:layout_marginTop="10dp"
 					android:src="@drawable/icon_back"
 					android:layout_alignParentLeft="true"
 					android:layout_marginLeft="10dp"/>
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="match_parent"
+					android:layout_centerInParent="true"
+					android:gravity="center"
+					android:textColor="#fff"
+					android:textSize="16sp"
+					android:text="账户信息"/>
 
 			</RelativeLayout>
 

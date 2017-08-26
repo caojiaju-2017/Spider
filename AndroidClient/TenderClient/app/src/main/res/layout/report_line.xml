@@ -2,20 +2,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="270dp"
+    android:layout_marginTop="5dp"
     android:background="@color/white"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/report_name"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="30dp"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
         android:gravity="center_vertical"
-        android:textSize="16sp"
+        android:textSize="12sp"
         android:layout_marginTop="1dp"
         android:text="客户销售习惯分布"
         android:background="#606060"
         android:textAlignment="center"
-        android:layout_marginRight="60dp"
         android:textColor="@color/white"
         />
 

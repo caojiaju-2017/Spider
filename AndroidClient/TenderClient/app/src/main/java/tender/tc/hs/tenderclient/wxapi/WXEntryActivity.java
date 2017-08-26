@@ -16,18 +16,28 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.tencent.mm.sdk.openapi.BaseReq;
-import com.tencent.mm.sdk.openapi.BaseResp;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.IWXAPIEventHandler;
-import com.tencent.mm.sdk.openapi.SendMessageToWX;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
-import com.tencent.mm.sdk.openapi.WXMediaMessage;
-import com.tencent.mm.sdk.openapi.WXTextObject;
-import com.tencent.mm.sdk.openapi.WXWebpageObject;
-import com.tencent.mm.sdk.platformtools.Util;
+
 
 //import com.tencent.mm.opensdk.openapi.IWXAPI
+
+//import com.tencent.mm.opensdk.modelbase.BaseReq;
+//import com.tencent.mm.opensdk.modelbase.BaseResp;
+//import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+//import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+//import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+//import com.tencent.mm.opensdk.openapi.IWXAPI;
+//import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+//import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+
+import com.tencent.mm.opensdk.modelbase.BaseReq;
+import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelmsg.SendMessageToWX;
+import com.tencent.mm.opensdk.modelmsg.WXMediaMessage;
+import com.tencent.mm.opensdk.modelmsg.WXWebpageObject;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
+import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
+import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -146,9 +156,7 @@ public class WXEntryActivity extends Activity implements OnClickListener,IWXAPIE
         return (type == null) ? String.valueOf(System.currentTimeMillis()) : type + System.currentTimeMillis();
     }
 
-    @Override
-    public void onReq(BaseReq baseReq) {
-    }
+
 
     @Override
     public void onResp(BaseResp baseResp) {
@@ -171,5 +179,11 @@ public class WXEntryActivity extends Activity implements OnClickListener,IWXAPIE
                 Log.i("test",""+result);
                 break;
         }
+    }
+
+
+    @Override
+    public void onReq(BaseReq baseReq) {
+
     }
 }

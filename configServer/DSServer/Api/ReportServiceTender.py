@@ -18,7 +18,7 @@ class ReportServiceTender(object):
     @staticmethod
     def buildKeyPieReport(bookHandle):
         oneConfig2 = {}
-        oneConfig2["Title"] = "按客户订阅关键字分布"
+        oneConfig2["Title"] = "全网标（按关键字）"
         oneConfig2["YLabel"] = "发标量(个)"
         oneConfig2["XLabel"] = "关键字"
         oneConfig2["InnerLabel"] = "关键字分布"
@@ -61,10 +61,10 @@ class ReportServiceTender(object):
     @staticmethod
     def buildWeekColumnReport(days):
         oneConfig2 = {}
-        oneConfig2["Title"] = "近一周四川省发布量统计"
+        oneConfig2["Title"] = "近一周发布量"
         oneConfig2["YLabel"] = "发标量(个)"
         oneConfig2["XLabel"] = "日期"
-        oneConfig2["InnerLabel"] = "按日期统计一个月"
+        oneConfig2["InnerLabel"] = "按日期统计"
         oneConfig2["Type"] = 2
 
         client = MongoClient('www.h-sen.com', 27017)
@@ -86,7 +86,7 @@ class ReportServiceTender(object):
     @staticmethod
     def buildHistoryLineReport(days):
         oneConfig2 = {}
-        oneConfig2["Title"] = "近%d天四川省发布量统计"%days
+        oneConfig2["Title"] = "近%d天发布量"%days
         oneConfig2["YLabel"] = "发标量(个)"
         oneConfig2["XLabel"] = "日期"
         oneConfig2["InnerLabel"] = "按日期统计一个月"
