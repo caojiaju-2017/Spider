@@ -239,14 +239,14 @@
 					android:gravity="right"
 					android:layout_marginTop="10dp"
 					android:text="是否启用" />
-				<tender.tc.hs.tenderclient.ToggleButton
+				<tender.hs.tenderclient.ToggleButton
 					android:id="@+id/mToggleButton01"
 					android:layout_width="80dp"
 					android:layout_height="30dp"
 					android:layout_centerInParent="true"
 					android:layout_marginLeft="90dp"
 					android:layout_alignParentLeft="true">
-				</tender.tc.hs.tenderclient.ToggleButton>
+				</tender.hs.tenderclient.ToggleButton>
 			</RelativeLayout>
 
 

@@ -112,13 +112,13 @@ class ChangeApi(object):
         rtnDict["OrderNo"] = prpareOrder.result["prepay_id"]
         rtnDict["MchId"] = prpareOrder.result["mch_id"]
         rtnDict["NonceStr"]= prpareOrder.result["nonce_str"]
+
         rtnDict["Sign"] = prpareOrder.result["sign"]
+        print rtnDict["Sign"]
         rtnDict["AppId"] = prpareOrder.result["appid"]
         rtnDict["ApiKey"] = WxPayConf_pub.KEY
-        t = time.time()
-        timeSmap = int(t)
-        rtnDict["TimeStamp"] = "%d" % timeSmap
-        rtnDict["OrderPrice"] = totalPrice/100
+        rtnDict["TimeStamp"] = prpareOrder.result["timestamp"]
+        rtnDict["OrderPrice"] = 1#totalPrice/100
 
         loginResut = json.dumps({"ErrorInfo": "操作成功", "ErrorId": 200, "Result": rtnDict})
         return HttpResponse(loginResut)
@@ -128,10 +128,10 @@ class ChangeApi(object):
         prpareOrder = UnifiedOrder_pub()
         prpareOrder.parameters["out_trade_no"] = currentTime
         prpareOrder.parameters["body"] = "汉森镖局-预付款单接口测试"
-        prpareOrder.parameters["total_fee"] = "%d"%totalPrice
+        prpareOrder.parameters["total_fee"] = "1"#"%d"%totalPrice
         prpareOrder.parameters["notify_url"] = "http://www.weixin.qq.com/wxpay/pay.php"
         prpareOrder.parameters["trade_type"] = "APP"
 
-        prpareOrder.parameters["fee_type"] = "CNY"
+        # prpareOrder.parameters["fee_type"] = "CNY"
 
         return prpareOrder

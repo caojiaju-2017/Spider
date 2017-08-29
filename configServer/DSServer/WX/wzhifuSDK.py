@@ -56,11 +56,15 @@ class WxPayConf_pub(object):
     #微信公众号身份的唯一标识。审核通过后，在微信发送的邮件中查看
     APPID = "wx5cf4976ee8ae65c5"
     #JSAPI接口中获取openid，审核后在公众平台开启开发模式后可查看
-    APPSECRET = "d306b2d5ab3793063150acf448d36c28"
+    APPSECRET = "778960704b1d68df879e506a49d81cc7"
+
+    # 778960704b1d68df879e506a49d81cc7  AppSecret
+    #bd8e8c565c46e3209a16850515e504ab   应用签名
+    #57dc610bc6cc48b28330260649a665fd   商户的key
     #受理商ID，身份标识
     MCHID = "1487941952"
     #商户支付密钥Key。审核通过后，在微信发送的邮件中查看    "d306b2d5ab3793063150acf448d36c28"#"
-    KEY = "57DC610BC6CC48B28330260649A665FD"
+    KEY = "57dc610bc6cc48b28330260649a665fd"
    
 
     #=======【异步通知url设置】===================================
@@ -360,6 +364,7 @@ class UnifiedOrder_pub(Wxpay_client_pub):
         self.parameters["mch_id"] = WxPayConf_pub.MCHID  #商户号
         self.parameters["spbill_create_ip"] = "127.0.0.1"  #终端ip      
         self.parameters["nonce_str"] = self.createNoncestr()  #随机字符串
+
         self.parameters["sign"] = self.getSign(self.parameters)  #签名
         return  self.arrayToXml(self.parameters)
 
@@ -367,8 +372,30 @@ class UnifiedOrder_pub(Wxpay_client_pub):
         """获取prepay_id"""
         self.postXml()
         self.result = self.xmlToArray(self.response)
-        prepay_id = self.result["prepay_id"]
-        return prepay_id
+
+        print self.result
+
+        if self.result.has_key("prepay_id"):
+            prepay_id = self.result["prepay_id"]
+            # 再次簽名
+            paramsTemp = {}
+            paramsTemp["appid"] = self.result["appid"]
+            paramsTemp["noncestr"] = self.result["nonce_str"]
+            paramsTemp["package"] = "Sign=WXPay"
+            paramsTemp["partnerid"] = self.result["mch_id"]
+            paramsTemp["prepayid"] = self.result["prepay_id"]
+            t = time.time()
+            timeSmap = int(t)
+            paramsTemp["timestamp"] = "%d" % timeSmap
+            # paramsTemp["key"] = "57dc610bc6cc48b28330260649a665fd"
+
+            print "resign:",paramsTemp
+            paramsTemp["sign"] = self.getSign(paramsTemp)  #签名
+
+            self.result["timestamp"] = "%d" % timeSmap
+            self.result["sign"] = paramsTemp["sign"]
+            return prepay_id
+        return None
 
 
 class OrderQuery_pub(Wxpay_client_pub):
