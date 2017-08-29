@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="55dp"
+    android:orientation="horizontal"
+    android:padding="1dp"
+
+    android:layout_alignParentBottom="true"
+    android:background="#f0f0f0">
+
+    <!--<LinearLayout-->
+        <!--android:id="@+id/layout_book"-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_weight="1"-->
+        <!--android:gravity="center"-->
+        <!--android:background="#ffffff"-->
+        <!--android:orientation="vertical">-->
+
+        <!--<ImageView-->
+            <!--android:id="@+id/img_book"-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:src="@drawable/book_pressed" />-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="订阅设置" />-->
+    <!--</LinearLayout>-->
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:id="@+id/layout_report"
+        android:background="#ffffff"
+        android:layout_marginLeft="1dp"
+        android:gravity="center"
+        >
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/img_report"
+            android:src="@drawable/report_normal"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="统计报表"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:id="@+id/layout_home"
+            android:background="#ffffff"
+        android:layout_marginLeft="1dp"
+            android:gravity="center"
+            >
+            <ImageView 
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/img_home"
+                android:src="@drawable/home_normal"
+                />
+            <TextView 
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="首页"
+                />
+        </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:background="#ffffff"
+            android:id="@+id/layout_my"
+            android:layout_marginLeft="1dp"
+            android:gravity="center"
+            >
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/img_my"
+                android:src="@drawable/book_pressed"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="用户中心"
+                />
+        </LinearLayout>
+        
+        
+    </LinearLayout>

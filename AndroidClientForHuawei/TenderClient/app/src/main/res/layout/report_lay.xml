@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="top"
+    android:orientation="vertical"
+	android:weightSum="1">
+
+	<TextView
+		android:layout_width="match_parent"
+		android:layout_height="100dp"
+		android:textColor="#a0a0a0"
+		android:background="#fff"
+		android:padding="5dp"
+		android:gravity="left|center_vertical"
+		android:letterSpacing="0.1"
+		android:lineSpacingExtra="3dp"
+		android:text="        您如果有任何有关报表的需求，请将您的需求反馈到我们的邮箱：h-sen@foxmail.com; 同时您也必须提供您的账号信息，新的报表需求将同个人账户绑定"
+		android:textSize="14sp"/>
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+		<!--<LinearLayout-->
+			<!--android:layout_width="match_parent"-->
+			<!--android:layout_height="match_parent"-->
+			<!--android:background="#dfdfdf"-->
+			<!--android:orientation="vertical">-->
+
+
+
+			<LinearLayout
+				android:id="@+id/report_container"
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:background="#dfdfdf"
+				android:orientation="vertical">
+
+			</LinearLayout>
+
+
+		<!--</LinearLayout>-->
+	</ScrollView>
+</LinearLayout>

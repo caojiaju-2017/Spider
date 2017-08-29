@@ -47,6 +47,7 @@ def startMain():
             print "Config was Disable %s" % oneConfig.Code
             continue
 
+        print "========Thread for ====>" + oneConfig.Name + "============"
         t = threading.Thread(target=startWorkThread, args=(oneConfig,))
         t.daemon = True
         t.start()
@@ -88,7 +89,7 @@ if __name__ == "__main__":
         elif str.lower() == "q":
             exit()
 
-    startDbBackThread()
+    # startDbBackThread()
     startMain()
     while True:
         str = raw_input(u"请选择操作内容：\n    输入q,退出程序\n你的输入：")
